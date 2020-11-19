@@ -1,0 +1,22 @@
+<div class="categories-container">
+    <div class="search-container">
+        <mat-form-field style="width: 100%;">
+            <mat-label>Search category</mat-label>
+            <input matInput type="text">
+        </mat-form-field>
+        <button mat-mini-fab 
+            color="primary" 
+            style="margin-left: 2rem;"
+            (click)="addCategory()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <div class="categories-list">
+        <app-category
+         *ngFor="let category of (categories$ | async)"
+         [categoryToDisplay]="category"
+         (updateCategory)="updateCategory($event)"
+         (deleteCategory)="deleteCategory($event)">
+        </app-category>
+    </div>
+</div>

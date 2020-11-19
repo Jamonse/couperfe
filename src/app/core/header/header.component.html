@@ -1,0 +1,43 @@
+
+<!-- Normal Window Header -->
+<mat-toolbar *ngIf="!windowService.isWindowSmall">
+    <img class="logo" src="./assets/logo.svg">
+    <div class="buttons-container">
+        <div>
+            <button class="link" mat-stroked-button *ngFor="let option of navBarOptions"
+                [routerLink]="option.path">
+                <mat-icon>{{ option.icon }} </mat-icon>
+                {{ option.message }}
+            </button>
+        </div>
+        <div>
+            <button mat-raised-button 
+                color="primary" 
+                style="float: right;"
+                (click)="logout()">
+                Logout
+            </button>
+        </div>
+    </div>  
+</mat-toolbar>
+
+<!-- Small window Header -->
+<mat-toolbar *ngIf="windowService.isWindowSmall"
+    style="display: flex; justify-content: space-between;">
+    <button mat-mini-fab 
+        color="primary"
+        (click)="menuButtonClick()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <img class="logo" src="./assets/logo.svg">
+    <div>
+        <button mat-raised-button 
+            color="primary" 
+            style="float: right;"
+            (click)="logout()">
+            Logout
+        </button>
+    </div>
+</mat-toolbar>
+
+

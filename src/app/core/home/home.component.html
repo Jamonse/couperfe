@@ -1,0 +1,18 @@
+<div class="home">
+    <div class="head">
+        <h1>{{ headingMessage }}</h1>
+        <h2>{{ subHeadingMessage }}</h2>
+        <p>{{ headingParagraphMessage }}</p>
+    </div>
+    <div class="globe-image">
+        <img style="display:block; margin:auto;" src="./assets/couper_world.svg">
+    </div>
+    <div class="home-list">
+        <mat-list>
+            <mat-list-item class="home-list-item" *ngFor="let item of homeList">
+                <mat-icon class="home-list-icon">{{ item.icon }}</mat-icon>
+                {{ item.message }}
+            </mat-list-item>
+        </mat-list>
+    </div>
+</div>

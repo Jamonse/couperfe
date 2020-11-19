@@ -1,0 +1,16 @@
+
+<!-- Normal Size Window -->
+<mat-nav-list style="min-width: 10rem;">
+    <a mat-list-item style="height: 10rem;"
+        *ngFor="let option of menuOptions" 
+        [routerLink]="option.path"
+        (click)="menuButtonClicked()">
+        <span class="side-menu-option">
+            <mat-icon style="transform: scale(1.5); margin-bottom: 0.5rem;">
+                {{ option.icon }}
+            </mat-icon>
+            {{ option.message }}
+        </span>
+        <mat-divider></mat-divider>
+    </a>   
+</mat-nav-list>

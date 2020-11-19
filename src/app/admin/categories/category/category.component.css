@@ -1,0 +1,20 @@
+.category {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 70rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    flex-flow: row nowrap;
+}
+
+.category-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.buttons-container {
+    display: flex;
+}

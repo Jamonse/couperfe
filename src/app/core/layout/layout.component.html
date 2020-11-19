@@ -1,0 +1,29 @@
+<mat-sidenav-container>
+    <!-- Side Nav is used for small window mode -->
+    <mat-sidenav 
+        [opened]="opened" 
+        (opened)="opened = true" 
+        (closed)="opened = false">
+        <app-menu (menuButtonClick)="opened = !opened"></app-menu>
+    </mat-sidenav>
+    <section>
+        <header>
+            <!-- Event for the side nav will be emitted from the header
+                 whenever the side nav button has been clicked-->
+            <app-header (sideMenuButtonCliecked)="opened = !opened"></app-header>
+        </header>
+        <main>
+            <!-- Side Menu will be displayed on normal window mode -->
+            <app-menu *ngIf="!windowService.isWindowSmall"></app-menu>
+            <!-- Content of the app -->
+            <div style="flex-grow: 1;"> 
+                <router-outlet></router-outlet>
+            </div>
+        </main>
+        <footer>
+            <app-footer></app-footer>
+        </footer>
+    </section>
+</mat-sidenav-container>
+
+

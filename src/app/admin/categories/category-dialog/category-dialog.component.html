@@ -1,0 +1,29 @@
+<form [formGroup]="categoryForm" 
+    (ngSubmit)="onSubmit()"
+    class="category-form">
+    <h1>{{ dialogTitle }}</h1>
+    <mat-form-field style="margin-bottom: 5rem;">
+        <mat-label>Select category name</mat-label>
+        <input matInput type="text" formControlName="name">
+        <mat-error *ngIf="categoryForm.get('name').hasError('required')">
+            Category name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="categoryForm.get('name').hasError('minlength')">
+            Category name must consist at least <strong>two letters</strong>
+        </mat-error>
+    </mat-form-field>
+    <div class="buttons-container">
+        <button mat-raised-button 
+        type="button"
+        (click)="onClose()"
+        class="dialog-button">
+        Close
+    </button>
+    <button mat-raised-button color="primary"
+        (click)="onSubmit()"
+        class="dialog-button">
+        {{ buttonTitle }}
+    </button>
+    </div>
+    
+</form>

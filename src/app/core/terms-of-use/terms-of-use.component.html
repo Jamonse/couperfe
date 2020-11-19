@@ -1,0 +1,15 @@
+<div class="terms">
+    <div class="head-text-container">
+        <h1 style="font-size: 5em;">Our terms of use</h1>
+        <br>
+        <h1>{{ subHeadingMessage }}</h1>
+    </div>
+    <div class="terms-options">
+        <mat-list>
+            <mat-list-item class="terms-list-item" *ngFor="let option of clientOptions">
+                <mat-icon class="terms-list-icon">{{ option.icon }}</mat-icon>
+                {{ option.message }}
+            </mat-list-item>
+        </mat-list>
+    </div>
+</div>

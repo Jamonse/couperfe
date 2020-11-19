@@ -1,0 +1,30 @@
+.home {
+    background: url("/assets/home.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.head {
+    /*background: rgba(149, 204, 255, 0.5);*/
+    text-align: center;
+    width: 100%;
+    margin-top: 7%;
+}
+
+.home-list {
+    margin-bottom: 10%;
+}
+
+.home-list-item {
+    font-size: 1.5rem;
+}
+
+.home-list-icon {
+    margin-right: 1em;
+}

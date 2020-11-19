@@ -1,0 +1,23 @@
+.categories-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.search-container {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+}
+
+.categories-list {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    width: 50%;
+}

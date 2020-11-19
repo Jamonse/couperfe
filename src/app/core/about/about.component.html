@@ -1,0 +1,19 @@
+<div class="about">
+    <div class="head-text-container">
+        <h1>{{ headlineMessage }}</h1>
+        <br>
+        <h2>{{ subHeadline1 }}</h2>
+        <h2>{{ subHeadline2 }}</h2>
+    </div>
+    <div class="head-text-container">
+        <h2>Contact us:</h2>
+    </div>
+    <div class="contact-info">
+        <mat-list>
+            <mat-list-item class="about-list-item" *ngFor="let item of contactInformation">
+                <mat-icon class="about-list-icon">{{ item.icon }}</mat-icon>
+                {{ item.message }}
+            </mat-list-item>
+        </mat-list>
+    </div>
+</div>

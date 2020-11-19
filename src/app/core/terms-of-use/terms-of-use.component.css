@@ -1,0 +1,30 @@
+.terms {
+    background: url("/assets/home.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.terms-options {
+    margin-bottom: 20rem;
+}
+
+.head-text-container {
+    margin-top: 10em;
+    align-self: center;
+    text-align: center;
+}
+
+.terms-list-item {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.terms-list-icon {
+    margin-right: 1em;
+}
