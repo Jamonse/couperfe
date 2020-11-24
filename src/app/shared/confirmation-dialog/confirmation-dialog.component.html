@@ -1,0 +1,21 @@
+<div class="confirmation-dialog">
+    <mat-icon class="dialog-logo" color="warn">
+        warning
+    </mat-icon>
+    <div>
+        {{ message }}
+    </div>
+    <div class="buttons-container">
+        <button mat-raised-button 
+            class="dialog-button"
+            (click)="onNo()">
+            No
+        </button>
+        <button mat-raised-button 
+            class="dialog-button"
+            color="warn"
+            (click)="onYes()">
+            Yes
+        </button>
+    </div>
+</div>

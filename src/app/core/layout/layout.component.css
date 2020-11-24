@@ -16,6 +16,12 @@ header {
     align-self: start;
 }
 
+.small-window-header {
+    position: sticky;
+    z-index: 20000;
+    top: 0;
+}
+
 main {
     grid-area: main;
     display: flex;
@@ -25,3 +31,4 @@ footer {
    grid-area: footer;
    align-self: end;
 }
+

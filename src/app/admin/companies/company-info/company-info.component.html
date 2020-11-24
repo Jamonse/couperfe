@@ -1,0 +1,11 @@
+<div *ngIf="companyToDiaply" class="company-info-container">
+    <div class="company-info">
+        <div>
+            <h1>{{ companyToDiaply.name }}</h1>
+            <h2>{{ companyToDiaply.email }}</h2>
+        </div>
+        <mat-icon>groups</mat-icon>
+    </div>
+    <button mat-raised-button>Update</button>
+    <button mat-raised-button>Delete</button>
+</div>

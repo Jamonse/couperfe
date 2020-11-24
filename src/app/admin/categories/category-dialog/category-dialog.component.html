@@ -11,6 +11,9 @@
         <mat-error *ngIf="categoryForm.get('name').hasError('minlength')">
             Category name must consist at least <strong>two letters</strong>
         </mat-error>
+        <mat-error *ngIf="categoryForm.get('name').hasError('maxlength')">
+            Category name cannot exceed <strong>25 letters</strong>
+        </mat-error>
     </mat-form-field>
     <div class="buttons-container">
         <button mat-raised-button 
@@ -20,10 +23,8 @@
         Close
     </button>
     <button mat-raised-button color="primary"
-        (click)="onSubmit()"
         class="dialog-button">
         {{ buttonTitle }}
     </button>
     </div>
-    
 </form>

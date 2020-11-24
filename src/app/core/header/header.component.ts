@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/authentication/service/authentication.service';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
-import { MenuOption } from '../utils/common';
+import { MenuOption } from 'src/app/shared/utils/common';
 
 @Component({
   selector: 'app-header',

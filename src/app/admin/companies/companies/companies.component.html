@@ -1,1 +1,58 @@
-<p>companies works!</p>
+<div class="companies-container">
+    <div class="search-container">
+        <!-- Search bar + add button -->
+        <mat-form-field style="width: 100%;" [formGroup]="searchInput">
+            <mat-label>Search company</mat-label>
+            <input matInput 
+                type="text" 
+                formControlName="searchInput"
+                [matAutocomplete]="companiesAutoComplete">
+        </mat-form-field>
+        <button mat-mini-fab
+            color="primary" 
+            style="margin-left: 2rem;"
+            (click)="addCompany()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <!-- Search bar autocomplete -->
+        <mat-autocomplete #companiesAutoComplete="matAutocomplete">
+            <mat-option *ngFor="let searchedCompany of searchedCompanies">
+                <span [innerHTML]="searchedCompany.name | highlightSearch: searchText"></span>
+            </mat-option>
+        </mat-autocomplete>
+    </div>
+    <div class="sort-container">
+        <!-- Sort options and sort direction -->
+        <mat-form-field style="margin-right: 2rem;">
+            <mat-label>Sort by</mat-label>
+            <mat-select [(ngModel)]="sortBy" (selectionChange)="loadCompanies()">
+                <mat-option 
+                    *ngFor="let orderType of sortByOptions" [value]="orderType">
+                    {{orderType}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-mini-fab 
+            color="white"
+            (click)="sortDirection = !sortDirection; loadCompanies()"
+            [disabled]="!sortBy">
+            <mat-icon>{{sortDirection ? UP_ARROW : DOWN_ARROW}}</mat-icon>
+        </button>
+    </div>
+    <!-- Companies cards diplay + paginator -->
+    <div class="companies-grid">
+        <app-company 
+            *ngFor="let comapny of (companies$ | async)"
+            [companyToDisplay]="comapny"
+            (updateCompany)="updateCompany($event)"
+            (deleteCompany)="deleteCompany($event)">
+        </app-company>
+        <mat-paginator
+            class="mat-elevation-z8 paginator"
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="companiesStroe.pageIndex"
+            [pageSize]="companiesStroe.pageSize"
+            [length]="companiesStroe.count">
+        </mat-paginator>
+    </div>
+</div>

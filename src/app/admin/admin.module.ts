@@ -9,10 +9,21 @@ import { CategoryComponent } from './categories/category/category.component';
 import { MaterialModule } from '../core/material/material.module';
 import { CategoryDialogComponent } from './categories/category-dialog/category-dialog.component';
 import { SharedModule } from '../shared/shared.module';
+import { CompanyComponent } from './companies/company/company.component';
+import { CompanyDialogComponent } from './companies/company-dialog/company-dialog.component';
+import { CompanyInfoComponent } from './companies/company-info/company-info.component';
 
 
 @NgModule({
-  declarations: [CategoriesComponent, CompaniesComponent, CustomersComponent, CategoryComponent, CategoryDialogComponent],
+  declarations: [
+    CategoriesComponent, 
+    CompaniesComponent, 
+    CustomersComponent, 
+    CategoryComponent, 
+    CategoryDialogComponent, 
+    CompanyComponent, 
+    CompanyDialogComponent, 
+    CompanyInfoComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

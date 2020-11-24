@@ -22,3 +22,10 @@
     left: 0;
     right: 0;
 }
+
+.small-window-header {
+    display: flex; 
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+}

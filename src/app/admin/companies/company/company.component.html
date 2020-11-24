@@ -1,0 +1,35 @@
+<div class="mat-elevation-z2 company">
+    <div class="company-details">
+        <h1>
+            {{ companyToDisplay.name }}
+        </h1>
+        <h2>
+            {{ companyToDisplay.email }}
+        </h2>
+    </div>
+    <div class="buttons-container">
+        <button mat-mini-fab
+            class="company-button" 
+            color="primary"
+            [routerLink]="['info/', companyToDisplay.id]">
+            <mat-icon>
+                account_circle
+            </mat-icon>
+        </button>
+        <button mat-mini-fab
+            class="company-button"
+            (click)="update()">
+            <mat-icon style="color: white;">
+                edit
+            </mat-icon>
+        </button>
+        <button mat-mini-fab
+            class="company-button"
+            color="warn"
+            (click)="delete()">
+            <mat-icon>
+                delete
+            </mat-icon>
+        </button>
+    </div>
+</div>

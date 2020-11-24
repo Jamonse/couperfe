@@ -10,25 +10,38 @@ export class LoadingService {
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
   loading$: Observable<boolean> = this.loadingSubject.asObservable();
-
+  
   constructor() { }
 
   displayLoadingUntil<T>(observable$: Observable<T>): Observable<T>
   {
+    let loadingFinished = false;
+    // Return an observable 
     return of(null)
       .pipe(
-        tap(() => this.displayLoading()),
+        tap(() => {
+          setTimeout(() => {
+            if(!loadingFinished)
+            { // Wait before actually displaying loading indication
+              this.displayLoading();
+            }
+          }, 500)
+        }), // Perform a concat map in order to handle each subscription at a time
         concatMap(() => observable$),
-        finalize(() => this.hideLoading())
+        finalize(() => {
+          // Hide loading again after subscription returned
+          loadingFinished = true;
+          this.hideLoading()
+          })
       );
   }
 
-  displayLoading()
+  private displayLoading()
   {
     this.loadingSubject.next(true);
   }
 
-  hideLoading()
+  private hideLoading()
   {
     this.loadingSubject.next(false);
   }

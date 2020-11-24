@@ -1,0 +1,14 @@
+.company-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10rem;
+}
+
+.company-info {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+    margin-bottom: 10rem;
+}

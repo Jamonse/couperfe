@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonListItem } from '../utils/common';
+import { CommonListItem } from 'src/app/shared/utils/common';
 
 @Component({
   templateUrl: './about.component.html',

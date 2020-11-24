@@ -5,26 +5,21 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { delay, filter, map, shareReplay, tap } from 'rxjs/operators';
 import { ClientType } from 'src/app/core/model/client-type';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
+import { 
+  ADMIN_LOGIN_URL,
+  COMPANY_LOGIN_URL,
+  CUSTOMER_LOGIN_URL,
+  COMPANY_LOAD_URL,
+  CUSTOMER_LOAD_URL,
+  AUTH_URL
+ } from 'src/app/shared/utils/api.utils';
 
-import { APIUtils } from 'src/app/shared/utils/api-utils';
 import { Client } from '../model/client.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  // Login URLs
-  private ADMIN_LOGIN_URL = 'admin/login';
-  private COMPANY_LOGIN_URL = 'company/login';
-  private CUSTOMER_LOGIN_URL = 'customer/login';
-
-  // Details Loading URLs
-  private COMPANY_LOAD_URL = 'company/getDetials';
-  private CUSTOMER_LOAD_URL = 'customer/getDetials';
-
-  // Authentication URL
-  private AUTH_KEY = 'authenticated';
 
   private loginSubject = new BehaviorSubject<boolean>(false);
   private logoutSubject = new BehaviorSubject<boolean>(false);
@@ -63,21 +58,22 @@ export class AuthenticationService {
 
   login(email: string, password: string, clientType: ClientType): Observable<boolean>
   {
-    let loginUrl = APIUtils.API_URL;
+    let loginUrl = '';
 
     switch(clientType)
     { // Build the login url according to client type
       case ClientType.ADMIN:
-        loginUrl += this.ADMIN_LOGIN_URL;
+        loginUrl = ADMIN_LOGIN_URL;
         break;
       case ClientType.COMPANY:
-        loginUrl += this.COMPANY_LOGIN_URL;
+        loginUrl = COMPANY_LOGIN_URL;
         break;
       case ClientType.CUSTOMER:
-        loginUrl += this.CUSTOMER_LOGIN_URL;
+        loginUrl = CUSTOMER_LOGIN_URL;
         break;
     }
-
+    console.log(loginUrl);
+    
     return this.httpClient.post<boolean>(loginUrl,{email, password})
         .pipe(tap(authenticated => {
           this.loginSubject.next(authenticated);
@@ -88,17 +84,17 @@ export class AuthenticationService {
 
   loadUser(clientType: ClientType) 
   {
-    let loadUrl = APIUtils.API_URL;
+    let loadUrl = '';
 
     switch(clientType)
     {
       case ClientType.ADMIN:
         return;
       case ClientType.COMPANY:
-        loadUrl += this.COMPANY_LOAD_URL;
+        loadUrl = COMPANY_LOAD_URL;
         break;
       case ClientType.CUSTOMER:
-        loadUrl += this.CUSTOMER_LOAD_URL;
+        loadUrl = CUSTOMER_LOAD_URL;
         break;
     }
     const clientLoad$ = this.httpClient.get<Client>(loadUrl)
@@ -110,7 +106,7 @@ export class AuthenticationService {
   // Return true if the user session is still alive (used for app refresh checks)
   isAuthenticated(): Observable<boolean>
   {
-    return this.httpClient.get<boolean>(APIUtils.API_URL + this.AUTH_KEY);
+    return this.httpClient.get<boolean>(AUTH_URL);
   }
 
   logout()

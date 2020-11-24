@@ -3,7 +3,9 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Category } from 'src/app/core/model/category.model';
 import { LoadingService } from '../../loading/service/loading.service';
+import { MessagesService } from '../../messages/service/messages.service';
 import { CategoriesService } from '../service/categories.service';
+import '../../utils/array.prototype';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +18,8 @@ export class CategoriesStore
 
     constructor(
         private categoriesService: CategoriesService,
-        private loadingService: LoadingService)
+        private loadingService: LoadingService,
+        private messagesService: MessagesService)
     {
         this.loadAllCategories();
     }
@@ -33,7 +36,7 @@ export class CategoriesStore
         this.loadingService.displayLoadingUntil(loadedCategories$).subscribe();
     }
 
-    saveCategory(category: Category): Observable<Category>
+    saveCategory(category: Category): Observable<any>
     {
         if(category.id == null || category.id == 0)
         { // Add mode
@@ -49,6 +52,11 @@ export class CategoriesStore
     {
         return this.categoriesService.addCategory(categoryToAdd).pipe(
             catchError(err => { // Error during adding process
+                if(err.status === 406)
+                { // Duplication Error
+                    this.messagesService
+                        .displayErrors(err.error.message);
+                }
                 return throwError(err);
             }),
             tap(addedCategory => {
@@ -63,6 +71,11 @@ export class CategoriesStore
     {
         return this.categoriesService.updateCategory(categoryToUpdate).pipe(
             catchError(err => { // Error during updating process
+                if(err.status === 406)
+                { // Duplication Error
+                    this.messagesService
+                        .displayErrors(err.error.message);
+                }
                 return throwError(err);
             }),
             tap(() => {
@@ -89,6 +102,13 @@ export class CategoriesStore
         return this.categoriesService.deleteCategory(categoryId).pipe(
             catchError(err => {
                 return throwError(err);
+            }),
+            tap(() => {
+                const categories = this.categoriesSubject.getValue();
+                const categoryIndex = categories // Exctract the category index in the subject
+                    .findIndex(category => category.id === categoryId);
+                categories.splice(categoryIndex, 1);
+                this.categoriesSubject.next(categories);
             })
         );
     }

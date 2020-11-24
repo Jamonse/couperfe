@@ -1,0 +1,40 @@
+<form [formGroup]="companyForm" 
+    (ngSubmit)="onSubmit()"
+    class="company-form">
+    <h1>{{ dialogTitle }}</h1>
+    <mat-form-field>
+        <mat-label>Select company name</mat-label>
+        <input matInput type="text" formControlName="name">
+        <mat-error *ngIf="companyForm.get('name').hasError('required')">
+            Company name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="companyForm.get('name').hasError('minlength')">
+            Company name must consist at least <strong>two letters</strong>
+        </mat-error>
+        <mat-error *ngIf="companyForm.get('name').hasError('maxlength')">
+            Company name cannot exceed <strong>25 letters</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field style="margin-bottom: 5rem;">
+        <mat-label>Select company email</mat-label>
+        <input matInput type="text" formControlName="email">
+        <mat-error *ngIf="companyForm.get('email').hasError('required')">
+            Company email is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="companyForm.get('email').hasError('email')">
+            Please provide a valid email address <strong>e.g. e@e.com</strong>
+        </mat-error>
+    </mat-form-field>
+    <div class="buttons-container">
+        <button mat-raised-button 
+        type="button"
+        (click)="onClose()"
+        class="dialog-button">
+        Close
+    </button>
+    <button mat-raised-button color="primary"
+        class="dialog-button">
+        {{ buttonTitle }}
+    </button>
+    </div>
+</form>

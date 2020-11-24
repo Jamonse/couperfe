@@ -7,7 +7,7 @@
         <app-menu (menuButtonClick)="opened = !opened"></app-menu>
     </mat-sidenav>
     <section>
-        <header>
+        <header [ngClass]="{'small-window-header': windowService.isWindowSmall}">
             <!-- Event for the side nav will be emitted from the header
                  whenever the side nav button has been clicked-->
             <app-header (sideMenuButtonCliecked)="opened = !opened"></app-header>

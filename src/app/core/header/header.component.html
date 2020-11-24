@@ -1,7 +1,7 @@
 
 <!-- Normal Window Header -->
 <mat-toolbar *ngIf="!windowService.isWindowSmall">
-    <img class="logo" src="./assets/logo.svg">
+    <img class="logo" src="./assets/logo.png">
     <div class="buttons-container">
         <div>
             <button class="link" mat-stroked-button *ngFor="let option of navBarOptions"
@@ -23,13 +23,15 @@
 
 <!-- Small window Header -->
 <mat-toolbar *ngIf="windowService.isWindowSmall"
-    style="display: flex; justify-content: space-between;">
-    <button mat-mini-fab 
+    class="small-window-header">
+    <div style="width: 5rem;">
+        <button mat-mini-fab 
         color="primary"
         (click)="menuButtonClick()">
         <mat-icon>menu</mat-icon>
-    </button>
-    <img class="logo" src="./assets/logo.svg">
+        </button>
+    </div>
+    <img class="logo" src="./assets/logo.png">
     <div>
         <button mat-raised-button 
             color="primary" 

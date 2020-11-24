@@ -1,0 +1,22 @@
+.confirmation-dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons-container {
+    display: flex;
+    margin-top: 4rem;
+}
+
+.dialog-button {
+    border-radius: 0;
+    margin: 1rem;
+}
+
+.dialog-logo {
+    font-size: 3rem;
+    width: 3rem;
+    margin-bottom: 5rem;
+}

@@ -5,6 +5,7 @@ import { throwError } from 'rxjs';
 import { catchError, delay, tap } from 'rxjs/operators';
 import { ClientType } from 'src/app/core/model/client-type';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
+import { MessagesService } from 'src/app/shared/messages/service/messages.service';
 
 import { AuthenticationService } from '../service/authentication.service';
 
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthenticationService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private messagesService: MessagesService
   ) 
   { 
     this.loginForm = formBuilder.group(
@@ -66,9 +68,9 @@ export class LoginComponent implements OnInit {
           }
           else
           {
-            alert('Error');
+            this.messagesService.displayErrors('Either email or password is invalid');
           }
-        }), catchError(err => throwError(err))) //TODO change to custom message service
+        }));
       
       this.loadingService.displayLoadingUntil(login$).subscribe();
       

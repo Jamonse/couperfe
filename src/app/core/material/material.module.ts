@@ -11,6 +11,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const materialModules = [
   MatButtonModule,
@@ -25,7 +28,10 @@ const materialModules = [
   MatSidenavModule,
   MatDialogModule,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  MatPaginatorModule,
+  MatAutocompleteModule,
+  MatSnackBarModule
 ]
 
 @NgModule({

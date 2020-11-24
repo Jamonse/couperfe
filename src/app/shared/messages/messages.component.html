@@ -1,0 +1,24 @@
+<!-- Subsribe and get the errors array as erros -->
+<div *ngIf="(errors$ | async) as errors">
+    <!-- Displayed if there are any errors -->
+    <div *ngIf="displayMessages" class="messages-container">
+        <div class="messages">
+            <mat-icon class="message-icon" 
+                color="warn" 
+                style="margin-top: 2rem;">
+                error
+            </mat-icon>
+            <mat-list style="margin-bottom: 5rem;">
+                <!-- Errors list-->
+                <mat-list-item *ngFor="let error of errors">
+                    {{ error }}
+                </mat-list-item>
+            </mat-list>
+            <button mat-raised-button
+                id="close-button"
+                (click)="onClose()">
+                Close
+            </button>
+        </div>
+    </div>
+</div>

@@ -53,6 +53,6 @@ export class AppGuard implements CanActivate {
 
   private navigateToLoginPage()
   {
-    this.router.navigateByUrl('/login');
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
 }

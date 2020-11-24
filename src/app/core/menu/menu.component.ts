@@ -3,7 +3,7 @@ import { tap } from 'rxjs/operators';
 import { Company } from 'src/app/authentication/model/company.model';
 import { Customer } from 'src/app/authentication/model/customer.model';
 import { AuthenticationService } from 'src/app/authentication/service/authentication.service';
-import { MenuOption } from '../utils/common';
+import { MenuOption } from 'src/app/shared/utils/common';
 
 @Component({
   selector: 'app-menu',

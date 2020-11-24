@@ -1,16 +1,13 @@
-<svg width="770" height="398" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="hidden">
-    <defs>
-        <clipPath id="clip0">
-            <rect x="274" y="128" width="770" height="398"/>
-            </clipPath><clipPath id="clip1"><rect x="274" y="128" width="706" height="332"/>
-            </clipPath><clipPath id="clip2"><rect x="273" y="128" width="707" height="332"/>
-            </clipPath><clipPath id="clip3"><rect x="267" y="-68" width="721" height="723"/>
-            </clipPath></defs><g clip-path="url(#clip0)" transform="translate(-274 -128)">
-        <g clip-path="url(#clip1)"><g clip-path="url(#clip2)"><g clip-path="url(#clip3)">
-        <path d="M637.76 428.869C629.983 452.56 636.392 475.89 652.017 481.002 667.714 486.114 686.652 471.137 694.429 447.447 702.205 423.829 695.797 400.427 680.171 395.315 664.546 390.202 645.536 405.179 637.76 428.869ZM712.862 338.358 712.862 233.588C712.862 209.754 693.565 194.489 669.658 194.489L50.4044 194.489C26.5703 194.489 7.20063 209.754 7.20063 233.588L7.20063 482.298C7.20063 506.132 26.5703 525.502 50.4044 525.502L669.658 525.502C693.565 525.502 712.862 506.132 712.862 482.298L712.862 408.276C712.718 409.644 712.646 410.94 712.502 412.308 712.358 413.46 712.214 414.252 711.998 414.9 713.942 427.429 712.934 441.759 708.038 455.944 696.445 489.355 668.722 509.156 646.112 500.084 623.502 491.083 614.574 456.592 626.167 423.181 632.287 405.539 642.944 391.858 654.969 384.082 664.186 377.385 678.803 368.672 678.803 368.672 678.803 368.672 627.391 285.217 624.655 278.808 621.918 272.4 616.518 253.03 624.439 241.581 660.01 282.193 700.621 331.589 700.621 331.589L712.862 338.358Z" fill="#8FAADC" transform="matrix(-1 1.22465e-16 -1.22668e-16 -1.00166 987.582 654.252)"/>
-        </g></g></g>
-        <text fill="#EDEDED" font-family="Aharoni,Aharoni_MSFontService,sans-serif" font-weight="700" font-size="128" transform="translate(530.932 409)">
-            Couper
-        </text>
-    </g>
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="1174.000000pt" height="552.000000pt" viewBox="0 0 1174.000000 552.000000"
+ preserveAspectRatio="xMidYMid meet">
+<metadata>
+Created by potrace 1.16, written by Peter Selinger 2001-2019
+</metadata>
+<g transform="translate(0.000000,552.000000) scale(0.100000,-0.100000)"
+fill="#000000" stroke="none">
+</g>
 </svg>

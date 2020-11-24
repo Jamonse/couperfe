@@ -1,0 +1,14 @@
+.company-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+}
+
+.dialog-button {
+    border-radius: 0;
+    margin: 1rem;
+}
