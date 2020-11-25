@@ -14,19 +14,29 @@
         </button>
     </div>
     <div class="categories-list">
-        <app-category
-         *ngFor="let category of (categories$ | async)"
-         [categoryToDisplay]="category"
-         (updateCategory)="updateCategory($event)"
-         (deleteCategory)="deleteCategory($event)">
-        </app-category>
-        <mat-paginator
-        class="mat-elevation-z8 paginator"
-        [pageIndex]="pageIndex"
-        [pageSize]="pageSize"
-        [length]="length"
-        [pageSizeOptions]="pageSizeOptions"
-        (page)="pageChanged($event)">
-    </mat-paginator>
+        <ng-template *ngIf="(categories$ | async)?.length > 0;
+            then categoriesFound
+            else noCategoriesFound">
+        </ng-template>
+        <ng-template #categoriesFound>
+            <app-category
+            *ngFor="let category of (categories$ | async)"
+            [categoryToDisplay]="category"
+            (updateCategory)="updateCategory($event)"
+            (deleteCategory)="deleteCategory($event)">
+            </app-category>
+        </ng-template>
+        <ng-template #noCategoriesFound>
+            No Categories found.
+        </ng-template>
+        <mat-paginator 
+            [disabled]="(categories$ | async)?.length == 0"
+            class="mat-elevation-z8 paginator"
+            [pageIndex]="pageIndex"
+            [pageSize]="pageSize"
+            [length]="length"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="pageChanged($event)">
+        </mat-paginator>
     </div>
 </div>

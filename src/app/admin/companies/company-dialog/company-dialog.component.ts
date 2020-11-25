@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Company } from 'src/app/authentication/model/company.model';
 import { CompaniesStore } from 'src/app/shared/companies/store/companies.store';
@@ -18,6 +18,8 @@ export class CompanyDialogComponent implements OnInit {
   dialogMode: 'add' | 'update';
   company: Company;
 
+  passwordMessage: string;
+
   constructor(private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CompanyDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: CompanyDialogData,
@@ -29,9 +31,13 @@ export class CompanyDialogComponent implements OnInit {
   
       const formControls = {
         name: ['', [Validators.required,
-             Validators.minLength(2),
+            Validators.minLength(2),
             Validators.maxLength(25)]],
-        email: ['', [Validators.required, Validators.email]]
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [ // Password is required only in creation mode
+            this.conditionalValidator(() => this.dialogMode === 'add', Validators.required), 
+            Validators.minLength(5), 
+            Validators.maxLength(20)]]
       }
 
       if(this.dialogMode == 'update')
@@ -40,12 +46,14 @@ export class CompanyDialogComponent implements OnInit {
       this.companyForm.patchValue({...data.company});
       this.dialogTitle = `Update ${data.company.name}`;
       this.buttonTitle = 'Update';
+      this.passwordMessage = 'Change company password';
     }
     else if(this.dialogMode == 'add')
     {
       this.companyForm = this.formBuilder.group(formControls);
       this.dialogTitle = 'Create New Category';
       this.buttonTitle = 'Create';
+      this.passwordMessage = 'Select company password';
     }
     }
 
@@ -60,7 +68,7 @@ export class CompanyDialogComponent implements OnInit {
         ...this.company,
         ...this.companyForm.value
       }
-
+      
       const companySaved$ = this.companiesStore.saveCompany(comppany);
       this.loadingService.displayLoadingUntil(companySaved$).subscribe(
         () => this.dialogRef.close(comppany));
@@ -70,6 +78,16 @@ export class CompanyDialogComponent implements OnInit {
   onClose()
   {
     this.dialogRef.close();
+  }
+
+  conditionalValidator(condition: (() => boolean), validator: ValidatorFn): ValidatorFn 
+  {
+    return (control: AbstractControl): {[key: string]: any} => {
+      if (! condition()) {
+        return null;
+      }
+      return validator(control);
+    }
   }
 
 }

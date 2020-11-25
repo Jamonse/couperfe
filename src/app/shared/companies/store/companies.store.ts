@@ -1,3 +1,4 @@
+import { IfStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
@@ -69,18 +70,38 @@ export class CompaniesStore
 
     loadCompany(companyId): Observable<Company>
     {
-        return this.companiesService.getCompany(companyId).pipe(
-            catchError(err => {
-                this.messagesService.displayErrors('Could not load company');
-                return throwError(err)
-            })
-        )
+        return this.companiesService.getCompany(companyId);
     }
 
-    loadCompanies(pageIndex = 0, pageSize = 5, sortBy: 'name' | 'email' = 'name', asc = true)
+    loadCompanies(pageIndex = 0, pageSize = 5, sortBy?: 'name' | 'email', asc?: boolean)
+    {
+        sortBy ?
+            this.loadCompaniesPagedAndSorted(pageIndex, pageSize, sortBy, asc) :
+            this.loadCompaniesPaged(pageIndex, pageSize);
+    }
+
+    private loadCompaniesPaged(pageIndex: number, pageSize: number)
     {
         const loadedCompanies$ = this.companiesService
-            .getAllCompanies(pageIndex, pageSize, sortBy, asc).pipe(
+            .getAllCompaniesPaged(pageIndex, pageSize).pipe(
+            catchError(err => {
+                this.messagesService.displayErrors('Could not load companies');
+                return throwError(err)
+            }),
+            tap((loadedCompanies: CompanyResponse) => {
+                this.companiesSubject.next(loadedCompanies.content);
+                this.count = loadedCompanies.totalElements;
+                this.pageIndex = pageIndex;
+                this.pageSize = pageSize;
+            })
+        );
+        this.loadingService.displayLoadingUntil(loadedCompanies$).subscribe();
+    }
+
+    private loadCompaniesPagedAndSorted(pageIndex: number, pageSize: number, sortBy:  'name' | 'email', asc: boolean)
+    {
+        const loadedCompanies$ = this.companiesService
+            .getAllCompaniesPagedAndSorted(pageIndex, pageSize, sortBy, asc).pipe(
             catchError(err => {
                 this.messagesService.displayErrors('Could not load companies');
                 return throwError(err)

@@ -12,6 +12,9 @@ import { SharedModule } from '../shared/shared.module';
 import { CompanyComponent } from './companies/company/company.component';
 import { CompanyDialogComponent } from './companies/company-dialog/company-dialog.component';
 import { CompanyInfoComponent } from './companies/company-info/company-info.component';
+import { CustomerComponent } from './customers/customer/customer.component';
+import { CustomerDialogComponent } from './customers/customer-dialog/customer-dialog.component';
+import { CustomerInfoComponent } from './customers/customer-info/customer-info.component';
 
 
 @NgModule({
@@ -23,7 +26,7 @@ import { CompanyInfoComponent } from './companies/company-info/company-info.comp
     CategoryDialogComponent, 
     CompanyComponent, 
     CompanyDialogComponent, 
-    CompanyInfoComponent],
+    CompanyInfoComponent, CustomerComponent, CustomerDialogComponent, CustomerInfoComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

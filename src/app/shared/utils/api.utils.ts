@@ -14,7 +14,16 @@
         COMPANY_DELETE_URL,
         COMPANY_GET_URL,
         COMPANY_GET_PAGED_URL,
+        COMPANY_GET_PAGED_SORTED_URL,
         COMPANY_GET_EXAMPLE_URL,
+        CUSTOMER_POST_URL,
+        CUSTOMER_PUT_URL,
+        CUSTOMER_GET_ALL_URL,
+        CUSTOMER_DELETE_URL,
+        CUSTOMER_GET_URL,
+        CUSTOMER_GET_PAGED_URL,
+        CUSTOMER_GET_PAGED_SORTED_URL,
+        CUSTOMER_GET_EXAMPLE_URL,
         AUTH_URL
      }
     
@@ -43,8 +52,19 @@
     const COMPANY_GET_URL = COMPANY_ADMIN_URL + 'get/';
     const COMPANY_GET_ALL_URL = COMPANY_ADMIN_URL + 'get/all';
     const COMPANY_GET_PAGED_URL = COMPANY_ADMIN_URL + 'get/paged';
+    const COMPANY_GET_PAGED_SORTED_URL = COMPANY_ADMIN_URL + 'get/pagedSorted';
     const COMPANY_GET_EXAMPLE_URL = COMPANY_ADMIN_URL + 'get/example';
     const COMPANY_DELETE_URL = COMPANY_ADMIN_URL + 'delete/';
+
+    const CUSTOMER_ADMIN_URL = ADMIN_URL + 'customer/';
+    const CUSTOMER_POST_URL = CUSTOMER_ADMIN_URL + 'add';
+    const CUSTOMER_PUT_URL = CUSTOMER_ADMIN_URL + 'update';
+    const CUSTOMER_GET_URL = CUSTOMER_ADMIN_URL + 'get/';
+    const CUSTOMER_GET_ALL_URL = CUSTOMER_ADMIN_URL + 'get/all';
+    const CUSTOMER_GET_PAGED_URL = CUSTOMER_ADMIN_URL + 'get/paged';
+    const CUSTOMER_GET_PAGED_SORTED_URL = CUSTOMER_ADMIN_URL + 'get/pagedSorted';
+    const CUSTOMER_GET_EXAMPLE_URL = CUSTOMER_ADMIN_URL + 'get/example';
+    const CUSTOMER_DELETE_URL = CUSTOMER_ADMIN_URL + 'delete/';
 
     const AUTH_URL = API_URL + 'authenticated';
 

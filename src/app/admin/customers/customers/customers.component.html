@@ -1,1 +1,70 @@
-<p>customers works!</p>
+<div class="customers-container">
+    <div class="search-container">
+        <!-- Search bar + add button -->
+        <mat-form-field style="width: 100%;" [formGroup]="searchInput">
+            <mat-label>Search customer</mat-label>
+            <input matInput 
+                type="text" 
+                formControlName="searchInput"
+                [matAutocomplete]="customersAutoComplete">
+        </mat-form-field>
+        <button mat-mini-fab
+            color="primary" 
+            style="margin-left: 2rem;"
+            (click)="addCustomer()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <!-- Search bar autocomplete -->
+        <mat-autocomplete #customersAutoComplete="matAutocomplete">
+            <mat-option 
+                *ngFor="let searchedCustomer of searchedCustomers"
+                [routerLink]="['info/', searchedCustomer.id]">
+                <span 
+                    [innerHTML]="searchedCustomer.name | highlightSearch: searchText">
+                </span>
+            </mat-option>
+        </mat-autocomplete>
+    </div>
+    <div class="sort-container">
+        <!-- Sort options and sort direction -->
+        <mat-form-field style="margin-right: 2rem;">
+            <mat-label>Sort by</mat-label>
+            <mat-select 
+                [(ngModel)]="sortBy" 
+                (selectionChange)="loadCustomers()"
+                [disabled]="(customers$ | async)?.length == 0">
+                <mat-option 
+                    *ngFor="let sortType of sortByOptions" [value]="sortType">
+                    {{ sortType }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-mini-fab 
+            color="white"
+            (click)="sortDirection = !sortDirection; loadCustomers()"
+            [disabled]="!sortBy">
+            <mat-icon>{{sortDirection ? UP_ARROW : DOWN_ARROW}}</mat-icon>
+        </button>
+    </div>
+    <!-- Companies cards diplay + paginator -->
+    <div class="customers-grid">
+        <ng-template *ngIf="(customers$ | async)?.length > 0;
+            then customersFound
+            else noCustomersFound">
+        </ng-template>
+        <ng-template #customersFound>
+            
+        </ng-template>
+        <ng-template #noCustomersFound>
+            No Customers found.
+        </ng-template>
+        <mat-paginator
+            [disabled]="(customers$ | async)?.length == 0"
+            class="mat-elevation-z8 paginator"
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]=""
+            [pageSize]=""
+            [length]="">
+        </mat-paginator>
+    </div>   
+</div>

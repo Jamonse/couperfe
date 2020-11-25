@@ -16,8 +16,12 @@
         </button>
         <!-- Search bar autocomplete -->
         <mat-autocomplete #companiesAutoComplete="matAutocomplete">
-            <mat-option *ngFor="let searchedCompany of searchedCompanies">
-                <span [innerHTML]="searchedCompany.name | highlightSearch: searchText"></span>
+            <mat-option 
+                *ngFor="let searchedCompany of searchedCompanies"
+                [routerLink]="['info/', searchedCompany.id]">
+                <span 
+                    [innerHTML]="searchedCompany.name | highlightSearch: searchText">
+                </span>
             </mat-option>
         </mat-autocomplete>
     </div>
@@ -25,10 +29,13 @@
         <!-- Sort options and sort direction -->
         <mat-form-field style="margin-right: 2rem;">
             <mat-label>Sort by</mat-label>
-            <mat-select [(ngModel)]="sortBy" (selectionChange)="loadCompanies()">
+            <mat-select 
+                [(ngModel)]="sortBy" 
+                (selectionChange)="loadCompanies()"
+                [disabled]="(companies$ | async)?.length == 0">
                 <mat-option 
-                    *ngFor="let orderType of sortByOptions" [value]="orderType">
-                    {{orderType}}
+                    *ngFor="let sortType of sortByOptions" [value]="sortType">
+                    {{ sortType }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -41,18 +48,28 @@
     </div>
     <!-- Companies cards diplay + paginator -->
     <div class="companies-grid">
-        <app-company 
+        <ng-template *ngIf="(companies$ | async)?.length > 0;
+            then companiesFound
+            else noCompaniesFound">
+        </ng-template>
+        <ng-template #companiesFound>
+            <app-company 
             *ngFor="let comapny of (companies$ | async)"
             [companyToDisplay]="comapny"
             (updateCompany)="updateCompany($event)"
             (deleteCompany)="deleteCompany($event)">
-        </app-company>
+            </app-company>
+        </ng-template>
+        <ng-template #noCompaniesFound>
+            No Companies found.
+        </ng-template>
         <mat-paginator
+            [disabled]="(companies$ | async)?.length == 0"
             class="mat-elevation-z8 paginator"
             [pageSizeOptions]="pageSizeOptions"
             [pageIndex]="companiesStroe.pageIndex"
             [pageSize]="companiesStroe.pageSize"
             [length]="companiesStroe.count">
         </mat-paginator>
-    </div>
+    </div>   
 </div>

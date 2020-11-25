@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { Company } from 'src/app/authentication/model/company.model';
@@ -34,7 +33,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
   sortBy: 'name' | 'email';
   sortDirection: boolean;
   // Sort options and directions
-  sortByOptions: string[] = ['name','email'];
+  sortByOptions: string[] = ['Name','Email'];
   pageSizeOptions: number[] = [5, 7, 10];
   // Search bar and autocomplete
   searchInput: FormGroup;
@@ -79,11 +78,15 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
 
   loadCompanies()
   { // Load companies with current pagination properties
-    this.companiesStroe
+    this.sortBy ? 
+    this.companiesStroe // Sorting was selected
         .loadCompanies(this.paginator.pageIndex, 
           this.paginator.pageSize,
           this.sortBy,
-          this.sortDirection);
+          this.sortDirection) :
+    this.companiesStroe // Sorting not selected
+        .loadCompanies(this.paginator.pageIndex, 
+          this.paginator.pageSize)
   }
 
   loadSearchedCompanies()

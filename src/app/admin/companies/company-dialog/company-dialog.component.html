@@ -15,7 +15,7 @@
             Company name cannot exceed <strong>25 letters</strong>
         </mat-error>
     </mat-form-field>
-    <mat-form-field style="margin-bottom: 5rem;">
+    <mat-form-field>
         <mat-label>Select company email</mat-label>
         <input matInput type="text" formControlName="email">
         <mat-error *ngIf="companyForm.get('email').hasError('required')">
@@ -23,6 +23,19 @@
         </mat-error>
         <mat-error *ngIf="companyForm.get('email').hasError('email')">
             Please provide a valid email address <strong>e.g. e@e.com</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field style="margin-bottom: 5rem;">
+        <mat-label>{{ passwordMessage }}</mat-label>
+        <input matInput type="password" formControlName="password">
+        <mat-error *ngIf="companyForm.get('password').hasError('required')">
+            Company password is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="companyForm.get('password').hasError('minlength')">
+            Company password must consist at least <strong>five letters</strong>
+        </mat-error>
+        <mat-error *ngIf="companyForm.get('password').hasError('maxlength')">
+            Company password cannot exceed <strong>25 letters</strong>
         </mat-error>
     </mat-form-field>
     <div class="buttons-container">

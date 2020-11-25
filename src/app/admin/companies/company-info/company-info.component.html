@@ -1,11 +1,24 @@
 <div *ngIf="companyToDiaply" class="company-info-container">
+    <button mat-mini-fab color="white" 
+        style="align-self: flex-start;
+            margin-left: 5rem;"
+        [routerLink]="COMPANIES_URL">
+        <mat-icon>
+            keyboard_arrow_left
+        </mat-icon>
+    </button>
     <div class="company-info">
         <div>
-            <h1>{{ companyToDiaply.name }}</h1>
+            <h1 style="font-size: 3rem; margin-bottom: 2rem;">{{ companyToDiaply.name }}</h1>
             <h2>{{ companyToDiaply.email }}</h2>
         </div>
-        <mat-icon>groups</mat-icon>
     </div>
-    <button mat-raised-button>Update</button>
-    <button mat-raised-button>Delete</button>
+    <button mat-raised-button
+        color="accent"
+        (click)="updateCompany()">Update
+    </button>
+    <button mat-raised-button
+        color="warn"
+        (click)="deleteCompany()">Delete
+    </button>
 </div>
