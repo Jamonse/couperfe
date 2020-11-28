@@ -1,4 +1,5 @@
-import { validateBasis } from '@angular/flex-layout';
+
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export interface CommonListItem
 {
@@ -10,3 +11,13 @@ export interface MenuOption extends CommonListItem
 {
   path: string;
 }
+
+export function conditionalValidator(condition: (() => boolean), validator: ValidatorFn): ValidatorFn 
+  {
+    return (control: AbstractControl): {[key: string]: any} => {
+      if (! condition()) {
+        return null;
+      }
+      return validator(control);
+    }
+  }

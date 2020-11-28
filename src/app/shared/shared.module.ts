@@ -12,12 +12,23 @@ import { HighlightSearchPipe } from './pipe/highlight-search.pipe';
 
 
 @NgModule({
-  declarations: [ValuesPipe, LoadingComponent, MessagesComponent, ConfirmationDialogComponent, RemoveFocusDirective, HighlightSearchPipe],
+  declarations: [
+    ValuesPipe, 
+    LoadingComponent, 
+    MessagesComponent, 
+    ConfirmationDialogComponent, 
+    RemoveFocusDirective, 
+    HighlightSearchPipe],
   imports: [
     CommonModule,
     MaterialModule,
     HttpClientModule
   ],
-  exports: [ValuesPipe, LoadingComponent, MessagesComponent, RemoveFocusDirective, HighlightSearchPipe]
+  exports: [
+    ValuesPipe, 
+    LoadingComponent, 
+    MessagesComponent, 
+    RemoveFocusDirective, 
+    HighlightSearchPipe]
 })
 export class SharedModule { }

@@ -1,1 +1,35 @@
-<p>customer works!</p>
+<div class="mat-elevation-z2 customer">
+    <div class="customer-details">
+        <h1 class="customer-details">
+            {{ customerToDisplay.name }}
+        </h1>
+        <h2 class="customer-details">
+            {{ customerToDisplay.email }}
+        </h2>
+    </div>
+    <div class="buttons-container">
+        <button mat-mini-fab
+            class="customer-button" 
+            color="primary"
+            [routerLink]="['info/', customerToDisplay.id]">
+            <mat-icon>
+                account_circle
+            </mat-icon>
+        </button>
+        <button mat-mini-fab
+            class="customer-button"
+            (click)="update()">
+            <mat-icon style="color: white;">
+                edit
+            </mat-icon>
+        </button>
+        <button mat-mini-fab
+            class="customer-button"
+            color="warn"
+            (click)="delete()">
+            <mat-icon>
+                delete
+            </mat-icon>
+        </button>
+    </div>
+</div>

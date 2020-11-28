@@ -20,7 +20,7 @@
                 *ngFor="let searchedCustomer of searchedCustomers"
                 [routerLink]="['info/', searchedCustomer.id]">
                 <span 
-                    [innerHTML]="searchedCustomer.name | highlightSearch: searchText">
+                    [innerHTML]="customerResultName(searchedCustomer) | highlightSearch: searchText">
                 </span>
             </mat-option>
         </mat-autocomplete>
@@ -46,14 +46,19 @@
             <mat-icon>{{sortDirection ? UP_ARROW : DOWN_ARROW}}</mat-icon>
         </button>
     </div>
-    <!-- Companies cards diplay + paginator -->
+    <!-- Customers cards diplay + paginator -->
     <div class="customers-grid">
         <ng-template *ngIf="(customers$ | async)?.length > 0;
             then customersFound
             else noCustomersFound">
         </ng-template>
         <ng-template #customersFound>
-            
+            <app-customer
+                *ngFor="let customer of (customers$ | async)"
+                [customerToDisplay]="customer"
+                (updateCustomer)="updateCustomer($event)"
+                (deleteCustomer)="deleteCustomer($event)">
+            </app-customer>
         </ng-template>
         <ng-template #noCustomersFound>
             No Customers found.
@@ -62,9 +67,9 @@
             [disabled]="(customers$ | async)?.length == 0"
             class="mat-elevation-z8 paginator"
             [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]=""
-            [pageSize]=""
-            [length]="">
+            [pageIndex]="customersStroe.pageIndex"
+            [pageSize]="customersStroe.pageSize"
+            [length]="customersStroe.count">
         </mat-paginator>
     </div>   
 </div>

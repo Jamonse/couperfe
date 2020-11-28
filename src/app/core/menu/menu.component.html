@@ -1,14 +1,44 @@
 
 <!-- Normal Size Window -->
 <mat-nav-list style="min-width: 10rem;">
-    <a mat-list-item style="height: 10rem;"
-        *ngFor="let option of menuOptions" 
+    <div 
+        *ngIf="windowService.isWindowSmall; then smallWindow">
+    </div>
+    <ng-template #smallWindow>
+        <a mat-list-item style="height: 7rem;"
+        [routerLinkActiveOptions]="{exact: true}"
+        [routerLinkActive]="'active'"
+        *ngFor="let option of navBarOptions" 
         [routerLink]="option.path"
         (click)="menuButtonClicked()">
         <span class="side-menu-option">
             <mat-icon style="transform: scale(1.5); margin-bottom: 0.5rem;">
                 {{ option.icon }}
             </mat-icon>
+            {{ option.message }}
+        </span>
+        <mat-divider></mat-divider>
+        </a>
+    </ng-template>
+    <a mat-list-item style="height: 7rem;"
+        [routerLinkActive]="'active'"
+        *ngFor="let option of menuOptions" 
+        [routerLink]="option.path"
+        (click)="menuButtonClicked()">
+        <span class="side-menu-option">
+            <span 
+                *ngIf="option.message !== 'My Coupons';
+                    then icon
+                    else customIcon">
+            </span>
+            <ng-template #icon>
+                <mat-icon style="transform: scale(1.5); margin-bottom: 0.5rem;">
+                    {{ option.icon }}
+                </mat-icon>
+            </ng-template>
+            <ng-template #customIcon>
+                <img class="logo" src="./assets/logo-mini.svg">
+            </ng-template>
             {{ option.message }}
         </span>
         <mat-divider></mat-divider>

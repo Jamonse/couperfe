@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
-import { ContentComponent } from './content/content.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FooterComponent } from './footer/footer.component';
 import { LayoutComponent } from './layout/layout.component';
@@ -19,7 +18,6 @@ import { CoreRoutingModule } from './core-routing.module';
   declarations: [
     HeaderComponent,
     MenuComponent,
-    ContentComponent,
     FooterComponent,
     LayoutComponent,
     HomeComponent,

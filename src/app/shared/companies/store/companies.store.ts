@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
 import { Company } from 'src/app/authentication/model/company.model';
-import { CompanyResponse } from 'src/app/authentication/model/company.response';
+import { CompanyResponse } from 'src/app/shared/model/company.response';
 import { LoadingService } from '../../loading/service/loading.service';
 import { MessagesService } from '../../messages/service/messages.service';
 import { CompaniesService } from '../service/companies.service';
@@ -126,7 +126,7 @@ export class CompaniesStore
                 catchError(err => {
                     return throwError(err)
                 })
-            )
+            );
     }
 
     deleteCompany(companyId: number): Observable<any>
@@ -135,7 +135,7 @@ export class CompaniesStore
             catchError(err => {
                 return throwError(err)
             })
-        )
+        );
     }
 
 }

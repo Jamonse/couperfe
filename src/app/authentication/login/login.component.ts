@@ -46,13 +46,13 @@ export class LoginComponent implements OnInit {
     { 
       const formContent = this.loginForm.value;
       let clientType: ClientType;
-
+      
       switch(formContent.clientType)
       {
         case 'Admin':
           clientType = ClientType.ADMIN;
           break;
-        case 'Comapny':
+        case 'Company':
           clientType = ClientType.COMPANY;
           break;
         case 'Customer':

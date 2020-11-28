@@ -1,0 +1,52 @@
+<div class="coupons-container">
+    <div class="search-container">
+        <!-- Search bar + add button -->
+        <mat-form-field style="width: 100%;">
+            <mat-label>Search coupon</mat-label>
+            <input matInput 
+                type="text"
+                [matAutocomplete]="companiesAutoComplete">
+        </mat-form-field>
+        <button mat-mini-fab
+            color="primary" 
+            style="margin-left: 2rem;">
+            <mat-icon>add</mat-icon>
+        </button>
+        <!-- Search bar autocomplete -->
+        <mat-autocomplete #companiesAutoComplete="matAutocomplete">
+            <mat-option>
+            </mat-option>
+        </mat-autocomplete>
+    </div>
+    <div class="sort-container">
+        <!-- Sort options and sort direction -->
+        <mat-form-field style="margin-right: 2rem;">
+            <mat-label>Sort by</mat-label>
+            <mat-select>
+                <mat-option>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-mini-fab 
+            color="white">
+            <mat-icon></mat-icon>
+        </button>
+    </div>
+    <!-- Coupons cards diplay + paginator -->
+    <div class="coupons-grid">
+        <div style="width: 100px;" class="mat-elevation-z5">
+            
+        </div>
+        <ng-template>
+        </ng-template>
+        <ng-template #companiesFound>
+            
+        </ng-template>
+        <ng-template #noCompaniesFound>
+            No Coupons found.
+        </ng-template>
+        <mat-paginator>
+        </mat-paginator>
+    </div>   
+</div>
+

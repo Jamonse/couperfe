@@ -11,7 +11,8 @@
 .company-details {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: pre-wrap;
+    max-width: 15rem;
 }
 
 .buttons-container {

@@ -1,0 +1,25 @@
+.customer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    margin: 1rem;
+}
+
+.customer-details {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    max-width: 15rem;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.customer-button {
+    margin: 0.5rem;
+}

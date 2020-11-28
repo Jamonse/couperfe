@@ -9,6 +9,7 @@ import { Company } from 'src/app/authentication/model/company.model';
 import { CompaniesStore } from 'src/app/shared/companies/store/companies.store';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
+import { CompanySearchResult } from 'src/app/shared/model/company.search-result';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
 import { CompanyDialogComponent } from '../company-dialog/company-dialog.component';
 
@@ -38,7 +39,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
   // Search bar and autocomplete
   searchInput: FormGroup;
   searchText: string;
-  searchedCompanies: Company[];
+  searchedCompanies: CompanySearchResult[];
 
   constructor(
     public companiesStroe: CompaniesStore,
@@ -86,7 +87,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
           this.sortDirection) :
     this.companiesStroe // Sorting not selected
         .loadCompanies(this.paginator.pageIndex, 
-          this.paginator.pageSize)
+          this.paginator.pageSize);
   }
 
   loadSearchedCompanies()

@@ -1,13 +1,14 @@
 <mat-sidenav-container>
     <!-- Side Nav is used for small window mode -->
     <mat-sidenav 
-        [opened]="opened" 
+        [opened]="opened && windowService.isWindowSmall" 
         (opened)="opened = true" 
         (closed)="opened = false">
         <app-menu (menuButtonClick)="opened = !opened"></app-menu>
     </mat-sidenav>
     <section>
-        <header [ngClass]="{'small-window-header': windowService.isWindowSmall}">
+        <header 
+            [ngClass]="{'small-window-header mat-elevation-z5': windowService.isWindowSmall}">
             <!-- Event for the side nav will be emitted from the header
                  whenever the side nav button has been clicked-->
             <app-header (sideMenuButtonCliecked)="opened = !opened"></app-header>
@@ -25,5 +26,3 @@
         </footer>
     </section>
 </mat-sidenav-container>
-
-

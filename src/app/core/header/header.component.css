@@ -1,8 +1,8 @@
 .logo {
     height: auto;
     width: auto;
-    max-height: 72px;
-    max-width: 250px;
+    max-height: 52px;
+    max-width: 2200px;
 }
 
 .buttons-container {
@@ -26,6 +26,16 @@
 .small-window-header {
     display: flex; 
     justify-content: space-between;
-    position: fixed;
+    position: sticky;
     top: 0;
+}
+
+.active {
+    background-color: #8FAADC;
+    color: #EDEDED;
+}
+
+.active:hover {
+    background-color: #8FAADC;
+    color: #EDEDED;
 }

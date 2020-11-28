@@ -1,1 +1,24 @@
-<p>customer-info works!</p>
+<div *ngIf="customerToDisplay" class="customer-info-container">
+    <button mat-mini-fab color="white" 
+        style="align-self: flex-start;
+            margin-left: 5rem;"
+        [routerLink]="CUSTOMERS_URL">
+        <mat-icon>
+            keyboard_arrow_left
+        </mat-icon>
+    </button>
+    <div class="customer-info">
+        <div>
+            <h1 style="font-size: 3rem; margin-bottom: 2rem;">{{ customerToDisplay.name }}</h1>
+            <h2>{{ customerToDisplay.email }}</h2>
+        </div>
+    </div>
+    <button mat-raised-button
+        color="accent"
+        (click)="updateCustomer()">Update
+    </button>
+    <button mat-raised-button
+        color="warn"
+        (click)="deleteCustomer()">Delete
+    </button>
+</div>

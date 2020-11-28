@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/authentication/service/authentication.service';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
 import { MenuOption } from 'src/app/shared/utils/common';
+import { MenuOptions } from '../utils/options.utils';
 
 @Component({
   selector: 'app-header',
@@ -14,11 +15,7 @@ export class HeaderComponent implements OnInit {
   @Output()
   sideMenuButtonCliecked: EventEmitter<any> = new EventEmitter();
 
-  navBarOptions: MenuOption[] = [
-    {message: 'Home', path: '/home', icon: 'home'},
-    {message: 'About', path: '/about', icon: 'info'},
-    {message: 'Terms of Use', path: '/terms', icon: 'gavel'}
-  ]
+  navBarOptions: MenuOption[] = MenuOptions.navBarOptions;
 
   constructor(
     private authService: AuthenticationService, 

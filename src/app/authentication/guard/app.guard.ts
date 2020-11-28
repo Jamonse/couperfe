@@ -19,7 +19,6 @@ export class AppGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
   {
     return this.authService.isLoggedIn$.pipe(map(loggedIn => {
-
       if(!loggedIn)
       { // User is not logged in (as per the authentication service)
         this.authService.isLoggedOut$.pipe(tap(loggedOut => {
@@ -33,7 +32,7 @@ export class AppGuard implements CanActivate {
         const authenticated$ = this.authService.isAuthenticated().pipe(
           tap(authenticated => {
             // Checks wether the user is still logged in (session is still alive)
-            if(!authenticated)
+            if(!authenticated.authenticated)
             {
               this.navigateToLoginPage();
               return false;

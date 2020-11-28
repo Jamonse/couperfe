@@ -1,9 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { tap } from 'rxjs/operators';
-import { Company } from 'src/app/authentication/model/company.model';
-import { Customer } from 'src/app/authentication/model/customer.model';
 import { AuthenticationService } from 'src/app/authentication/service/authentication.service';
+import { WindowSizeService } from 'src/app/shared/service/window-size.service';
 import { MenuOption } from 'src/app/shared/utils/common';
+import { ClientType } from '../model/client-type';
+import { MenuOptions } from '../utils/options.utils';
 
 @Component({
   selector: 'app-menu',
@@ -13,7 +16,7 @@ import { MenuOption } from 'src/app/shared/utils/common';
 export class MenuComponent implements OnInit {
 
   menuOptions: MenuOption[] = [];
-  myCoupons: MenuOption = {path: 'coupons', message: 'My Coupons', icon: 'logo.svg'}
+  navBarOptions: MenuOption[] = MenuOptions.navBarOptions;
 
   @Output()
   menuButtonClick: EventEmitter<any> = new EventEmitter();
@@ -25,33 +28,41 @@ export class MenuComponent implements OnInit {
   ]
 
   companyOptions: MenuOption[] = [
-    {path: 'profile', message: 'My Profile', icon: 'account_circle'},
-    
+    {path: '/company/profile', message: 'My Profile', icon: 'account_circle'},
+    {path: '/company/my-coupons', message: 'My Coupons', icon: 'logo.svg'}
   ]
 
   customerOptions: MenuOption[] = [
-    {path: 'profile', message: 'My Profile', icon: 'account_circle'},
-    {path: 'buy', message: 'Buy Coupons', icon: 'credit_card'}
+    {path: '/customer/profile', message: 'My Profile', icon: 'account_circle'},
+    {path: '/customer/my-coupons', message: 'My Coupons', icon: 'logo.svg'},
+    {path: '/customer/buy', message: 'Buy Coupons', icon: 'credit_card'}
   ]
 
   constructor(
-    private authService: AuthenticationService) 
+    private authService: AuthenticationService,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer,
+    public windowService: WindowSizeService) 
   { 
-    this.authService.user$.pipe(tap(currentUser => {
-      if(currentUser)
+    iconRegistry.addSvgIcon('coupon',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/logo-mini.svg'));
+    this.authService.clientType$.pipe(tap(clientType => {
+      switch(clientType)
       {
-        if(currentUser instanceof Company)
-        {
-          this.menuOptions = this.companyOptions;
-        }
-        else if(currentUser instanceof Customer)
-        {
-          this.menuOptions = this.customerOptions;
-        }
+        case ClientType.ADMIN:
+        this.menuOptions = this.adminOptions;
+        break;
+        case ClientType.COMPANY:
+        this.menuOptions = this.companyOptions;
+        break;
+        case ClientType.CUSTOMER:
+        this.menuOptions = this.customerOptions;
+        break;
       }
-      this.menuOptions = this.adminOptions;
     }))
     .subscribe()
+
+    
   }
 
   ngOnInit(): void {

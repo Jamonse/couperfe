@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Company } from 'src/app/authentication/model/company.model';
+import { CompanySearchResult } from '../../model/company.search-result';
 import { 
   COMPANY_DELETE_URL, 
   COMPANY_GET_ALL_URL, 
@@ -58,12 +59,12 @@ export class CompaniesService {
     return this.httpClient.get<Company[]>(COMPANY_GET_PAGED_SORTED_URL, {params: requestParams});
   }
 
-  getCompaniesByNameExample(resultsCount: number, nameExample: string): Observable<Company[]>
+  getCompaniesByNameExample(resultsCount: number, nameExample: string): Observable<CompanySearchResult[]>
   { // Get companies based on name example
     const requestParams = new HttpParams()
       .set('resultsCount', resultsCount.toString())
       .set('nameExample', nameExample);
-    return this.httpClient.get<Company[]>(COMPANY_GET_EXAMPLE_URL, {params: requestParams});
+    return this.httpClient.get<CompanySearchResult[]>(COMPANY_GET_EXAMPLE_URL, {params: requestParams});
   }
 
   deleteCompany(companyId: number): Observable<any>

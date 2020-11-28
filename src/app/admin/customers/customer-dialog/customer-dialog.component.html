@@ -1,1 +1,66 @@
-<p>customer-dialog works!</p>
+<form [formGroup]="customerForm" 
+    (ngSubmit)="onSubmit()"
+    class="customer-form">
+    <h1>{{ dialogTitle }}</h1>
+    <mat-form-field>
+        <mat-label>Select customer first name</mat-label>
+        <input matInput type="text" formControlName="firstName">
+        <mat-error *ngIf="customerForm.get('firstName').hasError('required')">
+            Customer first name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="customerForm.get('firstName').hasError('minlength')">
+            Customer first name must consist at least <strong>two letters</strong>
+        </mat-error>
+        <mat-error *ngIf="customerForm.get('firstName').hasError('maxlength')">
+            Customer first name cannot exceed <strong>25 letters</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Select customer first name</mat-label>
+        <input matInput type="text" formControlName="lastName">
+        <mat-error *ngIf="customerForm.get('lastName').hasError('required')">
+            Customer last name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="customerForm.get('lastName').hasError('minlength')">
+            Customer last name must consist at least <strong>two letters</strong>
+        </mat-error>
+        <mat-error *ngIf="customerForm.get('lastName').hasError('maxlength')">
+            Customer last name cannot exceed <strong>25 letters</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Select customer email</mat-label>
+        <input matInput type="text" formControlName="email">
+        <mat-error *ngIf="customerForm.get('email').hasError('required')">
+            Customer email is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="customerForm.get('email').hasError('email')">
+            Please provide a valid email address <strong>e.g. e@e.com</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field style="margin-bottom: 5rem;">
+        <mat-label>{{ passwordMessage }}</mat-label>
+        <input matInput type="password" formControlName="password">
+        <mat-error *ngIf="customerForm.get('password').hasError('required')">
+            Customer password is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="customerForm.get('password').hasError('minlength')">
+            Customer password must consist at least <strong>five letters</strong>
+        </mat-error>
+        <mat-error *ngIf="customerForm.get('password').hasError('maxlength')">
+            Customer password cannot exceed <strong>25 letters</strong>
+        </mat-error>
+    </mat-form-field>
+    <div class="buttons-container">
+        <button mat-raised-button 
+        type="button"
+        (click)="onClose()"
+        class="dialog-button">
+        Close
+    </button>
+    <button mat-raised-button color="primary"
+        class="dialog-button">
+        {{ buttonTitle }}
+    </button>
+    </div>
+</form>

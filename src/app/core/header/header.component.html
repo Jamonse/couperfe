@@ -4,8 +4,10 @@
     <img class="logo" src="./assets/logo.png">
     <div class="buttons-container">
         <div>
-            <button class="link" mat-stroked-button *ngFor="let option of navBarOptions"
-                [routerLink]="option.path">
+            <button class="link" mat-stroked-button 
+                *ngFor="let option of navBarOptions"
+                [routerLink]="option.path"
+                routerLinkActive="active">
                 <mat-icon>{{ option.icon }} </mat-icon>
                 {{ option.message }}
             </button>
