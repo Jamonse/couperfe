@@ -2,10 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/core/model/category.model';
+import { ClientType } from 'src/app/core/model/client-type';
 import { 
   CATEGORY_POST_URL,
   CATEGORY_PUT_URL,
-  CATEGORY_GET_ALL_URL,
+  ADMIN_CATEGORY_GET_ALL_URL,
+  COMPANY_CATEGORY_GET_ALL_URL,
+  CUSTOMER_CATEGORY_GET_ALL_URL,
   CATEGORY_DELETE_URL
 } from '../../utils/api.utils';
 
@@ -26,9 +29,17 @@ export class CategoriesService {
     return this.httpClient.put(CATEGORY_PUT_URL, category);
   }
 
-  getAllCategories(): Observable<Category[]>
+  getAllCategories(clientType: ClientType): Observable<Category[]>
   {
-    return this.httpClient.get<Category[]>(CATEGORY_GET_ALL_URL);
+    switch(clientType)
+    {
+      case ClientType.ADMIN:
+        return this.httpClient.get<Category[]>(ADMIN_CATEGORY_GET_ALL_URL);
+      case ClientType.COMPANY:
+        return this.httpClient.get<Category[]>(COMPANY_CATEGORY_GET_ALL_URL);
+      case ClientType.CUSTOMER:
+        return this.httpClient.get<Category[]>(CUSTOMER_CATEGORY_GET_ALL_URL);
+    }
   }
 
   deleteCategory(categoryId: number): Observable<any>

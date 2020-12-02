@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
 import { Company } from 'src/app/authentication/model/company.model';
-import { CompanyResponse } from 'src/app/shared/model/company.response';
+import { CompanyResponse } from 'src/app/shared/companies/model/company.response';
 import { LoadingService } from '../../loading/service/loading.service';
 import { MessagesService } from '../../messages/service/messages.service';
+import { CompanySearchResult } from '../model/company.search-result';
 import { CompaniesService } from '../service/companies.service';
 
 @Injectable({
@@ -48,7 +49,7 @@ export class CompaniesStore
             catchError(err => {
                 if(err.status === 406)
                 {
-                    this.messagesService.displayErrors(err.error.message)
+                    this.messagesService.displayErrors(err.error.message);
                 }
                 return throwError(err);
             })
@@ -61,16 +62,24 @@ export class CompaniesStore
             catchError(err => {
                 if(err.status === 406)
                 {
-                    this.messagesService.displayErrors(err.error.message)
+                    this.messagesService.displayErrors(err.error.message);
                 }
                 return throwError(err);
             })
-        )
+        );
     }
 
     loadCompany(companyId): Observable<Company>
     {
-        return this.companiesService.getCompany(companyId);
+        return this.companiesService.getCompany(companyId).pipe(
+            catchError(err => {
+                if(err.status === 404)
+                {
+                    this.messagesService.displayErrors(err.error.message);
+                }
+                return throwError(err);
+            })
+        );
     }
 
     loadCompanies(pageIndex = 0, pageSize = 5, sortBy?: 'name' | 'email', asc?: boolean)
@@ -86,7 +95,7 @@ export class CompaniesStore
             .getAllCompaniesPaged(pageIndex, pageSize).pipe(
             catchError(err => {
                 this.messagesService.displayErrors('Could not load companies');
-                return throwError(err)
+                return throwError(err);
             }),
             tap((loadedCompanies: CompanyResponse) => {
                 this.companiesSubject.next(loadedCompanies.content);
@@ -118,7 +127,7 @@ export class CompaniesStore
         this.loadingService.displayLoadingUntil(loadedCompanies$).subscribe();
     }
 
-    loadSearchedCompanies(resultsCount: number = 5, nameExample: string)
+    loadSearchedCompanies(resultsCount: number = 5, nameExample: string): Observable<CompanySearchResult[]>
     {
         return this.companiesService.getCompaniesByNameExample(
             resultsCount, nameExample).pipe(

@@ -29,7 +29,8 @@
         <ng-template #noCategoriesFound>
             No Categories found.
         </ng-template>
-        <mat-paginator 
+    </div>
+    <mat-paginator style="width: 50%;"
             [disabled]="(categories$ | async)?.length == 0"
             class="mat-elevation-z8 paginator"
             [pageIndex]="pageIndex"
@@ -38,5 +39,4 @@
             [pageSizeOptions]="pageSizeOptions"
             (page)="pageChanged($event)">
         </mat-paginator>
-    </div>
 </div>

@@ -1,4 +1,4 @@
-import { Company } from '../../authentication/model/company.model';
+import { Company } from '../../../authentication/model/company.model';
 
 export interface CompanyResponse
 {

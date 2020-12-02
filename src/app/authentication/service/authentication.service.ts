@@ -9,8 +9,6 @@ import {
   ADMIN_LOGIN_URL,
   COMPANY_LOGIN_URL,
   CUSTOMER_LOGIN_URL,
-  COMPANY_LOAD_URL,
-  CUSTOMER_LOAD_URL,
   AUTH_URL,
   API_URL
  } from 'src/app/shared/utils/api.utils';
@@ -83,7 +81,11 @@ export class AuthenticationService {
           this.loginSubject.next(authenticated);
           this.logoutSubject.next(!authenticated);
           this.clientTypeSubject.next(clientType);
-          this.loadUser(clientType);
+          if(authenticated)
+          {
+            clientType != ClientType.ADMIN ?
+              this.loadUser(clientType) : null;
+          }
         }));
   }
 
@@ -93,7 +95,7 @@ export class AuthenticationService {
     return this.httpClient.get<AuthenticationResponse>(AUTH_URL).pipe(
       tap(authenticationReponse => {
         let clientType: ClientType;
-
+        
         switch(authenticationReponse.clientType)
         {
           case 'Admin':
@@ -108,12 +110,22 @@ export class AuthenticationService {
             clientType = ClientType.CUSTOMER;
             break;
         }
-        if(clientType)
-        {
-          this.clientTypeSubject.next(clientType);
-        }
+        this.clientTypeSubject.next(clientType);
       })
     );
+  }
+
+  isAllowed(clientType: ClientType): Observable<boolean>
+  {
+    if(this.clientTypeSubject.getValue() == clientType)
+    {
+      return of(true);
+    }
+    return this.isAuthenticated().pipe(map(
+      authResponse => {
+        return authResponse.clientType == clientType
+      }
+    ))
   }
 
   loadUser(clientType: ClientType)
@@ -125,6 +137,11 @@ export class AuthenticationService {
       );
 
     this.loadingService.displayLoadingUntil(loadedUser$).subscribe();
+  }
+
+  clientType(): ClientType
+  {
+    return this.clientTypeSubject.getValue();
   }
 
   logout()

@@ -20,6 +20,7 @@ export class CompanyDialogComponent implements OnInit {
   company: Company;
 
   passwordMessage: string;
+  hidePassword: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -66,14 +67,14 @@ export class CompanyDialogComponent implements OnInit {
   {
     if(this.companyForm.valid)
     {
-      const comppany = {
+      const company = {
         ...this.company,
         ...this.companyForm.value
       }
       
-      const companySaved$ = this.companiesStore.saveCompany(comppany);
+      const companySaved$ = this.companiesStore.saveCompany(company);
       this.loadingService.displayLoadingUntil(companySaved$).subscribe(
-        () => this.dialogRef.close(comppany));
+        () => this.dialogRef.close(company));
     }
   }
 

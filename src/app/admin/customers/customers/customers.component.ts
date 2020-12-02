@@ -7,9 +7,9 @@ import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, switchMap, tap } from 'rxjs/operators';
 import { Customer } from 'src/app/authentication/model/customer.model';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { CustomerSearchResult } from 'src/app/shared/customers/model/customer.search-result';
 import { CustomersStore } from 'src/app/shared/customers/store/customers.stroe';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
-import { CustomerSearchResult } from 'src/app/shared/model/customer.search-result';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
 import { CustomerDialogComponent } from '../customer-dialog/customer-dialog.component';
 
@@ -111,7 +111,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
     }
 
     let dialogRef = this.dialog.open(CustomerDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(newCustomer => {
+    dialogRef.afterClosed().subscribe((newCustomer: Customer) => {
       if(newCustomer)
       {
         this.loadCustomers();
@@ -129,7 +129,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
     }
 
     let dialogRef = this.dialog.open(CustomerDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(updatedCustomer => {
+    dialogRef.afterClosed().subscribe((updatedCustomer: Customer) => {
       if(updatedCustomer)
       {
         this.loadCustomers();

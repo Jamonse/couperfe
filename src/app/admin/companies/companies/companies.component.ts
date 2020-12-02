@@ -6,10 +6,10 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { Company } from 'src/app/authentication/model/company.model';
+import { CompanySearchResult } from 'src/app/shared/companies/model/company.search-result';
 import { CompaniesStore } from 'src/app/shared/companies/store/companies.store';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
-import { CompanySearchResult } from 'src/app/shared/model/company.search-result';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
 import { CompanyDialogComponent } from '../company-dialog/company-dialog.component';
 
@@ -77,6 +77,24 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
     this.changeDetector.detectChanges();
   }
 
+  addCompany()
+  {
+    const dialogConfig = { // Merge dialog config with data
+      ...this.dialogBasicConfiguration,
+      ...{data: {dialogMode: 'add'}}
+    }
+
+    let dialogRef = this.dialog.open(CompanyDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((newCompany: Company) => {
+      if(newCompany)
+      {
+        this.loadCompanies();
+        this.snackBar
+          .open(`${newCompany.name} was added successfuly!`, 'X', this.matSnackBarConfig)
+      }
+    })
+  }
+
   loadCompanies()
   { // Load companies with current pagination properties
     this.sortBy ? 
@@ -103,24 +121,6 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
     .subscribe();
   }
 
-  addCompany()
-  {
-    const dialogConfig = { // Merge dialog config with data
-      ...this.dialogBasicConfiguration,
-      ...{data: {dialogMode: 'add'}}
-    }
-
-    let dialogRef = this.dialog.open(CompanyDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(newCompany => {
-      if(newCompany)
-      {
-        this.loadCompanies();
-        this.snackBar
-          .open(`${newCompany.name} was added successfuly!`, 'X', this.matSnackBarConfig)
-      }
-    })
-  }
-
   updateCompany(company: Company)
   {
     const dialogConfig = { // Merge dialog config with data
@@ -129,7 +129,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
     }
 
     let dialogRef = this.dialog.open(CompanyDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(updatedCompany => {
+    dialogRef.afterClosed().subscribe((updatedCompany: Company) => {
       if(updatedCompany)
       {
         this.loadCompanies();

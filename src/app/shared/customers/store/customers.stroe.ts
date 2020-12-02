@@ -4,7 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { Customer } from 'src/app/authentication/model/customer.model';
 import { LoadingService } from '../../loading/service/loading.service';
 import { MessagesService } from '../../messages/service/messages.service';
-import { CustomerResponse } from '../../model/customer.response';
+import { CustomerResponse } from '../model/customer.response';
 import { CustomersService } from '../service/customers.service';
 
 @Injectable({

@@ -8,6 +8,8 @@ import { MessagesComponent } from './messages/messages.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { RemoveFocusDirective } from './remove-focus.directive';
 import { HighlightSearchPipe } from './pipe/highlight-search.pipe';
+import { MatNativeDateModule } from '@angular/material/core';
+import { StockPipe } from './coupons/pipe/stock.pipe';
 
 
 
@@ -18,17 +20,18 @@ import { HighlightSearchPipe } from './pipe/highlight-search.pipe';
     MessagesComponent, 
     ConfirmationDialogComponent, 
     RemoveFocusDirective, 
-    HighlightSearchPipe],
+    HighlightSearchPipe, StockPipe],
   imports: [
     CommonModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    MatNativeDateModule
   ],
   exports: [
     ValuesPipe, 
     LoadingComponent, 
     MessagesComponent, 
     RemoveFocusDirective, 
-    HighlightSearchPipe]
+    HighlightSearchPipe, StockPipe]
 })
 export class SharedModule { }

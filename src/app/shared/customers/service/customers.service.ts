@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Customer } from 'src/app/authentication/model/customer.model';
-import { CustomerSearchResult } from '../../model/customer.search-result';
+
 import { 
   CUSTOMER_DELETE_URL, 
   CUSTOMER_GET_ALL_URL, 
@@ -11,8 +11,15 @@ import {
   CUSTOMER_GET_PAGED_URL, 
   CUSTOMER_GET_URL, 
   CUSTOMER_POST_URL, 
-  CUSTOMER_PUT_URL 
+  CUSTOMER_PUT_URL, 
+  NAME_EXAMPLE, 
+  PAGE_INDEX,
+  PAGE_SIZE,
+  RESULTS_COUNT,
+  SORT_DIRECTION,
+  SORT_TYPE
 } from '../../utils/api.utils';
+import { CustomerSearchResult } from '../model/customer.search-result';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +46,8 @@ export class CustomersService {
   getAllCustomersPaged(pageIndex: number, pageSize: number): Observable<any>
   {
     const requestParams = new HttpParams()
-      .set('pageIndex', pageIndex.toString())
-      .set('pageSize', pageSize.toString());
+      .set(PAGE_INDEX, pageIndex.toString())
+      .set(PAGE_SIZE, pageSize.toString());
     return this.httpClient.get<Customer[]>(CUSTOMER_GET_PAGED_URL, {params: requestParams});
   }
 
@@ -48,18 +55,18 @@ export class CustomersService {
     sortType: string, asc: boolean): Observable<any>
   {
     const requestParams = new HttpParams()
-      .set('pageIndex', pageIndex.toString())
-      .set('pageSize', pageSize.toString())
-      .set('sortType', sortType)
-      .set('asc', String(asc));
+      .set(PAGE_INDEX, pageIndex.toString())
+      .set(PAGE_SIZE, pageSize.toString())
+      .set(SORT_TYPE, sortType)
+      .set(SORT_DIRECTION, String(asc));
     return this.httpClient.get<Customer[]>(CUSTOMER_GET_PAGED_SORTED_URL, {params: requestParams});
   }
 
   getAllCustomersByNameExample(resultsCount: number, nameExample: string): Observable<CustomerSearchResult[]>
   {
     const requestParams = new HttpParams()
-      .set('resultsCount', resultsCount.toString())
-      .set('nameExample', nameExample);
+      .set(RESULTS_COUNT, resultsCount.toString())
+      .set(NAME_EXAMPLE, nameExample);
     return this.httpClient.get<CustomerSearchResult[]>(CUSTOMER_GET_EXAMPLE_URL, {params: requestParams});
   }
 

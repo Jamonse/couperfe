@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
@@ -123,7 +122,8 @@ export class CategoriesComponent implements OnInit {
         {
           return categories;
         }
-        return categories.filter(category => category.name.includes(this.searchInput));
+        return categories.filter(category => 
+          category.name.toLocaleLowerCase().includes(this.searchInput.toLocaleLowerCase()));
       }), // Initialize total length
       tap(categories => this.length = categories.length),
       map(categories => categories.slice( // Initialize page index

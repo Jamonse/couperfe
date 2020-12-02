@@ -63,13 +63,13 @@
         <ng-template #noCustomersFound>
             No Customers found.
         </ng-template>
-        <mat-paginator
-            [disabled]="(customers$ | async)?.length == 0"
-            class="mat-elevation-z8 paginator"
-            [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]="customersStroe.pageIndex"
-            [pageSize]="customersStroe.pageSize"
-            [length]="customersStroe.count">
-        </mat-paginator>
-    </div>   
+    </div>
+    <mat-paginator style="width: 50%;"
+        [disabled]="(customers$ | async)?.length == 0"
+        class="mat-elevation-z8 paginator"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="customersStroe.pageIndex"
+        [pageSize]="customersStroe.pageSize"
+        [length]="customersStroe.count">
+    </mat-paginator>
 </div>

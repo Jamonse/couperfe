@@ -20,6 +20,7 @@ export class CustomerDialogComponent implements OnInit {
   customer: Customer;
 
   passwordMessage: string;
+  hidePassword: boolean = true;
   
   constructor(private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CustomerDialogComponent>,

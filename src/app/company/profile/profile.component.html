@@ -1,11 +1,13 @@
 <div class="profile-container" *ngIf="(companyToDisplay$ | async) as company">
     <div class="company-details">
-        <h1>
-            {{ company.name }}
-        </h1>
-        <h2>
-            {{ company.email }}
-        </h2>
+        <div style="margin-left: 4rem;">
+            <h1 style="margin-top: 0.5rem;">
+                {{ company.name }}
+            </h1>
+            <h2>
+                {{ company.email }}
+            </h2>
+        </div>    
     </div>
     <p style="font-size: 1.5rem; margin-top: 5rem;">
         Create and publish your coupons today!
@@ -16,5 +18,4 @@
         [routerLink]="['../my-coupons']">
         My Coupons
     </button>
-    
 </div>

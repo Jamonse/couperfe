@@ -56,7 +56,7 @@ export class CompanyInfoComponent implements OnInit {
     }
 
     let dialogRef = this.dialog.open(CompanyDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(updatedCompany => {
+    dialogRef.afterClosed().subscribe((updatedCompany: Company) => {
       if(updatedCompany)
       {
         this.companyToDiaply = updatedCompany;

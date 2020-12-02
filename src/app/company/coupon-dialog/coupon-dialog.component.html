@@ -1,0 +1,116 @@
+<form [formGroup]="couponForm"
+    (ngSubmit)="onSubmit()"
+    class="coupon-form">
+    <h1>{{ dialogTitle }}</h1>
+    <mat-form-field>
+        <mat-label>Select coupon title</mat-label>
+        <input matInput type="text" formControlName="title">
+        <mat-error *ngIf="couponForm.get('title').hasError('required')">
+            Coupon title is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="couponForm.get('title').hasError('minlength')">
+            Coupon title must consist at least <strong>two letters</strong>
+        </mat-error>
+        <mat-error *ngIf="couponForm.get('title').hasError('maxlength')">
+            Coupon title cannot exceed <strong>25 letters</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Select coupon price</mat-label>
+        <input matInput type="number" formControlName="price">
+        <mat-error *ngIf="couponForm.get('price').hasError('required')">
+            Coupon price is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="couponForm.get('price').hasError('min')">
+            Coupon price cannot be <strong>0 or lower</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Select coupon quantity</mat-label>
+        <input matInput type="number" formControlName="quantity">
+        <mat-error *ngIf="couponForm.get('quantity').hasError('required')">
+            Coupon quantity is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="couponForm.get('quantity').hasError('min')">
+            Coupon quantity cannot be <strong>0 or lower</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Select coupon category</mat-label>
+        <mat-select [(value)]="selectedCategory" formControlName="category">
+            <ng-template 
+                *ngIf="dialogMode == 'add';
+                    then createList
+                    else updateList">
+            </ng-template>
+            <ng-template #createList>
+                <mat-option 
+                    *ngFor="let category of (categories$ | async)"
+                    [value]="category">
+                    {{ category.name }}
+                </mat-option>
+            </ng-template>
+            <ng-template #updateList>
+                <mat-option
+                    *ngFor="let category of (categories$ | async)"
+                    [(value)]="selectedCategory">
+                    {{ category.name }}
+                </mat-option>
+            </ng-template>
+        </mat-select>
+        <mat-error *ngIf="couponForm.get('category').hasError('required')">
+            Coupon category is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Coupon start date</mat-label>
+        <input 
+            matInput 
+            formControlName="startDate"
+            [matDatepicker]="startDatePicker">
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+        <mat-error *ngIf="couponForm.get('startDate').hasError('required')">
+            Coupon start date is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="couponForm.get('startDate').hasError('invalid')">
+            Start date cannot be <strong>before today</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Coupon end date</mat-label>
+        <input 
+            matInput
+            formControlName="endDate"
+            [matDatepicker]="endDatePicker">
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+        <mat-error *ngIf="couponForm.get('endDate').hasError('required')">
+            Coupon end date is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="couponForm.get('endDate').hasError('invalid')">
+            End date cannot be <strong>before today</strong>
+        </mat-error>
+        <mat-error *ngIf="couponForm.get('endDate').hasError('beforeStartDate')">
+            End date cannot be <strong>before start date</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Coupon description</mat-label>
+        <textarea matInput #couponDescription maxlength="255" formControlName="description"></textarea>
+        <mat-hint align="end">{{ couponDescription.value.length }} / 255</mat-hint>
+    </mat-form-field>
+    <div class="buttons-container">
+        <button mat-raised-button 
+        type="button"
+        (click)="onClose()"
+        class="dialog-button">
+        Close
+        </button>
+        <button mat-raised-button 
+            color="primary"
+            class="dialog-button">
+            {{ buttonTitle }}
+        </button>
+    </div>
+</form>

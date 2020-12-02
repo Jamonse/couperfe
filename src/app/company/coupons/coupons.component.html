@@ -1,20 +1,26 @@
 <div class="coupons-container">
     <div class="search-container">
         <!-- Search bar + add button -->
-        <mat-form-field style="width: 100%;">
+        <mat-form-field style="width: 100%;" [formGroup]="searchInput">
             <mat-label>Search coupon</mat-label>
             <input matInput 
                 type="text"
+                formControlName="searchInput"
                 [matAutocomplete]="companiesAutoComplete">
         </mat-form-field>
         <button mat-mini-fab
             color="primary" 
-            style="margin-left: 2rem;">
+            style="margin-left: 2rem;"
+            (click)="addCoupon()">
             <mat-icon>add</mat-icon>
         </button>
         <!-- Search bar autocomplete -->
         <mat-autocomplete #companiesAutoComplete="matAutocomplete">
-            <mat-option>
+            <mat-option *ngFor="let searchedCoupon of searchedCoupons"
+            [routerLink]="['info/', searchedCoupon.id]">
+            <span
+                [innerHTML]="searchedCoupon.title | highlightSearch: searchText">
+            </span>
             </mat-option>
         </mat-autocomplete>
     </div>
@@ -22,31 +28,48 @@
         <!-- Sort options and sort direction -->
         <mat-form-field style="margin-right: 2rem;">
             <mat-label>Sort by</mat-label>
-            <mat-select>
-                <mat-option>
+            <mat-select
+                [(ngModel)]="sortBy"
+                (selectionChange)="loadCoupons()"
+                [disabled]="(coupons$ | async)?.length == 0">
+                <mat-option
+                    *ngFor="let sortType of sortByOptions" [value]="sortType">
+                    {{ sortType }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
         <button mat-mini-fab 
-            color="white">
-            <mat-icon></mat-icon>
+            color="white"
+            (click)="sortDirection = !sortDirection; loadCoupons()"
+            [disabled]="!sortBy">
+            <mat-icon>{{sortDirection ? UP_ARROW : DOWN_ARROW}}</mat-icon>
         </button>
     </div>
     <!-- Coupons cards diplay + paginator -->
     <div class="coupons-grid">
-        <div style="width: 100px;" class="mat-elevation-z5">
-            
-        </div>
-        <ng-template>
+        <ng-template *ngIf="(coupons$ | async)?.length > 0;
+            then couponsFound
+            else noCouponFound">
         </ng-template>
-        <ng-template #companiesFound>
-            
+        <ng-template #couponsFound>
+            <app-company-coupon
+                *ngFor="let coupon of (coupons$ | async)"
+                [couponToDisplay]="coupon"
+                (updateCoupon)="updateCoupon($event)"
+                (deleteCoupon)="deleteCoupon($event)">
+            </app-company-coupon>
         </ng-template>
-        <ng-template #noCompaniesFound>
+        <ng-template #noCouponFound>
             No Coupons found.
         </ng-template>
-        <mat-paginator>
-        </mat-paginator>
-    </div>   
+    </div>
+    <mat-paginator style="width: 50%;"
+        [disabled]="(coupons$ | async)?.length == 0"
+        class="mat-elevation-z8 paginator"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="couponsStore.pageIndex"
+        [pageSize]="couponsStore.pageSize"
+        [length]="couponsStore.count">
+    </mat-paginator>
 </div>
 

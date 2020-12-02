@@ -3,11 +3,19 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-button-focus-overlay { background-color: transparent!important; }
-.my-snack-bar [color="primary"]{
+.my-snack-bar {
     background: #2196F3; 
     color: white;
 }
 
 .my-snack-bar button {
     color: white;
+}
+
+.one-left-color {
+    color: red;
+}
+
+.out-of-stock-color {
+    color: grey;
 }

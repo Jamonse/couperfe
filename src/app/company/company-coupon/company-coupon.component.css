@@ -1,0 +1,34 @@
+.coupon {
+    background: url('/assets/coupon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 25rem;
+    height: 12rem;
+    display: flex;
+    justify-content: center;
+}
+
+.coupon-details {
+    width: 15rem;
+    height: 10rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+}
+
+.coupon-heading {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+    max-width: 14rem;
+}
+
+.buttons-container {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.coupon-button {
+    margin: 0.5rem;
+}

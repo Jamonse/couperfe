@@ -16,6 +16,7 @@ import { AuthenticationService } from '../service/authentication.service';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  hidePassword: boolean = true;
   
   clientTypeHolder = ClientType;
   keys = Object.keys;

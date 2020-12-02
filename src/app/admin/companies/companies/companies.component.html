@@ -54,22 +54,22 @@
         </ng-template>
         <ng-template #companiesFound>
             <app-company 
-            *ngFor="let comapny of (companies$ | async)"
-            [companyToDisplay]="comapny"
-            (updateCompany)="updateCompany($event)"
-            (deleteCompany)="deleteCompany($event)">
+                *ngFor="let comapny of (companies$ | async)"
+                [companyToDisplay]="comapny"
+                (updateCompany)="updateCompany($event)"
+                (deleteCompany)="deleteCompany($event)">
             </app-company>
         </ng-template>
         <ng-template #noCompaniesFound>
             No Companies found.
         </ng-template>
-        <mat-paginator
-            [disabled]="(companies$ | async)?.length == 0"
-            class="mat-elevation-z8 paginator"
-            [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]="companiesStroe.pageIndex"
-            [pageSize]="companiesStroe.pageSize"
-            [length]="companiesStroe.count">
-        </mat-paginator>
-    </div>   
+    </div>
+    <mat-paginator style="width: 50%;"
+        [disabled]="(companies$ | async)?.length == 0"
+        class="mat-elevation-z8 paginator"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="companiesStroe.pageIndex"
+        [pageSize]="companiesStroe.pageSize"
+        [length]="companiesStroe.count">
+    </mat-paginator>
 </div>

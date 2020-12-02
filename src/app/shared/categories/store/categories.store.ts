@@ -6,6 +6,8 @@ import { LoadingService } from '../../loading/service/loading.service';
 import { MessagesService } from '../../messages/service/messages.service';
 import { CategoriesService } from '../service/categories.service';
 import '../../utils/array.prototype';
+import { AuthenticationService } from 'src/app/authentication/service/authentication.service';
+import { ClientType } from 'src/app/core/model/client-type';
 
 @Injectable({
     providedIn: 'root'
@@ -14,19 +16,21 @@ export class CategoriesStore
 {
     private categoriesSubject = new BehaviorSubject<Category[]>([]);
 
-    categories$: Observable<Category[]> = this.categoriesSubject.asObservable();
+    categories$: Observable<Category[]>;
 
     constructor(
         private categoriesService: CategoriesService,
+        private authService: AuthenticationService,
         private loadingService: LoadingService,
         private messagesService: MessagesService)
     {
-        this.loadAllCategories();
+        this.categories$ = this.categoriesSubject.asObservable();
+        this.loadAllCategories(this.authService.clientType());
     }
 
-    private loadAllCategories()
+    private loadAllCategories(clientType: ClientType)
     {
-        const loadedCategories$ = this.categoriesService.getAllCategories().pipe(
+        const loadedCategories$ = this.categoriesService.getAllCategories(clientType).pipe(
             catchError(err => { // Error during loading process
                 return throwError(err);
             }), // Initialize subject with loaded categories
