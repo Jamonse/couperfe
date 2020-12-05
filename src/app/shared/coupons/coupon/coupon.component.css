@@ -1,0 +1,32 @@
+mat-card {
+    margin: 1rem;
+}
+
+.coupon-heading {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+    max-width: 17rem;
+}
+
+.buttons-container {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.coupon-button {
+    margin: 0.5rem;
+}
+
+.out-of-stock-sign {
+    position: absolute;
+    display: block;
+    width: 15rem;
+    top: 10rem;
+    bottom: 0;
+    left: 3rem;
+    right: 0;
+    z-index: 100;
+    opacity: 0.7;
+}

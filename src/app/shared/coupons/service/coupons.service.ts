@@ -14,8 +14,10 @@ import {
   COUPON_GET_PAGED_URL, 
   COUPON_POST_URL, 
   COUPON_PUT_URL, 
-  CUSTOMER_COUPON_GET_ALL_URL,
+  CUSTOMER_CATEGORY_GET_ALL_URL,
+  CUSTOMER_COUPON_GET_URL,
   CUSTOMER_COUPON_GET_EXAMPLE_URL,
+  CUSTOMER_COUPON_GET_PAGED_SORTED_URL,
   CUSTOMER_COUPON_GET_PAGED_URL,
   NAME_EXAMPLE,
   PAGE_INDEX,
@@ -25,6 +27,8 @@ import {
   SORT_TYPE
 } from '../../utils/api.utils';
 import { Coupon } from '../model/coupon';
+import { ClientType } from 'src/app/core/model/client-type';
+import { CouponResponse } from '../model/coupon.response';
 
 @Injectable({
   providedIn: 'root'
@@ -43,92 +47,105 @@ export class CouponsService {
     return this.httpClient.put(COUPON_PUT_URL, coupon);
   }
 
-  getCompanyCoupon(couponId: number): Observable<Coupon>
+  getClientCoupon(clientType: ClientType, couponId: number): Observable<Coupon>
   {
+    let url;
+    if(clientType && clientType == ClientType.COMPANY)
+    {
+      url = COMPANY_COUPON_GET_URL;
+    }
+    else if(clientType && clientType == ClientType.CUSTOMER)
+    {
+      url = CUSTOMER_COUPON_GET_URL;
+    }
     return this.httpClient.get<Coupon>(COMPANY_COUPON_GET_URL + couponId)
   }
 
-  getCompanyCoupons(): Observable<Coupon[]>
+  getClientCoupons(clientType: ClientType): Observable<Coupon[]>
   {
-    return this.httpClient.get<Coupon[]>(COMPANY_COUPON_GET_ALL_URL);
+    let url;
+    if(clientType && clientType == ClientType.COMPANY)
+    {
+      url = COMPANY_COUPON_GET_ALL_URL;
+    }
+    else if(clientType && clientType == ClientType.CUSTOMER)
+    {
+      url = CUSTOMER_CATEGORY_GET_ALL_URL;
+    }
+    return this.httpClient.get<Coupon[]>(url);
   }
 
-  getCompanyCouponsPaged(pageIndex: number, pageSize: number): Observable<any>
+  getClientCouponsPaged(clientType: ClientType, pageIndex: number, pageSize: number): Observable<CouponResponse>
   {
+    let url;
+    if(clientType && clientType == ClientType.COMPANY)
+    {
+      url = COMPANY_COUPON_GET_PAGED_URL;
+    }
+    else if(clientType && clientType == ClientType.CUSTOMER)
+    {
+      url = CUSTOMER_COUPON_GET_PAGED_URL;
+    }
     const queryParams = new HttpParams()
       .set(PAGE_INDEX, pageIndex.toString())
       .set(PAGE_SIZE, pageSize.toString());
-    return this.httpClient.get<Coupon[]>(COMPANY_COUPON_GET_PAGED_URL, {params: queryParams});
+    return this.httpClient.get<CouponResponse>(url, {params: queryParams});
   }
 
-  getCompanyCouponsPagedAndSorted(pageIndex: number, pageSize: number, 
-    sortBy: string, asc: boolean): Observable<any>
+  getClientCouponsPagedAndSorted(clientType: ClientType, pageIndex: number, pageSize: number, 
+    sortBy: string, asc: boolean): Observable<CouponResponse>
   {
+    let url;
+    if(clientType && clientType == ClientType.COMPANY)
+    {
+      url = COMPANY_COUPON_GET_PAGED_SORTED_URL;
+    }
+    else if(clientType && clientType == ClientType.CUSTOMER)
+    {
+      url = CUSTOMER_COUPON_GET_PAGED_SORTED_URL;
+    }
     const queryParams = new HttpParams()
       .set(PAGE_INDEX, pageIndex.toString())
       .set(PAGE_SIZE, pageSize.toString())
       .set(SORT_TYPE, sortBy)
       .set(SORT_DIRECTION, String(asc));
-    return this.httpClient.get<Coupon[]>(COMPANY_COUPON_GET_PAGED_SORTED_URL, {params: queryParams});
+    return this.httpClient.get<CouponResponse>(url, {params: queryParams});
   }
 
-  getCompanyCouponsByNameExample(resultsCount: number, nameExample: string): Observable<CouponSearchResult[]>
+  getClientCouponsByNameExample(clientType: ClientType, resultsCount: number, nameExample: string): Observable<CouponSearchResult[]>
   {
+    let url;
+    if(clientType && clientType == ClientType.COMPANY)
+    {
+      url = COMPANY_COUPON_GET_EXAMPLE_URL;
+    }
+    else if(clientType && clientType == ClientType.COMPANY)
+    {
+      url = CUSTOMER_COUPON_GET_EXAMPLE_URL;
+    }
     const queryParams = new HttpParams()
       .set(RESULTS_COUNT, resultsCount.toString())
       .set(NAME_EXAMPLE, nameExample);
-    return this.httpClient.get<CouponSearchResult[]>(COMPANY_COUPON_GET_EXAMPLE_URL, {params: queryParams});
+    return this.httpClient.get<CouponSearchResult[]>(url, {params: queryParams});
   }
 
-  getCustomerCoupons(): Observable<Coupon[]>
-  {
-    return this.httpClient.get<Coupon[]>(CUSTOMER_COUPON_GET_ALL_URL);
-  }
-
-  getCustomerCouponsPaged(pageIndex: number, pageSize: number): Observable<Coupon[]>
+  getAllCouponsPaged(pageIndex: number, pageSize: number): Observable<CouponResponse>
   {
     const queryParams = new HttpParams()
       .set(PAGE_INDEX, pageIndex.toString())
       .set(PAGE_SIZE, pageSize.toString());
-    return this.httpClient.get<Coupon[]>(CUSTOMER_COUPON_GET_PAGED_URL, {params: queryParams});
-  }
-
-  getCustomerCouponsPagedSorted(pageIndex: number, pageSize: number,
-    sortBy: string, asc: boolean): Observable<Coupon[]>
-  {
-    const queryParams = new HttpParams()
-      .set(PAGE_INDEX, pageIndex.toString())
-      .set(PAGE_SIZE, pageSize.toString())
-      .set(SORT_TYPE, sortBy)
-      .set(SORT_DIRECTION, String(asc));
-    return this.httpClient.get<Coupon[]>(CUSTOMER_COUPON_GET_PAGED_URL, {params: queryParams});
-  }
-
-  getCustomerCouponsByNameExample(resultsCount: number, nameExample: string): Observable<CouponSearchResult[]>
-  {
-    const queryParams = new HttpParams()
-      .set(RESULTS_COUNT, resultsCount.toString())
-      .set(NAME_EXAMPLE, nameExample);
-    return this.httpClient.get<CouponSearchResult[]>(CUSTOMER_COUPON_GET_EXAMPLE_URL, {params: queryParams});
-  }
-
-  getAllCouponsPaged(pageIndex: number, pageSize: number): Observable<Coupon[]>
-  {
-    const queryParams = new HttpParams()
-      .set(PAGE_INDEX, pageIndex.toString())
-      .set(PAGE_SIZE, pageSize.toString());
-    return this.httpClient.get<Coupon[]>(COUPON_GET_PAGED_URL, {params: queryParams});
+    return this.httpClient.get<CouponResponse>(COUPON_GET_PAGED_URL, {params: queryParams});
   }
 
   getAllCouponsPagedAndSorted(pageIndex: number, pageSize: number,
-    sortBy: string, asc: boolean): Observable<Coupon[]>
+    sortBy: string, asc: boolean): Observable<CouponResponse>
   {
     const queryParams = new HttpParams()
       .set(PAGE_INDEX, pageIndex.toString())
       .set(PAGE_SIZE, pageSize.toString())
       .set(SORT_TYPE, sortBy)
       .set(SORT_DIRECTION, String(asc));
-    return this.httpClient.get<Coupon[]>(COUPON_GET_PAGED_SORTED_URL, {params: queryParams});
+    return this.httpClient.get<CouponResponse>(COUPON_GET_PAGED_SORTED_URL, {params: queryParams});
   }
 
   getAllCouponsByNameExample(resultsCount: number, nameExample: string): Observable<CouponSearchResult[]>

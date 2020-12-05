@@ -19,3 +19,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .out-of-stock-color {
     color: grey;
 }
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+}

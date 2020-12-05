@@ -18,9 +18,14 @@
             <input matInput
              [type]="hidePassword ? 'password' : 'text'"
              formControlName="password">
-             <mat-icon matSuffix (click)="hidePassword = !hidePassword">
-                 {{ hidePassword ? 'visibility_off' : 'visibility'}}
-             </mat-icon>
+             <button 
+             mat-icon-button
+             matSuffix
+             type="button">
+                <mat-icon (click)="hidePassword = !hidePassword">
+                    {{ hidePassword ? 'visibility_off' : 'visibility'}}
+                </mat-icon>
+            </button>
             <mat-error *ngIf="loginForm.get('password').hasError('required')">
                 Password is <strong>required</strong>
             </mat-error>
@@ -32,6 +37,9 @@
                     {{ clientType }}
                 </mat-option>
             </mat-select>
+            <mat-error *ngIf="loginForm.get('clientType').hasError('required')">
+                Role is <strong>required</strong>
+            </mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary">
             Login

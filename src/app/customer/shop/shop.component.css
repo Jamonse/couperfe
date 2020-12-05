@@ -1,4 +1,4 @@
-.categories-container {
+.coupons-container {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -14,11 +14,18 @@
     width: 40%;
 }
 
-.categories-list {
+.sort-container {
+    display: flex;
+    align-items: flex-start;
+    width: 40%;
+}
+
+.coupons-grid {
     margin-top: 5rem;
     display: flex;
-    flex-direction: column;
-    width: 50%;
+    flex-flow: row wrap;
+    width: 80%;
+    height: 100%;
 }
 
 .spacer {
@@ -27,6 +34,10 @@
 
 .center {
     align-self: center;
+}
+
+.grid-small-window {
+    justify-content: center;
 }
 
 .paginator {

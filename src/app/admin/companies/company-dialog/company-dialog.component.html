@@ -1,7 +1,7 @@
 <form [formGroup]="companyForm" 
     (ngSubmit)="onSubmit()"
     class="company-form">
-    <h1>{{ dialogTitle }}</h1>
+    <h1 class="ellipsis">{{ dialogTitle }}</h1>
     <mat-form-field>
         <mat-label>Select company name</mat-label>
         <input matInput type="text" formControlName="name">

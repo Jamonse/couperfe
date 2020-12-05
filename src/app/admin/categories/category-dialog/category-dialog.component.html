@@ -1,7 +1,7 @@
 <form [formGroup]="categoryForm" 
     (ngSubmit)="onSubmit()"
     class="category-form">
-    <h1>{{ dialogTitle }}</h1>
+    <h1 class="ellipsis">{{ dialogTitle }}</h1>
     <mat-form-field style="margin-bottom: 5rem;">
         <mat-label>Select category name</mat-label>
         <input matInput type="text" formControlName="name">

@@ -42,28 +42,32 @@
         <button mat-mini-fab 
             color="white"
             (click)="sortDirection = !sortDirection; loadCustomers()"
-            [disabled]="!sortBy">
+            [disabled]="!sortBy || (customers$ | async)?.length == 0">
             <mat-icon>{{sortDirection ? UP_ARROW : DOWN_ARROW}}</mat-icon>
         </button>
     </div>
     <!-- Customers cards diplay + paginator -->
-    <div class="customers-grid">
-        <ng-template *ngIf="(customers$ | async)?.length > 0;
-            then customersFound
-            else noCustomersFound">
-        </ng-template>
-        <ng-template #customersFound>
+    <ng-template *ngIf="(customers$ | async)?.length > 0;
+        then customersFound
+        else noCustomersFound">
+    </ng-template>
+    <ng-template #customersFound>
+        <div class="customers-grid"
+        [ngClass]="{'grid-small-window': windowService.isWindowSmall}">
             <app-customer
                 *ngFor="let customer of (customers$ | async)"
                 [customerToDisplay]="customer"
                 (updateCustomer)="updateCustomer($event)"
                 (deleteCustomer)="deleteCustomer($event)">
             </app-customer>
-        </ng-template>
-        <ng-template #noCustomersFound>
+        </div>
+    </ng-template>
+    <ng-template #noCustomersFound>
+        <div class="center">
             No Customers found.
-        </ng-template>
-    </div>
+        </div>
+    </ng-template>
+    <div class="spacer"></div>
     <mat-paginator style="width: 50%;"
         [disabled]="(customers$ | async)?.length == 0"
         class="mat-elevation-z8 paginator"

@@ -8,12 +8,6 @@
                 formControlName="searchInput"
                 [matAutocomplete]="companiesAutoComplete">
         </mat-form-field>
-        <button mat-mini-fab
-            color="primary" 
-            style="margin-left: 2rem;"
-            (click)="addCoupon()">
-            <mat-icon>add</mat-icon>
-        </button>
         <!-- Search bar autocomplete -->
         <mat-autocomplete #companiesAutoComplete="matAutocomplete">
             <mat-option *ngFor="let searchedCoupon of searchedCoupons"
@@ -54,11 +48,9 @@
         <div class="coupons-grid"
         [ngClass]="{'grid-small-window': windowService.isWindowSmall}">
             <app-coupon
-                *ngFor="let coupon of (coupons$ | async)"
-                [couponToDisplay]="coupon"
-                [clientType]="clientTypes.COMPANY"
-                (updateCoupon)="updateCoupon($event)"
-                (deleteCoupon)="deleteCoupon($event)">
+                *ngFor="let coupon of coupons$ | async"
+                [clientType]="clientTypes.CUSTOMER"
+                [couponToDisplay]="coupon">
             </app-coupon>
         </div>
     </ng-template>
@@ -67,9 +59,7 @@
             No Coupons found.
         </div>
     </ng-template>
-    <div *ngIf="!windowService.isWindowSmall || 
-        (coupons$ | async)?.length == 0" class="spacer">
-    </div>
+    <div *ngIf="!windowService.isWindowSmall || (coupons$ | async)?.length == 0" class="spacer"></div>
     <mat-paginator style="width: 50%;"
         [disabled]="(coupons$ | async)?.length == 0"
         class="mat-elevation-z8 paginator"

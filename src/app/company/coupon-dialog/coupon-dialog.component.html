@@ -1,7 +1,7 @@
 <form [formGroup]="couponForm"
     (ngSubmit)="onSubmit()"
     class="coupon-form">
-    <h1>{{ dialogTitle }}</h1>
+    <h1 class="ellipsis">{{ dialogTitle }}</h1>
     <mat-form-field>
         <mat-label>Select coupon title</mat-label>
         <input matInput type="text" formControlName="title">
@@ -24,6 +24,9 @@
         <mat-error *ngIf="couponForm.get('price').hasError('min')">
             Coupon price cannot be <strong>0 or lower</strong>
         </mat-error>
+        <mat-error *ngIf="couponForm.get('price').hasError('max')">
+            Coupon price cannot exceed <strong>999</strong>
+        </mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Select coupon quantity</mat-label>
@@ -33,6 +36,9 @@
         </mat-error>
         <mat-error *ngIf="couponForm.get('quantity').hasError('min')">
             Coupon quantity cannot be <strong>0 or lower</strong>
+        </mat-error>
+        <mat-error *ngIf="couponForm.get('quantity').hasError('max')">
+            Coupon quantity cannot exceed <strong>999</strong>
         </mat-error>
     </mat-form-field>
     <mat-form-field>

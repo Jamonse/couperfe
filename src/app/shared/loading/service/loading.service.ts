@@ -36,12 +36,12 @@ export class LoadingService {
       );
   }
 
-  private displayLoading()
+  displayLoading()
   {
     this.loadingSubject.next(true);
   }
 
-  private hideLoading()
+  hideLoading()
   {
     this.loadingSubject.next(false);
   }

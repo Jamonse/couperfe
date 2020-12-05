@@ -20,14 +20,21 @@ const routes: Routes =[
         canLoad: [AuthGuard],
         canActivate: [AuthGuard],
         data: {roles: [ClientType.ADMIN]},
-        loadChildren: () => import('../admin/admin.module').then(m => m.AdminModule),
+        loadChildren: () => import('../admin/admin.module').then(m => m.AdminModule)
       },
       {
         path: 'company',
         canLoad: [AuthGuard],
         canActivate: [AuthGuard],
         data: {roles: [ClientType.COMPANY]},
-        loadChildren: () => import('../company/company.module').then(m => m.CompanyModule),
+        loadChildren: () => import('../company/company.module').then(m => m.CompanyModule)
+      },
+      {
+        path: 'customer',
+        canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
+        data: {roles: [ClientType.CUSTOMER]},
+        loadChildren: () => import('../customer/customer.module').then(m => m.CustomerModule)
       }
     ]},
     

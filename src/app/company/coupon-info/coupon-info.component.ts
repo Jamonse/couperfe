@@ -3,9 +3,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
+import { ClientType } from 'src/app/core/model/client-type';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Coupon } from 'src/app/shared/coupons/model/coupon';
-import { CompanyCouponsStore } from 'src/app/shared/coupons/store/company-coupons.store';
+import { ClientCouponsStore } from 'src/app/shared/coupons/store/client-coupons.store';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
 import { CouponDialogComponent } from '../coupon-dialog/coupon-dialog.component';
@@ -24,7 +25,7 @@ export class CouponInfoComponent implements OnInit {
   matSnackBarConfig: MatSnackBarConfig;
 
   constructor(
-    private couponsStore: CompanyCouponsStore,
+    private couponsStore: ClientCouponsStore,
     private router: Router,
     private route: ActivatedRoute,
     private loadingService: LoadingService,
@@ -43,7 +44,9 @@ export class CouponInfoComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    const loadedCoupon$ = this.couponsStore.loadCoupon(this.route.snapshot.params['id'])
+    const loadedCoupon$ = this.couponsStore.loadCoupon(
+      ClientType.COMPANY, 
+      this.route.snapshot.params['id'])
       .pipe(
         tap(loadedCoupon => this.couponToDisplay = loadedCoupon),
         catchError(() => this.router.navigate([this.COMPANY_COUPONS_URL], {relativeTo: this.route})));
@@ -64,7 +67,7 @@ export class CouponInfoComponent implements OnInit {
         this.couponToDisplay = updatedCoupon;
         this.snackBar
           .open(`${updatedCoupon.title} was updated successfuly!`, 'X', this.matSnackBarConfig);
-        this.couponsStore.loadCoupons();
+        this.couponsStore.loadCoupons(ClientType.COMPANY);
       }
     })
   }
@@ -85,7 +88,7 @@ export class CouponInfoComponent implements OnInit {
           () => {
             this.snackBar
               .open(`${this.couponToDisplay.title} was deleted successfuly`, 'X', this.matSnackBarConfig)
-            this.couponsStore.loadCoupons();
+            this.couponsStore.loadCoupons(ClientType.COMPANY);
             this.router.navigate([this.COMPANY_COUPONS_URL], {relativeTo: this.route, replaceUrl: true});
           }
         );

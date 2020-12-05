@@ -1,0 +1,27 @@
+<div class="profile-container" *ngIf="(customerToDisplay$ | async) as customer">
+    <div class="company-details">
+        <div style="margin-left: 4rem;">
+            <h1 style="margin-top: 0.5rem;">
+                {{ customer.name }}
+            </h1>
+            <h2>
+                {{ customer.email }}
+            </h2>
+        </div>    
+    </div>
+    <p style="font-size: 1.5rem; margin-top: 5rem;">
+        Buy and manage your coupons today!
+    </p>
+    <button mat-raised-button 
+        color="primary" 
+        style="margin: 1rem;"
+        [routerLink]="['../my-coupons']">
+        My coupons
+    </button>
+    <button mat-raised-button 
+        color="primary" 
+        style="margin: 1rem;"
+        [routerLink]="['../shop']">
+        Our shop
+    </button>
+</div>

@@ -8,18 +8,13 @@
                 formControlName="searchInput"
                 [matAutocomplete]="companiesAutoComplete">
         </mat-form-field>
-        <button mat-mini-fab
-            color="primary" 
-            style="margin-left: 2rem;"
-            (click)="addCoupon()">
-            <mat-icon>add</mat-icon>
-        </button>
         <!-- Search bar autocomplete -->
         <mat-autocomplete #companiesAutoComplete="matAutocomplete">
             <mat-option *ngFor="let searchedCoupon of searchedCoupons"
             [routerLink]="['info/', searchedCoupon.id]">
             <span
-                [innerHTML]="searchedCoupon.title | highlightSearch: searchText">
+                [innerHTML]="(searchedCoupon.title | highlightSearch: searchText) + ', by: ' +
+                    searchedCoupon.ownerCompanyName">
             </span>
             </mat-option>
         </mat-autocomplete>
@@ -51,32 +46,22 @@
         else noCouponFound">
     </ng-template>
     <ng-template #couponsFound>
-        <div class="coupons-grid"
-        [ngClass]="{'grid-small-window': windowService.isWindowSmall}">
-            <app-coupon
-                *ngFor="let coupon of (coupons$ | async)"
-                [couponToDisplay]="coupon"
-                [clientType]="clientTypes.COMPANY"
-                (updateCoupon)="updateCoupon($event)"
-                (deleteCoupon)="deleteCoupon($event)">
-            </app-coupon>
-        </div>
+        <ng-container *ngIf="coupons$ | async as coupons">
+            <cdk-virtual-scroll-viewport class="coupons-grid"
+                [ngClass]="{'grid-small-window': windowService.isWindowSmall}"
+                [itemSize]="50">
+                <app-coupon
+                    *cdkVirtualFor="let coupon of coupons"
+                    [couponToDisplay]="coupon"
+                    (buyCoupon)="buyCoupon($event)">
+                </app-coupon>
+            </cdk-virtual-scroll-viewport>
+        </ng-container>
     </ng-template>
     <ng-template #noCouponFound>
         <div class="center">
             No Coupons found.
         </div>
     </ng-template>
-    <div *ngIf="!windowService.isWindowSmall || 
-        (coupons$ | async)?.length == 0" class="spacer">
-    </div>
-    <mat-paginator style="width: 50%;"
-        [disabled]="(coupons$ | async)?.length == 0"
-        class="mat-elevation-z8 paginator"
-        [pageSizeOptions]="pageSizeOptions"
-        [pageIndex]="couponsStore.pageIndex"
-        [pageSize]="couponsStore.pageSize"
-        [length]="couponsStore.count">
-    </mat-paginator>
 </div>
 

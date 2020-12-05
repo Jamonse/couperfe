@@ -13,7 +13,8 @@
             'info-small-window': windowService.isWindowSmall }">
         <img 
             class="coupon-image" src="./assets/customer-logo.svg"
-            [ngClass]="{'image-normal-window': !windowService.isWindowSmall}">
+            [ngClass]="{'image-normal-window': !windowService.isWindowSmall,
+                'image-small-window': windowService.isWindowSmall}">
         <div class="coupon-info">
             <div>
                 <h1>{{ couponToDisplay.title }}</h1>

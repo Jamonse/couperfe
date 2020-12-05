@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, finalize, map, tap } from 'rxjs/operators';
 import { ClientType } from 'src/app/core/model/client-type';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { 
@@ -106,8 +106,8 @@ export class AuthenticationService {
             this.loadUser(clientType);
             break;
           case 'Customer':
-            this.loadUser(clientType);
             clientType = ClientType.CUSTOMER;
+            this.loadUser(clientType);
             break;
         }
         this.clientTypeSubject.next(clientType);
@@ -121,11 +121,14 @@ export class AuthenticationService {
     {
       return of(true);
     }
-    return this.isAuthenticated().pipe(map(
+    return this.isAuthenticated().pipe(
+      tap(() => this.loadingService.displayLoading()),
+      map(
       authResponse => {
         return authResponse.clientType == clientType
-      }
-    ))
+      },
+      finalize(() => this.loadingService.hideLoading())
+    ));
   }
 
   loadUser(clientType: ClientType)

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Category } from 'src/app/core/model/category.model';
 import { CategoriesStore } from 'src/app/shared/categories/store/categories.store';
 import { Coupon } from 'src/app/shared/coupons/model/coupon';
-import { CompanyCouponsStore } from 'src/app/shared/coupons/store/company-coupons.store';
+import { ClientCouponsStore } from 'src/app/shared/coupons/store/client-coupons.store';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
 
@@ -35,7 +35,7 @@ export class CouponDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CouponDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CouponDialogData,
-    private couponsStore: CompanyCouponsStore,
+    private couponsStore: ClientCouponsStore,
     public categoiesStore: CategoriesStore,
     private loadingService: LoadingService,
     public windowService: WindowSizeService) 
@@ -46,8 +46,8 @@ export class CouponDialogComponent implements OnInit {
 
       const formControls = {
         title: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-        price: ['', [Validators.required, Validators.min(0.05)]],
-        quantity: ['' ,[Validators.required, Validators.min(1)]],
+        price: ['', [Validators.required, Validators.min(0.05), Validators.max(999)]],
+        quantity: ['' ,[Validators.required, Validators.min(1), Validators.max(999)]],
         category: ['', Validators.required],
         startDate: ['', [Validators.required, this.notBeforeToday]],
         endDate: ['', [Validators.required, this.notBeforeToday]],

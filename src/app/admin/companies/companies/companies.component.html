@@ -42,28 +42,32 @@
         <button mat-mini-fab 
             color="white"
             (click)="sortDirection = !sortDirection; loadCompanies()"
-            [disabled]="!sortBy">
+            [disabled]="!sortBy || (companies$ | async)?.length == 0">
             <mat-icon>{{sortDirection ? UP_ARROW : DOWN_ARROW}}</mat-icon>
         </button>
     </div>
     <!-- Companies cards diplay + paginator -->
-    <div class="companies-grid">
-        <ng-template *ngIf="(companies$ | async)?.length > 0;
-            then companiesFound
-            else noCompaniesFound">
-        </ng-template>
-        <ng-template #companiesFound>
+    <ng-template *ngIf="(companies$ | async)?.length > 0;
+        then companiesFound
+        else noCompaniesFound">
+    </ng-template>
+    <ng-template #companiesFound>
+        <div class="companies-grid"
+        [ngClass]="{'grid-small-window': windowService.isWindowSmall}">
             <app-company 
                 *ngFor="let comapny of (companies$ | async)"
                 [companyToDisplay]="comapny"
                 (updateCompany)="updateCompany($event)"
                 (deleteCompany)="deleteCompany($event)">
             </app-company>
-        </ng-template>
-        <ng-template #noCompaniesFound>
+        </div>
+    </ng-template>
+    <ng-template #noCompaniesFound>
+        <div class="center">
             No Companies found.
-        </ng-template>
-    </div>
+        </div>
+    </ng-template>
+    <div class="spacer"></div>
     <mat-paginator style="width: 50%;"
         [disabled]="(companies$ | async)?.length == 0"
         class="mat-elevation-z8 paginator"

@@ -1,26 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CompanyRoutingModule } from './company-routing.module';
+import { CustomerRoutingModule } from './customer-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { CouponsComponent } from './coupons/coupons.component';
+import { ShopComponent } from './shop/shop.component';
+import { CouponInfoComponent } from './coupon-info/coupon-info.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../core/material/material.module';
-import { CouponDialogComponent } from './coupon-dialog/coupon-dialog.component';
-import { CouponInfoComponent } from './coupon-info/coupon-info.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
   declarations: [
     ProfileComponent, 
     CouponsComponent, 
-    CouponDialogComponent,
-    CouponInfoComponent],
+    ShopComponent, 
+    CouponInfoComponent
+  ],
   imports: [
     CommonModule,
-    CompanyRoutingModule,
+    CustomerRoutingModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    ScrollingModule
   ]
 })
-export class CompanyModule { }
+export class CustomerModule { }

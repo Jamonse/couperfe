@@ -1,6 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 import { tap } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/authentication/service/authentication.service';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
@@ -35,17 +33,13 @@ export class MenuComponent implements OnInit {
   customerOptions: MenuOption[] = [
     {path: '/customer/profile', message: 'My Profile', icon: 'account_circle'},
     {path: '/customer/my-coupons', message: 'My Coupons', icon: 'logo.svg'},
-    {path: '/customer/buy', message: 'Buy Coupons', icon: 'credit_card'}
+    {path: '/customer/shop', message: 'Buy Coupons', icon: 'attach_money'}
   ]
 
   constructor(
     private authService: AuthenticationService,
-    private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer,
     public windowService: WindowSizeService) 
   { 
-    iconRegistry.addSvgIcon('coupon',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/logo-mini.svg'));
     this.authService.clientType$.pipe(tap(clientType => {
       switch(clientType)
       {

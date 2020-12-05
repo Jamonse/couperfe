@@ -30,13 +30,14 @@
             No Categories found.
         </ng-template>
     </div>
+    <div class="spacer"></div>
     <mat-paginator style="width: 50%;"
-            [disabled]="(categories$ | async)?.length == 0"
-            class="mat-elevation-z8 paginator"
-            [pageIndex]="pageIndex"
-            [pageSize]="pageSize"
-            [length]="length"
-            [pageSizeOptions]="pageSizeOptions"
-            (page)="pageChanged($event)">
-        </mat-paginator>
+        [disabled]="(categories$ | async)?.length == 0"
+        class="mat-elevation-z8 paginator"
+        [pageIndex]="pageIndex"
+        [pageSize]="pageSize"
+        [length]="length"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageChanged($event)">
+    </mat-paginator>
 </div>

@@ -10,6 +10,8 @@ import { RemoveFocusDirective } from './remove-focus.directive';
 import { HighlightSearchPipe } from './pipe/highlight-search.pipe';
 import { MatNativeDateModule } from '@angular/material/core';
 import { StockPipe } from './coupons/pipe/stock.pipe';
+import { CouponComponent } from './coupons/coupon/coupon.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -20,18 +22,25 @@ import { StockPipe } from './coupons/pipe/stock.pipe';
     MessagesComponent, 
     ConfirmationDialogComponent, 
     RemoveFocusDirective, 
-    HighlightSearchPipe, StockPipe],
+    HighlightSearchPipe, 
+    StockPipe, 
+    CouponComponent
+  ],
   imports: [
     CommonModule,
     MaterialModule,
     HttpClientModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    RouterModule
   ],
   exports: [
     ValuesPipe, 
     LoadingComponent, 
-    MessagesComponent, 
+    MessagesComponent,
+    CouponComponent,
     RemoveFocusDirective, 
-    HighlightSearchPipe, StockPipe]
+    HighlightSearchPipe, 
+    StockPipe
+  ]
 })
 export class SharedModule { }
