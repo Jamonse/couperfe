@@ -38,6 +38,16 @@ export class ShopCouponStore
             this.loadCouponsPaged(pageIndex, pageSize);
     }
 
+    purchaseCoupons(coupons: Coupon[])
+    {
+        return this.couponsService.purchaseCoupons(coupons).pipe(
+            catchError(err => {
+                this.messagesService.displayErrors(err.error.message);
+                return throwError(err);
+            })
+        );
+    }
+
     private loadCouponsPaged(pageIndex: number, pageSize: number)
     {
         const loadedCoupons$ = this.couponsService

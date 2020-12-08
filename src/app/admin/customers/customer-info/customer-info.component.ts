@@ -4,6 +4,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { Customer } from 'src/app/authentication/model/customer.model';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { CustomersStore } from 'src/app/shared/customers/store/customers.stroe';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { CustomerDialogComponent } from '../customer-dialog/customer-dialog.component';
@@ -61,6 +62,7 @@ export class CustomerInfoComponent implements OnInit {
         this.customerToDisplay = updatedCustomer;
         this.snackBar
           .open(`${updatedCustomer.name} was updated successfuly!`, 'X', this.matSnackBarConfig)
+        this.customersStore.loadCustomers();
       }
     })
   }
@@ -72,7 +74,7 @@ export class CustomerInfoComponent implements OnInit {
       ...{data: {message: `Are you sure you want to delete ${this.customerToDisplay.name}?`}}
     }
 
-    let dialogRef = this.dialog.open(CustomerDialogComponent, dialogConfig);
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       if(result)
       { // Delete operation confirmed
@@ -81,6 +83,7 @@ export class CustomerInfoComponent implements OnInit {
           () => {
             this.snackBar
               .open(`${this.customerToDisplay.name} was deleted successfuly`, 'X', this.matSnackBarConfig);
+            this.customersStore.loadCustomers();
             this.router.navigate([this.CUSTOMERS_URL], {relativeTo: this.route, replaceUrl: true});
           }
         );

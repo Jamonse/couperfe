@@ -59,7 +59,9 @@
             No Coupons found.
         </div>
     </ng-template>
-    <div *ngIf="!windowService.isWindowSmall || (coupons$ | async)?.length == 0" class="spacer"></div>
+    <div *ngIf="!windowService.isWindowSmall || 
+        (coupons$ | async)?.length == 0" class="spacer">
+    </div>
     <mat-paginator style="width: 50%;"
         [disabled]="(coupons$ | async)?.length == 0"
         class="mat-elevation-z8 paginator"

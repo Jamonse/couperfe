@@ -16,6 +16,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
+import { MatRadioModule } from '@angular/material/radio';
 
 const materialModules = [
   MatButtonModule,
@@ -35,7 +36,8 @@ const materialModules = [
   MatAutocompleteModule,
   MatSnackBarModule,
   MatDatepickerModule,
-  MatCardModule
+  MatCardModule,
+  MatRadioModule
 ]
 
 @NgModule({

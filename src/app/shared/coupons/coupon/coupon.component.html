@@ -2,10 +2,9 @@
     <mat-card-header style="display: flex; flex-direction: column;">
         <div style="display: flex; justify-content: space-between;">
             <h1 class="coupon-heading">{{ couponToDisplay.title }}</h1>
-            <div style="display: flex;">
+            <div *ngIf="!clientType" style="display: flex;">
                 <button 
                     mat-icon-button
-                    *ngIf="!clientType"
                     color="primary">
                     <mat-icon>
                         info

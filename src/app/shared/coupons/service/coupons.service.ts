@@ -24,7 +24,8 @@ import {
   PAGE_SIZE,
   RESULTS_COUNT,
   SORT_DIRECTION,
-  SORT_TYPE
+  SORT_TYPE,
+  COUPON_PURCHASE_URL
 } from '../../utils/api.utils';
 import { Coupon } from '../model/coupon';
 import { ClientType } from 'src/app/core/model/client-type';
@@ -40,6 +41,11 @@ export class CouponsService {
   addCoupon(coupon: Coupon): Observable<Coupon>
   {
     return this.httpClient.post<Coupon>(COUPON_POST_URL, coupon);
+  }
+
+  purchaseCoupons(coupons: Coupon[]): Observable<any>
+  {
+    return this.httpClient.post(COUPON_PURCHASE_URL, coupons);
   }
 
   updateCoupon(coupon: Coupon): Observable<any>
@@ -119,10 +125,11 @@ export class CouponsService {
     {
       url = COMPANY_COUPON_GET_EXAMPLE_URL;
     }
-    else if(clientType && clientType == ClientType.COMPANY)
+    else if(clientType && clientType == ClientType.CUSTOMER)
     {
       url = CUSTOMER_COUPON_GET_EXAMPLE_URL;
     }
+    console.log(url)
     const queryParams = new HttpParams()
       .set(RESULTS_COUNT, resultsCount.toString())
       .set(NAME_EXAMPLE, nameExample);

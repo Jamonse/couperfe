@@ -27,10 +27,14 @@
             </app-category>
         </ng-template>
         <ng-template #noCategoriesFound>
-            No Categories found.
+            <div class="center">
+                No Categories found.
+            </div>
         </ng-template>
     </div>
-    <div class="spacer"></div>
+    <div *ngIf="!windowService.isWindowSmall || 
+        (categories$ | async)?.length == 0" class="spacer">
+    </div>
     <mat-paginator style="width: 50%;"
         [disabled]="(categories$ | async)?.length == 0"
         class="mat-elevation-z8 paginator"

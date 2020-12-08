@@ -48,7 +48,6 @@
     <ng-template #couponsFound>
         <ng-container *ngIf="coupons$ | async as coupons">
             <cdk-virtual-scroll-viewport class="coupons-grid"
-                [ngClass]="{'grid-small-window': windowService.isWindowSmall}"
                 [itemSize]="50">
                 <app-coupon
                     *cdkVirtualFor="let coupon of coupons"

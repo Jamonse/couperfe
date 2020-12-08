@@ -25,10 +25,12 @@ header {
 main {
     grid-area: main;
     display: flex;
+    overflow: auto;
 }
 
 footer {
    grid-area: footer;
    align-self: end;
+   overflow: auto;
 }
 

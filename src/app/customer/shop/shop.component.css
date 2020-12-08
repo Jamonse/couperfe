@@ -24,8 +24,8 @@
     margin-top: 5rem;
     display: flex;
     flex-flow: row wrap;
-    width: 80%;
     height: 100%;
+    width: 80%;
 }
 
 .spacer {
@@ -36,7 +36,7 @@
     align-self: center;
 }
 
-.grid-small-window {
+::ng-deep .grid-small-window {
     justify-content: center;
 }
 
@@ -44,4 +44,16 @@
     justify-self: flex-end;
     margin: 1rem 0 1rem 0;
     width: 100%;
+}
+
+::ng-deep .cdk-virtual-scroll-content-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+@media only screen and (max-width: 959px)
+{
+    ::ng-deep .cdk-virtual-scroll-content-wrapper {
+        justify-content: center;
+    }
 }

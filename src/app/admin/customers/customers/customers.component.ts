@@ -34,7 +34,11 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   sortBy: 'firstName' | 'lastName' | 'email';
   sortDirection: boolean = true;
   // Sort options and directions
-  sortByOptions: string[] = ['First Name', 'Last Name', 'Email'];
+  sortByOptions: string[][] = [
+    ['First Name', 'firstName'], 
+    ['Last Name', 'lastName'], 
+    ['Email', 'email']
+  ];
   pageSizeOptions: number[] = [5, 7, 10];
   // Search bar and autocomplete
   searchInput: FormGroup;

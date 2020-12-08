@@ -9,6 +9,8 @@ import { CouponInfoComponent } from './coupon-info/coupon-info.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../core/material/material.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { PurchaseDialogComponent } from './purchase-dialog/purchase-dialog.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 @NgModule({
@@ -16,14 +18,15 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ProfileComponent, 
     CouponsComponent, 
     ShopComponent, 
-    CouponInfoComponent
+    CouponInfoComponent, PurchaseDialogComponent
   ],
   imports: [
     CommonModule,
     CustomerRoutingModule,
     MaterialModule,
     SharedModule,
-    ScrollingModule
+    ScrollingModule,
+    MatStepperModule
   ]
 })
 export class CustomerModule { }

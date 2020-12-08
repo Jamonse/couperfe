@@ -1,5 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { ClientType } from 'src/app/core/model/client-type';
@@ -9,6 +11,7 @@ import { ClientCouponsStore } from 'src/app/shared/coupons/store/client-coupons.
 import { ShopCouponStore } from 'src/app/shared/coupons/store/coupons-shop.store';
 import { CouponSortType } from 'src/app/shared/coupons/utils/coupon.sort-type';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
+import { PurchaseDialogComponent } from '../purchase-dialog/purchase-dialog.component';
 
 @Component({
   templateUrl: './shop.component.html',
@@ -21,6 +24,9 @@ export class ShopComponent implements OnInit {
   // Sort icon options
   UP_ARROW = 'keyboard_arrow_up';
   DOWN_ARROW = 'keyboard_arrow_down';
+
+  dialogBasicConfiguration: MatDialogConfig;
+  matSnackBarConfig: MatSnackBarConfig;
 
   coupons$: Observable<Coupon[]>;
   pageIndex: number;
@@ -43,12 +49,23 @@ export class ShopComponent implements OnInit {
   searchedCoupons: CouponSearchResult[];
 
   constructor(
+    private clientCouponsStore: ClientCouponsStore,
     public couponsStore: ShopCouponStore,
     public windowService: WindowSizeService,
     private changeDetector: ChangeDetectorRef,
-    private formBuilder: FormBuilder) 
+    private formBuilder: FormBuilder,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar) 
     { 
       this.searchInput = this.formBuilder.group({searchInput: ''});
+      this.dialogBasicConfiguration = new MatDialogConfig();
+      this.dialogBasicConfiguration.autoFocus = false;
+      this.dialogBasicConfiguration.closeOnNavigation = true;
+      this.dialogBasicConfiguration.width = '25rem';
+
+      this.matSnackBarConfig = new MatSnackBarConfig();
+      this.matSnackBarConfig.duration = 7000;
+      this.matSnackBarConfig.panelClass = ['my-snack-bar'];
     }
 
     ngOnInit(): void {
@@ -92,7 +109,21 @@ export class ShopComponent implements OnInit {
 
     buyCoupon(coupon: Coupon)
     {
+      const dialogConfig = {
+        ...this.dialogBasicConfiguration,
+        ...{data: {coupons: [coupon]}}
+      }
 
+      let dialogRef = this.dialog.open(PurchaseDialogComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(res => {
+        if(res)
+        {
+          this.loadCoupons();
+          this.clientCouponsStore.loadCoupons(ClientType.CUSTOMER);
+          this.snackBar
+            .open('Purchased Successfuly, Congatulations!', 'X', this.matSnackBarConfig)
+        }
+      })
     }
 
     get clientTypes(): typeof ClientType 

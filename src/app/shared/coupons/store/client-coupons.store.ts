@@ -33,9 +33,9 @@ export class ClientCouponsStore
         private authService: AuthenticationService) 
     {   
         this.authService.clientType$.subscribe(clientType => {
-            if(clientType)
+            if(clientType && clientType != ClientType.ADMIN)
             {
-                this.loadCoupons(this.authService.clientType());
+                this.loadCoupons(clientType);
             }
             else
             {

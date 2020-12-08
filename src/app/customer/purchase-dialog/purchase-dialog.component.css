@@ -1,0 +1,30 @@
+.order-info {
+    height: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
+}
+
+.order-content {
+    overflow: auto;
+}
+
+.payment-method {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.payment-method img {
+    max-width: 3rem;
+    margin-right: 5rem;
+}
+
+.summary_icon {
+    margin-right: 1rem;
+}
+
+::ng-deep .mat-vertical-stepper-header{
+    pointer-events: none !important;
+}

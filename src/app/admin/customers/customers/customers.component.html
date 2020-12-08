@@ -34,8 +34,8 @@
                 (selectionChange)="loadCustomers()"
                 [disabled]="(customers$ | async)?.length == 0">
                 <mat-option 
-                    *ngFor="let sortType of sortByOptions" [value]="sortType">
-                    {{ sortType }}
+                    *ngFor="let sortType of sortByOptions" [value]="sortType[1]">
+                    {{ sortType[0] }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -67,7 +67,9 @@
             No Customers found.
         </div>
     </ng-template>
-    <div class="spacer"></div>
+    <div *ngIf="!windowService.isWindowSmall || 
+        (customers$ | async)?.length == 0" class="spacer">
+    </div>
     <mat-paginator style="width: 50%;"
         [disabled]="(customers$ | async)?.length == 0"
         class="mat-elevation-z8 paginator"

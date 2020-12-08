@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
-import { catchError, delay, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { ClientType } from 'src/app/core/model/client-type';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { MessagesService } from 'src/app/shared/messages/service/messages.service';

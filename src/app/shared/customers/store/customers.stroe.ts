@@ -84,7 +84,7 @@ export class CustomersStore {
     const loadedCustomers$ = this.customersService
     .getAllCustomersPaged(pageIndex, pageSize).pipe(
     catchError(err => {
-        this.messagesService.displayErrors('Could not load companies');
+        this.messagesService.displayErrors('Could not load customers');
         return throwError(err)
       }),
       tap((loadedCustomers: CustomerResponse) => {
@@ -103,7 +103,7 @@ export class CustomersStore {
     const loadedCustomers$ = this.customersService
     .getAllCustomerPagedAndSorted(pageIndex, pageSize, sortBy, asc).pipe(
     catchError(err => {
-        this.messagesService.displayErrors('Could not load companies');
+        this.messagesService.displayErrors('Could not load customers');
         return throwError(err)
       }),
       tap((loadedCustomers: CustomerResponse) => {

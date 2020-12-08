@@ -1,0 +1,89 @@
+<mat-vertical-stepper [linear]="true">
+    <mat-step label="Your order:">
+        <div class="order-info">
+            <div *ngFor="let coupon of coupons" class="order-content">
+                <div>{{ coupon.title }}</div>
+                <div>by: {{ coupon.ownerCompany.name }}</div>
+                <div>{{ coupon.price | currency }}</div>
+                <mat-divider></mat-divider>
+            </div>
+            <div>Total: {{ totalPrice | currency }}</div>
+            <button matStepperNext
+                mat-flat-button   
+                color="primary"
+                (click)="orderConfirmed = true">
+                Continue
+            </button>
+        </div>
+    </mat-step>
+    <mat-step label="Choose payment method:">
+        <div style="display: flex; text-align: center; flex-direction: column;">
+            <mat-radio-group
+                *ngFor="let paymentMethod of paymentMethods"
+                [(ngModel)]="selectedPaymentMethod">
+                <div class="payment-method" >
+                <img [src]="paymentMethod.imageUrl">
+                <mat-radio-button
+                    style="margin-top: 0.4rem;"
+                    color="primary"
+                    [value]="paymentMethod.name">
+                </mat-radio-button>
+                </div>
+            </mat-radio-group>
+            <button matStepperNext
+                style="margin-bottom: 1rem;"
+                mat-flat-button
+                color="primary"
+                [disabled]="!selectedPaymentMethod"
+                (click)="paymentMethodChosen = true">
+                Continue
+            </button>
+            <button matStepperPrevious
+                mat-stroked-button>
+                Back
+            </button>
+        </div>
+    </mat-step>
+    <mat-step label="Summary:">
+        <div style="display: flex; flex-direction: column;">
+            <mat-list>
+                <mat-list-item>
+                    <mat-icon class="summary_icon">
+                        format_list_bulleted
+                    </mat-icon>
+                    <span>
+                        Coupons in order: <strong> {{ coupons.length }}</strong>
+                    </span>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon class="summary_icon">
+                        credit_card
+                    </mat-icon>
+                    Payment method: <strong> {{ selectedPaymentMethod }}</strong>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon class="summary_icon">
+                        attach_money
+                    </mat-icon>
+                    Total price: <strong> {{ totalPrice | currency }}</strong>
+                </mat-list-item>
+            </mat-list>
+            <button style="margin-bottom: 1rem;" 
+                mat-flat-button
+                color="primary"
+                (click)="purchaseCoupons()">
+                Check Out
+            </button>
+            <button matStepperPrevious
+                mat-stroked-button>
+                Back
+            </button>
+        </div>  
+    </mat-step>
+</mat-vertical-stepper>
+<button
+    style="border-radius: 0;" 
+    mat-raised-button
+    (click)="onClose()">
+    Cancel
+</button>
