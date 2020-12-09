@@ -12,6 +12,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { StockPipe } from './coupons/pipe/stock.pipe';
 import { CouponComponent } from './coupons/coupon/coupon.component';
 import { RouterModule } from '@angular/router';
+import { CouponInfoComponent } from './coupons/coupon-info/coupon-info.component';
 
 
 
@@ -24,7 +25,8 @@ import { RouterModule } from '@angular/router';
     RemoveFocusDirective, 
     HighlightSearchPipe, 
     StockPipe, 
-    CouponComponent
+    CouponComponent, 
+    CouponInfoComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { RouterModule } from '@angular/router';
     CouponComponent,
     RemoveFocusDirective, 
     HighlightSearchPipe, 
-    StockPipe
+    StockPipe,
+    CouponInfoComponent
   ]
 })
 export class SharedModule { }

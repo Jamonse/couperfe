@@ -1,0 +1,66 @@
+<div *ngIf="couponToDisplay" class="info-container">
+    <button mat-mini-fab color="white" 
+        style="align-self: flex-start;
+            margin-top: 5rem;"
+        [routerLink]="COUPONS_URL">
+        <mat-icon>
+            keyboard_arrow_left
+        </mat-icon>
+    </button>
+    <div 
+        class="info" 
+        [ngClass]="{'info-normal-window': !windowService.isWindowSmall, 
+            'info-small-window': windowService.isWindowSmall }">
+        <img 
+            class="coupon-image" src="./assets/customer-logo.svg"
+            [ngClass]="{'image-normal-window': !windowService.isWindowSmall,
+                'image-small-window': windowService.isWindowSmall}">
+        <div class="coupon-info">
+            <div>
+                <h1>{{ couponToDisplay.title }}</h1>
+                <h2>{{ couponToDisplay.category.name }}</h2>
+            </div>
+            <mat-divider style="margin-bottom: 2rem;"></mat-divider>
+            <div style="display: flex; flex-direction: column; margin-bottom: 2rem;">
+                <span class="info-item" >{{ couponToDisplay.price | currency }}</span>
+                <span class="info-item"
+                    [innerHTML]="couponToDisplay.quantity | stock">
+                </span>
+                <span class="info-item">Available from 
+                    {{ couponToDisplay.startDate | date }}
+                    to
+                    {{ couponToDisplay.endDate | date }}
+                </span>
+                <span class="info-item">{{ couponToDisplay.description }}</span>
+            </div>
+            <button *ngIf="clientType == clientTypes.COMPANY"
+                class="coupon-button"
+                mat-raised-button
+                color="accent"
+                (click)="updateCoupon()">Update
+            </button>
+            <button *ngIf="clientType == clientTypes.COMPANY"
+                class="coupon-button"
+                mat-raised-button
+                color="warn"
+                (click)="deleteCoupon()">Delete
+            </button>
+            <button *ngIf="!clientType"
+                class="coupon-button"
+                mat-raised-button
+                color="primary"
+                (click)="purchaseCoupon()"
+                [disabled]="couponToDisplay.quantity == 0">
+                Buy Now
+            </button>
+            <button *ngIf="!clientType"
+                class="coupon-button"
+                mat-raised-button
+                color="primary"
+                (click)="addToCard()"
+                [disabled]="couponToDisplay.quantity == 0">
+                Add to Cart
+            </button>
+        </div>
+    </div> 
+</div>

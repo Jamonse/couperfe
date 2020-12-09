@@ -1,0 +1,53 @@
+.info-container {
+    display: flex;
+    justify-content: center;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10rem;
+}
+
+.info-small-window {
+    width: 70%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-normal-window {
+    width: 50%;
+}
+
+.info-item {
+    margin-bottom: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+}
+
+.coupon-info {
+    display: flex;
+    flex-direction: column;
+    height: 30rem;
+    min-width: 15rem;
+}
+
+.coupon-image {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 20rem;
+    height: 20rem;
+}
+
+.image-small-window {
+    margin-bottom: 2rem;
+}
+
+.image-normal-window {
+    margin-right: 5rem;
+}
+
+.coupon-button {
+    margin-bottom: 1rem;
+}

@@ -41,7 +41,7 @@ export class ClientCouponsStore
             {
                 this.couponsSubject.next([]);
             }
-        })
+        });
     }
 
     saveCoupon(coupon: Coupon): Observable<Coupon>

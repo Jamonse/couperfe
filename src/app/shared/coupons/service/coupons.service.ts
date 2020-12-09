@@ -25,7 +25,8 @@ import {
   RESULTS_COUNT,
   SORT_DIRECTION,
   SORT_TYPE,
-  COUPON_PURCHASE_URL
+  COUPON_PURCHASE_URL,
+  COUPON_GET_URL
 } from '../../utils/api.utils';
 import { Coupon } from '../model/coupon';
 import { ClientType } from 'src/app/core/model/client-type';
@@ -64,7 +65,11 @@ export class CouponsService {
     {
       url = CUSTOMER_COUPON_GET_URL;
     }
-    return this.httpClient.get<Coupon>(COMPANY_COUPON_GET_URL + couponId)
+    else
+    {
+      url = COUPON_GET_URL;
+    }
+    return this.httpClient.get<Coupon>(url + couponId)
   }
 
   getClientCoupons(clientType: ClientType): Observable<Coupon[]>

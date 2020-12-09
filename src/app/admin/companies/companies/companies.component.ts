@@ -11,6 +11,7 @@ import { CompaniesStore } from 'src/app/shared/companies/store/companies.store';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
+import { GlobalConfiguration, PageUtils } from 'src/app/shared/utils/common';
 import { CompanyDialogComponent } from '../company-dialog/company-dialog.component';
 
 @Component({
@@ -28,14 +29,12 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
   MAX_SEARCH_RESULTS = 5;
 
   companies$: Observable<Company[]>;
-  dialogBasicConfiguration: MatDialogConfig;
-  matSnackBarConfig: MatSnackBarConfig;
   // Selected sort option and direction
   sortBy: 'name' | 'email';
   sortDirection: boolean;
   // Sort options and directions
   sortByOptions: string[] = ['Name','Email'];
-  pageSizeOptions: number[] = [5, 7, 10];
+  pageSizeOptions: number[] = PageUtils.DEFAULT_PAGE_SIZE_OPTIONS;
   // Search bar and autocomplete
   searchInput: FormGroup;
   searchText: string;
@@ -51,14 +50,6 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar) 
     { 
       this.searchInput = this.formBuilder.group({searchInput: ''});
-      this.dialogBasicConfiguration = new MatDialogConfig();
-      this.dialogBasicConfiguration.autoFocus = false;
-      this.dialogBasicConfiguration.closeOnNavigation = true;
-      this.dialogBasicConfiguration.width = '20rem';
-
-      this.matSnackBarConfig = new MatSnackBarConfig();
-      this.matSnackBarConfig.duration = 7000;
-      this.matSnackBarConfig.panelClass = ['my-snack-bar'];
     }
 
   ngOnInit(): void {
@@ -80,7 +71,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
   addCompany()
   {
     const dialogConfig = { // Merge dialog config with data
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {dialogMode: 'add'}}
     }
 
@@ -90,7 +81,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
       {
         this.loadCompanies();
         this.snackBar
-          .open(`${newCompany.name} was added successfuly!`, 'X', this.matSnackBarConfig)
+          .open(`${newCompany.name} was added successfuly!`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
       }
     })
   }
@@ -124,7 +115,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
   updateCompany(company: Company)
   {
     const dialogConfig = { // Merge dialog config with data
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {dialogMode: 'update', company: company}}
     }
 
@@ -134,7 +125,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
       {
         this.loadCompanies();
         this.snackBar
-          .open(`${updatedCompany.name} was updated successfuly!`, 'X', this.matSnackBarConfig)
+          .open(`${updatedCompany.name} was updated successfuly!`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
       }
     })
   }
@@ -142,7 +133,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
   deleteCompany(company: Company)
   {
     const dialogConfig = { // Merge dialog config with message
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {message: `Are you sure you want to delete ${company.name}?`}}
     }
 
@@ -154,7 +145,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
         this.loadingService.displayLoadingUntil(companyDeleted$).subscribe(
           () => {
             this.snackBar
-              .open(`${company.name} was deleted successfuly`, 'X', this.matSnackBarConfig)
+              .open(`${company.name} was deleted successfuly`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
             this.loadCompanies();
           }
         );

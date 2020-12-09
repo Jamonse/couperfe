@@ -7,6 +7,7 @@ import { ClientType } from 'src/app/core/model/client-type';
 import { Coupon } from 'src/app/shared/coupons/model/coupon';
 import { CouponSearchResult } from 'src/app/shared/coupons/model/coupon.search-result';
 import { ClientCouponsStore } from 'src/app/shared/coupons/store/client-coupons.store';
+import { CouponUtils } from 'src/app/shared/coupons/utils/common';
 import { CouponSortType } from 'src/app/shared/coupons/utils/coupon.sort-type';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
 
@@ -28,14 +29,7 @@ export class CouponsComponent implements OnInit, AfterViewInit {
   sortBy: CouponSortType; 
   sortDirection: boolean;
   // Sort options and directions
-  sortByOptions: string[][] = [
-    ['Title', 'title'],
-    ['Description', 'description'],
-    ['Price', 'price'], 
-    ['Quantity', 'quantity'], 
-    ['Start Date', 'startDate'], 
-    ['End Date', 'endDate']
-  ];
+  sortByOptions: string[][] = CouponUtils.COUPON_SORT_OPTIONS;
   pageSizeOptions: number[] = [5, 7, 10];
   // Search bar and autocomplete
   searchInput: FormGroup;

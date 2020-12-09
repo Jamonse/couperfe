@@ -9,6 +9,7 @@ import { CategoriesStore } from 'src/app/shared/categories/store/categories.stor
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
+import { GlobalConfiguration, PageUtils } from 'src/app/shared/utils/common';
 import { CategoryDialogComponent } from '../category-dialog/category-dialog.component';
 
 @Component({
@@ -18,13 +19,11 @@ import { CategoryDialogComponent } from '../category-dialog/category-dialog.comp
 export class CategoriesComponent implements OnInit {
 
   categories$: Observable<Category[]>;
-  dialogBasicConfiguration: MatDialogConfig;
-  matSnackBarConfig: MatSnackBarConfig;
 
   pageIndex: number = 0;
   pageSize: number = 5;
   length: number = 0;
-  pageSizeOptions: number[] = [5, 10];
+  pageSizeOptions: number[] = PageUtils.DEFAULT_PAGE_SIZE_OPTIONS;
 
   searchInput: string;
 
@@ -33,17 +32,7 @@ export class CategoriesComponent implements OnInit {
     private categoryStore: CategoriesStore,
     private dialog: MatDialog,
     private loadingSerivce: LoadingService,
-    private snackBar: MatSnackBar)
-  { 
-    this.dialogBasicConfiguration = new MatDialogConfig();
-    this.dialogBasicConfiguration.autoFocus = false;
-    this.dialogBasicConfiguration.closeOnNavigation = true;
-    this.dialogBasicConfiguration.width = '20rem';
-
-    this.matSnackBarConfig = new MatSnackBarConfig();
-    this.matSnackBarConfig.duration = 7000;
-    this.matSnackBarConfig.panelClass = ['my-snack-bar'];
-  }
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initPage()
@@ -52,7 +41,7 @@ export class CategoriesComponent implements OnInit {
   addCategory()
   {
     const dialogConfig = { // Merge dialog config with data
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {dialogMode: 'add'}}
     }
 
@@ -61,7 +50,7 @@ export class CategoriesComponent implements OnInit {
       if(newCategory)
       {
         this.snackBar
-          .open(`${newCategory.name} was added successfuly!`, 'X', this.matSnackBarConfig)
+          .open(`${newCategory.name} was added successfuly!`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
       }
     })
   }
@@ -69,7 +58,7 @@ export class CategoriesComponent implements OnInit {
   updateCategory(category: Category)
   {
     const dialogConfig = { // Merge dialog config with data
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {dialogMode: 'update', category: category}}
     }
 
@@ -78,7 +67,7 @@ export class CategoriesComponent implements OnInit {
       if(updatedCategory)
       {
         this.snackBar
-          .open(`${updatedCategory.name} was updated successfuly!`, 'X', this.matSnackBarConfig)
+          .open(`${updatedCategory.name} was updated successfuly!`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
       }
     })
   }
@@ -86,7 +75,7 @@ export class CategoriesComponent implements OnInit {
   deleteCategory(category: Category)
   {
     const dialogConfig = { // Merge dialog config with message
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {message: `Are you sure you want to delete ${category.name}?`}}
     }
 
@@ -96,7 +85,7 @@ export class CategoriesComponent implements OnInit {
       { // Delete operation confirmed
         const categoryDeleted$ = this.categoryStore.deleteCategory(category.id);
         this.loadingSerivce.displayLoadingUntil(categoryDeleted$).subscribe(() => {
-          this.snackBar.open(`${category.name} was deleted successfuly`, 'X', this.matSnackBarConfig)
+          this.snackBar.open(`${category.name} was deleted successfuly`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
         });
       }
     })

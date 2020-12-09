@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
 import { ClientType } from 'src/app/core/model/client-type';
@@ -9,8 +9,10 @@ import { Coupon } from 'src/app/shared/coupons/model/coupon';
 import { CouponSearchResult } from 'src/app/shared/coupons/model/coupon.search-result';
 import { ClientCouponsStore } from 'src/app/shared/coupons/store/client-coupons.store';
 import { ShopCouponStore } from 'src/app/shared/coupons/store/coupons-shop.store';
+import { CouponUtils } from 'src/app/shared/coupons/utils/common';
 import { CouponSortType } from 'src/app/shared/coupons/utils/coupon.sort-type';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
+import { GlobalConfiguration, PageUtils } from 'src/app/shared/utils/common';
 import { PurchaseDialogComponent } from '../purchase-dialog/purchase-dialog.component';
 
 @Component({
@@ -25,24 +27,14 @@ export class ShopComponent implements OnInit {
   UP_ARROW = 'keyboard_arrow_up';
   DOWN_ARROW = 'keyboard_arrow_down';
 
-  dialogBasicConfiguration: MatDialogConfig;
-  matSnackBarConfig: MatSnackBarConfig;
-
   coupons$: Observable<Coupon[]>;
   pageIndex: number;
   pageSize: number;
   sortBy: CouponSortType; 
   sortDirection: boolean;
   // Sort options and directions
-  sortByOptions: string[][] = [
-    ['Title', 'title'],
-    ['Description', 'description'],
-    ['Price', 'price'], 
-    ['Quantity', 'quantity'], 
-    ['Start Date', 'startDate'], 
-    ['End Date', 'endDate']
-  ];
-  pageSizeOptions: number[] = [5, 7, 10];
+  sortByOptions: string[][] = CouponUtils.COUPON_SORT_OPTIONS;
+  pageSizeOptions: number[] = PageUtils.DEFAULT_PAGE_SIZE_OPTIONS;
   // Search bar and autocomplete
   searchInput: FormGroup;
   searchText: string;
@@ -58,17 +50,10 @@ export class ShopComponent implements OnInit {
     private snackBar: MatSnackBar) 
     { 
       this.searchInput = this.formBuilder.group({searchInput: ''});
-      this.dialogBasicConfiguration = new MatDialogConfig();
-      this.dialogBasicConfiguration.autoFocus = false;
-      this.dialogBasicConfiguration.closeOnNavigation = true;
-      this.dialogBasicConfiguration.width = '25rem';
-
-      this.matSnackBarConfig = new MatSnackBarConfig();
-      this.matSnackBarConfig.duration = 7000;
-      this.matSnackBarConfig.panelClass = ['my-snack-bar'];
     }
 
     ngOnInit(): void {
+      this.couponsStore.loadCoupons();
       this.coupons$ = this.couponsStore.coupons$;
       this.sortBy = this.couponsStore.sortBy;
       this.sortDirection = this.couponsStore.sortDirection;
@@ -110,7 +95,7 @@ export class ShopComponent implements OnInit {
     buyCoupon(coupon: Coupon)
     {
       const dialogConfig = {
-        ...this.dialogBasicConfiguration,
+        ...GlobalConfiguration.dialogGlobalConfiguration(),
         ...{data: {coupons: [coupon]}}
       }
 
@@ -121,7 +106,7 @@ export class ShopComponent implements OnInit {
           this.loadCoupons();
           this.clientCouponsStore.loadCoupons(ClientType.CUSTOMER);
           this.snackBar
-            .open('Purchased Successfuly, Congatulations!', 'X', this.matSnackBarConfig)
+            .open('Purchased Successfuly, Congatulations!', 'X', GlobalConfiguration.snackbarGlobalConfiguration())
         }
       })
     }

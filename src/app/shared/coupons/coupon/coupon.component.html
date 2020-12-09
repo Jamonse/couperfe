@@ -5,7 +5,8 @@
             <div *ngIf="!clientType" style="display: flex;">
                 <button 
                     mat-icon-button
-                    color="primary">
+                    color="primary"
+                    [routerLink]="['info/', couponToDisplay.id]">
                     <mat-icon>
                         info
                     </mat-icon>
@@ -27,14 +28,14 @@
     <mat-card-content>
         <h2 class="coupon-heading">{{ couponToDisplay.category.name }}</h2>
         <h2>{{ couponToDisplay.price | currency }}</h2>
-        <h2 
+        <h2 *ngIf="clientType != clientTypes.CUSTOMER"
             [innerHTML]="couponToDisplay.quantity | stock">
         </h2>
         <h3>From: {{ couponToDisplay.startDate | date }}</h3>
         <h3>Until: {{ couponToDisplay.endDate | date }}</h3>
     </mat-card-content>
     <img 
-        *ngIf="couponToDisplay.quantity == 0" 
+        *ngIf="couponToDisplay.quantity == 0 && !clientType" 
         class="out-of-stock-sign" 
         src="/assets/out-of-stock.svg">
     <mat-card-actions style="text-align: center;" [ngSwitch]="clientType">

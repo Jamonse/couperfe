@@ -10,9 +10,11 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
 import { Coupon } from 'src/app/shared/coupons/model/coupon';
 import { CouponSearchResult } from 'src/app/shared/coupons/model/coupon.search-result';
 import { ClientCouponsStore } from 'src/app/shared/coupons/store/client-coupons.store';
+import { CouponUtils } from 'src/app/shared/coupons/utils/common';
 import { CouponSortType } from 'src/app/shared/coupons/utils/coupon.sort-type';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
+import { GlobalConfiguration, PageUtils } from 'src/app/shared/utils/common';
 import { CouponDialogComponent } from '../coupon-dialog/coupon-dialog.component';
 
 @Component({
@@ -30,21 +32,12 @@ export class CouponsComponent implements OnInit, AfterViewInit {
   MAX_SEARCH_RESULTS = 5;
 
   coupons$: Observable<Coupon[]>;
-  dialogBasicConfiguration: MatDialogConfig;
-  matSnackBarConfig: MatSnackBarConfig;
   // Selected sort option and direction
   sortBy: CouponSortType; 
   sortDirection: boolean;
   // Sort options and directions
-  sortByOptions: string[][] = [
-    ['Title', 'title'],
-    ['Description', 'description'],
-    ['Price', 'price'], 
-    ['Quantity', 'quantity'], 
-    ['Start Date', 'startDate'], 
-    ['End Date', 'endDate']
-  ];
-  pageSizeOptions: number[] = [5, 7, 10];
+  sortByOptions: string[][] = CouponUtils.COUPON_SORT_OPTIONS;
+  pageSizeOptions: number[] = PageUtils.DEFAULT_PAGE_SIZE_OPTIONS;
   // Search bar and autocomplete
   searchInput: FormGroup;
   searchText: string;
@@ -60,14 +53,6 @@ export class CouponsComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar) 
   { 
     this.searchInput = this.formBuilder.group({searchInput: ''});
-    this.dialogBasicConfiguration = new MatDialogConfig();
-    this.dialogBasicConfiguration.autoFocus = false;
-    this.dialogBasicConfiguration.closeOnNavigation = true;
-    this.dialogBasicConfiguration.width = '20rem';
-
-    this.matSnackBarConfig = new MatSnackBarConfig();
-    this.matSnackBarConfig.duration = 7000;
-    this.matSnackBarConfig.panelClass = ['my-snack-bar'];
   }
 
   ngOnInit(): void {
@@ -89,7 +74,7 @@ export class CouponsComponent implements OnInit, AfterViewInit {
   addCoupon()
   {
     const dialogConfig = {
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {dialogMode: 'add'}}
     }
     
@@ -99,7 +84,7 @@ export class CouponsComponent implements OnInit, AfterViewInit {
       {
         this.loadCoupons();
         this.snackBar
-          .open(`${newCoupon.title} was added successfuly!`, 'X', this.matSnackBarConfig)
+          .open(`${newCoupon.title} was added successfuly!`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
       }
     })
   }
@@ -135,7 +120,7 @@ export class CouponsComponent implements OnInit, AfterViewInit {
   updateCoupon(coupon: Coupon)
   {
     const dialogConfig = { // Merge dialog config with data
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {dialogMode: 'update', coupon: coupon}}
     }
 
@@ -145,7 +130,7 @@ export class CouponsComponent implements OnInit, AfterViewInit {
       {
         this.loadCoupons();
         this.snackBar
-          .open(`${updatedCoupon.title} was updated successfuly!`, 'X', this.matSnackBarConfig)
+          .open(`${updatedCoupon.title} was updated successfuly!`, 'X', )
       }
     })
   }
@@ -153,7 +138,7 @@ export class CouponsComponent implements OnInit, AfterViewInit {
   deleteCoupon(coupon: Coupon)
   {
     const dialogConfig = { // Merge dialog config with message
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {message: `Are you sure you want to delete ${coupon.title}?`}}
     }
 
@@ -165,7 +150,7 @@ export class CouponsComponent implements OnInit, AfterViewInit {
         this.loadingService.displayLoadingUntil(companyDeleted$).subscribe(
           () => {
             this.snackBar
-              .open(`${coupon.title} was deleted successfuly`, 'X', this.matSnackBarConfig)
+              .open(`${coupon.title} was deleted successfuly`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
             this.loadCoupons();
           }
         );

@@ -11,6 +11,7 @@ import { CustomerSearchResult } from 'src/app/shared/customers/model/customer.se
 import { CustomersStore } from 'src/app/shared/customers/store/customers.stroe';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
+import { GlobalConfiguration, PageUtils } from 'src/app/shared/utils/common';
 import { CustomerDialogComponent } from '../customer-dialog/customer-dialog.component';
 
 @Component({
@@ -28,8 +29,6 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   MAX_SEARCH_RESULTS = 5;
 
   customers$: Observable<Customer[]>;
-  dialogBasicConfiguration: MatDialogConfig;
-  matSnackBarConfig: MatSnackBarConfig;
   // Selected sort option and direction
   sortBy: 'firstName' | 'lastName' | 'email';
   sortDirection: boolean = true;
@@ -39,7 +38,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
     ['Last Name', 'lastName'], 
     ['Email', 'email']
   ];
-  pageSizeOptions: number[] = [5, 7, 10];
+  pageSizeOptions: number[] = PageUtils.DEFAULT_PAGE_SIZE_OPTIONS;
   // Search bar and autocomplete
   searchInput: FormGroup;
   searchText: string;
@@ -54,14 +53,6 @@ export class CustomersComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar) 
     { 
       this.searchInput = this.formBuilder.group({searchInput: ''});
-      this.dialogBasicConfiguration = new MatDialogConfig();
-      this.dialogBasicConfiguration.autoFocus = false;
-      this.dialogBasicConfiguration.closeOnNavigation = true;
-      this.dialogBasicConfiguration.width = '20rem';
-
-      this.matSnackBarConfig = new MatSnackBarConfig();
-      this.matSnackBarConfig.duration = 7000;
-      this.matSnackBarConfig.panelClass = ['my-snack-bar'];
     }
 
   ngOnInit(): void {
@@ -110,7 +101,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   addCustomer()
   {
     const dialogConfig = { // Merge dialog config with data
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {dialogMode: 'add'}}
     }
 
@@ -120,7 +111,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
       {
         this.loadCustomers();
         this.snackBar
-          .open(`${newCustomer.name} was updated successfuly!`, 'X', this.matSnackBarConfig)
+          .open(`${newCustomer.name} was updated successfuly!`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
       }
     })
   }
@@ -128,7 +119,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   updateCustomer(customer: Customer)
   {
     const dialogConfig = { // Merge dialog config with data
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {dialogMode: 'update', customer: customer}}
     }
 
@@ -138,7 +129,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
       {
         this.loadCustomers();
         this.snackBar
-          .open(`${updatedCustomer.name} was updated successfuly!`, 'X', this.matSnackBarConfig)
+          .open(`${updatedCustomer.name} was updated successfuly!`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
       }
     })
   }
@@ -146,7 +137,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   deleteCustomer(customer: Customer)
   {
     const dialogConfig = { // Merge dialog config with message
-      ...this.dialogBasicConfiguration,
+      ...GlobalConfiguration.dialogGlobalConfiguration(),
       ...{data: {message: `Are you sure you want to delete ${customer.name}?`}}
     }
 
@@ -158,7 +149,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
         this.loadingService.displayLoadingUntil(customerDeleted$).subscribe(
           () => {
             this.snackBar
-              .open(`${customer.name} was deleted successfuly`, 'X', this.matSnackBarConfig)
+              .open(`${customer.name} was deleted successfuly`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
             this.loadCustomers();
           }
         );

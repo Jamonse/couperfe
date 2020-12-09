@@ -11,6 +11,7 @@ import { MaterialModule } from '../core/material/material.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PurchaseDialogComponent } from './purchase-dialog/purchase-dialog.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { CouponShopInfoComponent } from './coupon-shop-info/coupon-shop-info.component';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     ProfileComponent, 
     CouponsComponent, 
     ShopComponent, 
-    CouponInfoComponent, PurchaseDialogComponent
+    CouponInfoComponent, PurchaseDialogComponent, CouponShopInfoComponent
   ],
   imports: [
     CommonModule,
