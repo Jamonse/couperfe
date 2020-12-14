@@ -102,6 +102,28 @@
         </mat-error>
     </mat-form-field>
     <mat-form-field>
+        <mat-label>Coupon picture</mat-label>
+        <input
+            matInput
+            formControlName="imageUrl">
+        <button 
+            type="button" 
+            mat-icon-button 
+            matSuffix
+            [matMenuTriggerFor]="couponImagesMenu">
+            <mat-icon>
+                image
+            </mat-icon>
+        </button>
+        <mat-menu #couponImagesMenu="matMenu" class="images"> 
+            <img mat-menu-item
+                class="coupon-image"
+                *ngFor="let image of couponImages" 
+                [src]="image.url" 
+                (click)="selectImage(image)">
+        </mat-menu>
+    </mat-form-field>
+    <mat-form-field>
         <mat-label>Coupon description</mat-label>
         <textarea matInput #couponDescription maxlength="255" formControlName="description"></textarea>
         <mat-hint align="end">{{ couponDescription.value.length }} / 255</mat-hint>

@@ -1,12 +1,11 @@
 mat-card {
-    margin: 1rem;
+    min-width: 20rem;
 }
 
 .coupon-heading {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: wrap;
-    max-width: 17rem;
 }
 
 .buttons-container {

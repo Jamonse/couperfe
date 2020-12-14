@@ -6,6 +6,7 @@ import { Category } from 'src/app/core/model/category.model';
 import { CategoriesStore } from 'src/app/shared/categories/store/categories.store';
 import { Coupon } from 'src/app/shared/coupons/model/coupon';
 import { ClientCouponsStore } from 'src/app/shared/coupons/store/client-coupons.store';
+import { CouponImage, CouponUtils } from 'src/app/shared/coupons/utils/common';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
 import { conditionalValidator } from 'src/app/shared/utils/common';
@@ -29,6 +30,8 @@ export class CouponDialogComponent implements OnInit {
   selectedStartDate: Date;
   selectedEndDate: Date;
 
+  couponImages: CouponImage[] = CouponUtils.couponImages;
+
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CouponDialogComponent>,
@@ -51,6 +54,7 @@ export class CouponDialogComponent implements OnInit {
           Validators.required, 
           conditionalValidator(() => this.dialogMode == 'add', this.notBeforeToday)]],
         endDate: ['', [Validators.required, this.notBeforeToday]],
+        imageUrl: [{value: '', disabled: true}],
         description: ['']
       }
       
@@ -92,6 +96,11 @@ export class CouponDialogComponent implements OnInit {
       this.loadingService.displayLoadingUntil(couponSaved$).subscribe(
         () => this.dialogRef.close(coupon));
     }
+  }
+
+  selectImage(image: CouponImage)
+  {
+    this.couponForm.get('imageUrl').patchValue(image.name);
   }
 
   onClose()

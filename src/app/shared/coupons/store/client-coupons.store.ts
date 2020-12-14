@@ -156,6 +156,10 @@ export class ClientCouponsStore
     {
         return this.couponsService.deleteCoupon(couponId).pipe(
             catchError(err => {
+                if(err.status === 400)
+                {
+                    this.messagesService.displayErrors(err.error.message);
+                }
                 return throwError(err);
             })
         );

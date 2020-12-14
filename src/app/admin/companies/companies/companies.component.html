@@ -52,8 +52,7 @@
         else noCompaniesFound">
     </ng-template>
     <ng-template #companiesFound>
-        <div class="companies-grid"
-        [ngClass]="{'grid-small-window': windowService.isWindowSmall}">
+        <div class="companies-grid">
             <app-company 
                 *ngFor="let comapny of (companies$ | async)"
                 [companyToDisplay]="comapny"

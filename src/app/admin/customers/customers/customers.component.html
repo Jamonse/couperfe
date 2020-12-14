@@ -52,8 +52,7 @@
         else noCustomersFound">
     </ng-template>
     <ng-template #customersFound>
-        <div class="customers-grid"
-        [ngClass]="{'grid-small-window': windowService.isWindowSmall}">
+        <div class="customers-grid">
             <app-customer
                 *ngFor="let customer of (customers$ | async)"
                 [customerToDisplay]="customer"

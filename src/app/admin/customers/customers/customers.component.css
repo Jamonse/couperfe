@@ -21,10 +21,11 @@
 }
 
 .customers-grid {
-    margin-top: 5rem;
-    display: flex;
-    flex-flow: row wrap;
     width: 80%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    grid-auto-rows: auto;
+    grid-gap: 0.5rem;
 }
 
 .spacer {
@@ -33,10 +34,6 @@
 
 .center {
     align-self: center;
-}
-
-.grid-small-window {
-    justify-content: center;
 }
 
 .paginator {

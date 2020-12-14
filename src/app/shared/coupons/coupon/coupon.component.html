@@ -1,4 +1,4 @@
-<mat-card style="max-width: 20rem; min-width: 20rem;">
+<mat-card>
     <mat-card-header style="display: flex; flex-direction: column;">
         <div style="display: flex; justify-content: space-between;">
             <h1 class="coupon-heading">{{ couponToDisplay.title }}</h1>
@@ -24,7 +24,7 @@
             <p class="ellipsis">by: {{ couponToDisplay.ownerCompany.name }}</p>
         </div>
     </mat-card-header>
-    <img mat-card-image src="/assets/company-logo.svg">
+    <img mat-card-image src="/assets/coupon-pics/Tech.jpg">
     <mat-card-content>
         <h2 class="coupon-heading">{{ couponToDisplay.category.name }}</h2>
         <h2>{{ couponToDisplay.price | currency }}</h2>

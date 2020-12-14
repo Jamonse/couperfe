@@ -13,6 +13,14 @@
             </button>
         </div>
         <div>
+            <button mat-icon-button
+                style="margin-right: 1rem;"
+                *ngIf="(clientType$ | async) == clientTypes.CUSTOMER"
+                [matBadge]="(shopStore.shoppingCart$ | async)?.length"
+                [matBadgeHidden]="(shopStore.shoppingCart$ | async)?.length == 0"
+                matBadgeColor="primary">
+                <mat-icon>shopping_cart</mat-icon>
+            </button>
             <button mat-raised-button 
                 color="primary" 
                 style="float: right;"
@@ -34,14 +42,36 @@
         </button>
     </div>
     <img class="logo" src="./assets/logo.png">
-    <div>
+    <div
+        *ngIf="(clientType$ | async) == clientTypes.CUSTOMER;
+            then customer
+            else noneCustomer">  
+    </div>
+    <ng-template #customer>
+        <button mat-mini-fab
+            color="primary"
+            [matMenuTriggerFor]="customerMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #customerMenu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>shopping_cart</mat-icon>
+                My Cart
+            </button>
+            <button mat-menu-item>
+                <mat-icon>power_settings_new</mat-icon>
+                Logout
+            </button>
+        </mat-menu>
+    </ng-template>
+    <ng-template #noneCustomer>
         <button mat-raised-button 
             color="primary" 
             style="float: right;"
             (click)="logout()">
             Logout
         </button>
-    </div>
+    </ng-template>
 </mat-toolbar>
 
 

@@ -24,6 +24,7 @@
             <div style="display: flex; flex-direction: column; margin-bottom: 2rem;">
                 <span class="info-item" >{{ couponToDisplay.price | currency }}</span>
                 <span class="info-item"
+                    *ngIf="clientType != clientTypes.CUSTOMER"
                     [innerHTML]="couponToDisplay.quantity | stock">
                 </span>
                 <span class="info-item">Available from 

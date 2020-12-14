@@ -15,6 +15,7 @@ import { CouponSortType } from '../utils/coupon.sort-type';
 export class ShopCouponStore
 {
     private couponsSubject = new BehaviorSubject<Coupon[]>([]);
+    private shoppingCartSubject = new BehaviorSubject<Coupon[]>([]);
     count = 0;
     pageIndex = 0;
     pageSize = 0;
@@ -22,6 +23,7 @@ export class ShopCouponStore
     sortDirection: boolean = true;
 
     coupons$ = this.couponsSubject.asObservable();
+    shoppingCart$ = this.shoppingCartSubject.asObservable();
 
     constructor(
         private couponsService: CouponsService,

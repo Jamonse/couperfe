@@ -12,3 +12,16 @@
     border-radius: 0;
     margin: 1rem;
 }
+
+.coupon-image {
+    width: 15rem;
+    height: 10rem;
+    margin: 0.5rem;
+}
+
+::ng-deep.mat-menu-panel {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    max-height: 20rem !important;
+    width: 25rem !important;
+  }
