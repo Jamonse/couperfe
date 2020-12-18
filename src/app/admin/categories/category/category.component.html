@@ -1,7 +1,9 @@
 <div class="mat-elevation-z2 category">
-    <h1 class="category-name">
+    <h1 class="category-name"
+        appTooltipIfTuncated
+        [matTooltip]="categoryToDisplay.name">
         {{ categoryToDisplay.name }}
-    </h1> 
+    </h1>
     <div class="buttons-container">
         <button mat-mini-fab (click)="update()">
             <mat-icon style="color: white;">

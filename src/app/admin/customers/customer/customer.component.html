@@ -1,9 +1,13 @@
 <div class="mat-elevation-z2 customer">
     <div class="customer-details">
-        <h1 class="customer-details">
+        <h1 class="customer-details"
+            appTooltipIfTuncated
+            [matTooltip]="customerToDisplay.name">
             {{ customerToDisplay.name }}
         </h1>
-        <h2 class="customer-details">
+        <h2 class="customer-details"
+            appTooltipIfTuncated
+            [matTooltip]="customerToDisplay.email">
             {{ customerToDisplay.email }}
         </h2>
     </div>

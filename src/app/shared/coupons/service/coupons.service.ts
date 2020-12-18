@@ -26,7 +26,10 @@ import {
   SORT_DIRECTION,
   SORT_TYPE,
   COUPON_PURCHASE_URL,
-  COUPON_GET_URL
+  COUPON_GET_URL,
+  ADD_TO_CART_URL,
+  REMOVE_FROM_CART_URL,
+  GET_CUSTOMER_CART
 } from '../../utils/api.utils';
 import { Coupon } from '../model/coupon';
 import { ClientType } from 'src/app/core/model/client-type';
@@ -49,9 +52,19 @@ export class CouponsService {
     return this.httpClient.post(COUPON_PURCHASE_URL, coupons);
   }
 
+  addToCart(coupon: Coupon): Observable<any>
+  {
+    return this.httpClient.post(ADD_TO_CART_URL, coupon);
+  }
+
   updateCoupon(coupon: Coupon): Observable<any>
   {
     return this.httpClient.put(COUPON_PUT_URL, coupon);
+  }
+
+  getCart()
+  {
+    return this.httpClient.get(GET_CUSTOMER_CART);
   }
 
   getClientCoupon(clientType: ClientType, couponId: number): Observable<Coupon>
@@ -171,6 +184,11 @@ export class CouponsService {
   deleteCoupon(couponId: number): Observable<any>
   {
     return this.httpClient.delete(COUPON_DELETE_URL + couponId);
+  }
+
+  removeFromCart(coupon: Coupon): Observable<any>
+  {
+    return this.httpClient.post(REMOVE_FROM_CART_URL, coupon);
   }
 
 }

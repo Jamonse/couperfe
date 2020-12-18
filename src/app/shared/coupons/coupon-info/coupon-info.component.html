@@ -7,18 +7,23 @@
             keyboard_arrow_left
         </mat-icon>
     </button>
-    <div 
-        class="info" 
+    <div class="info" 
         [ngClass]="{'info-normal-window': !windowService.isWindowSmall, 
             'info-small-window': windowService.isWindowSmall }">
         <img 
-            class="coupon-image" src="./assets/customer-logo.svg"
+            class="coupon-image" [src]="couponToDisplay.imagePath"
             [ngClass]="{'image-normal-window': !windowService.isWindowSmall,
                 'image-small-window': windowService.isWindowSmall}">
         <div class="coupon-info">
             <div>
-                <h1>{{ couponToDisplay.title }}</h1>
-                <h2>{{ couponToDisplay.category.name }}</h2>
+                <h1 appTooltipIfTuncated
+                    [matTooltip]="couponToDisplay.title">
+                    {{ couponToDisplay.title }}
+                </h1>
+                <h2 appTooltipIfTuncated
+                    [matTooltip]="couponToDisplay.category.name">
+                    {{ couponToDisplay.category.name }}
+                </h2>
             </div>
             <mat-divider style="margin-bottom: 2rem;"></mat-divider>
             <div style="display: flex; flex-direction: column; margin-bottom: 2rem;">
@@ -59,9 +64,20 @@
                 mat-raised-button
                 color="primary"
                 (click)="addToCard()"
-                [disabled]="couponToDisplay.quantity == 0">
-                Add to Cart
+                [disabled]="couponToDisplay.quantity == 0 || 
+                couponIncluded(couponToDisplay, (couponsShopStore.shoppingCart$ | async))">
+                <ng-template
+                    *ngIf="couponIncluded(couponToDisplay, (couponsShopStore.shoppingCart$ | async));
+                        then inCart
+                        else notInCart">
+                </ng-template>
             </button>
+            <ng-template #inCart>
+                In Cart
+            </ng-template>
+            <ng-template #notInCart>
+                Add to Cart
+            </ng-template>
         </div>
     </div> 
 </div>

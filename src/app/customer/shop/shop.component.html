@@ -52,7 +52,9 @@
                 <app-coupon
                     *cdkVirtualFor="let coupon of coupons"
                     [couponToDisplay]="coupon"
-                    (buyCoupon)="buyCoupon($event)">
+                    [inCart]="couponIncluded(coupon, (cart$ | async))"
+                    (buyCoupon)="buyCoupon($event)"
+                    (addCouponToCart)="addToCart($event)">
                 </app-coupon>
             </cdk-virtual-scroll-viewport>
         </ng-container>

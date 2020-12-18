@@ -130,7 +130,7 @@ export class CouponsComponent implements OnInit, AfterViewInit {
       {
         this.loadCoupons();
         this.snackBar
-          .open(`${updatedCoupon.title} was updated successfuly!`, 'X', )
+          .open(`${updatedCoupon.title} was updated successfuly!`, 'X', GlobalConfiguration.snackbarGlobalConfiguration())
       }
     })
   }

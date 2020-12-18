@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Injector, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -27,16 +27,24 @@ export class CouponInfoComponent implements OnInit {
   clientType: ClientType;
 
   couponToDisplay: Coupon;
+  shopStore: ShopCouponStore;
 
   constructor(
     private couponsStore: ClientCouponsStore,
-    private couponShop: ShopCouponStore,
     private router: Router,
+    private injector: Injector,
     private route: ActivatedRoute,
     private loadingService: LoadingService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    public windowService: WindowSizeService) { }
+    public windowService: WindowSizeService,
+    public couponsShopStore: ShopCouponStore) 
+    { 
+      if(this.clientType == ClientType.CUSTOMER)
+        {
+          this.shopStore = this.injector.get<ShopCouponStore>(ShopCouponStore);
+        }
+    }
 
   ngOnInit(): void {
     const loadedCoupon$ = this.couponsStore.loadCoupon(
@@ -60,7 +68,7 @@ export class CouponInfoComponent implements OnInit {
       if(res)
       {
         this.couponsStore.loadCoupons(ClientType.CUSTOMER);
-        this.couponShop.loadCoupons();
+        this.shopStore.loadCoupons();
         this.snackBar
           .open('Purchased Successfuly, Congatulations!', 'X', GlobalConfiguration.snackbarGlobalConfiguration())
         this.router.navigate([this.COUPONS_URL], {relativeTo: this.route, replaceUrl: true});
@@ -114,6 +122,11 @@ export class CouponInfoComponent implements OnInit {
         );
       }
     })
+  }
+
+  couponIncluded(coupon: Coupon, coupons: Coupon[])
+  {
+    return coupons.some(c => c.id == coupon.id);
   }
 
   get clientTypes(): typeof ClientType 

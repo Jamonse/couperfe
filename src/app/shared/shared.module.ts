@@ -13,6 +13,7 @@ import { StockPipe } from './coupons/pipe/stock.pipe';
 import { CouponComponent } from './coupons/coupon/coupon.component';
 import { RouterModule } from '@angular/router';
 import { CouponInfoComponent } from './coupons/coupon-info/coupon-info.component';
+import { TooltipIfTuncatedDirective } from './tooltip-if-tuncated.directive';
 
 
 
@@ -26,7 +27,8 @@ import { CouponInfoComponent } from './coupons/coupon-info/coupon-info.component
     HighlightSearchPipe, 
     StockPipe, 
     CouponComponent, 
-    CouponInfoComponent
+    CouponInfoComponent, 
+    TooltipIfTuncatedDirective
   ],
   imports: [
     CommonModule,
@@ -43,7 +45,8 @@ import { CouponInfoComponent } from './coupons/coupon-info/coupon-info.component
     RemoveFocusDirective, 
     HighlightSearchPipe, 
     StockPipe,
-    CouponInfoComponent
+    CouponInfoComponent,
+    TooltipIfTuncatedDirective
   ]
 })
 export class SharedModule { }

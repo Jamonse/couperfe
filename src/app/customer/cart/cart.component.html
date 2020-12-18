@@ -1,0 +1,15 @@
+<ng-template
+    *ngIf="(cart$ | async)?.length == 0;
+        then noCouponsFound
+        else couponsFound">
+</ng-template>
+<ng-template #noCouponsFound>
+    Nothing in the cart yet.
+</ng-template>
+<ng-template #couponsFound>
+    <app-cart-coupon
+        *ngFor="let coupon of (cart$ | async) as cart"
+        [couponToDisplay]="coupon">
+    </app-cart-coupon>
+</ng-template>
+

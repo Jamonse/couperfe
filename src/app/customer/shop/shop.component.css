@@ -22,10 +22,7 @@
 
 .coupons-grid {
     width: 80%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-    grid-auto-rows: auto;
-    grid-gap: 0.5rem;
+    height: 100%;
 }
 
 .spacer {
@@ -45,6 +42,10 @@
 ::ng-deep .cdk-virtual-scroll-content-wrapper {
     display: flex;
     flex-flow: row wrap;
+}
+
+::ng-deep .cdk-virtual-scroll-content-wrapper app-coupon {
+    margin: 1rem;
 }
 
 @media only screen and (max-width: 959px)

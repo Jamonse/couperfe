@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { ClientType } from 'src/app/core/model/client-type';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { MessagesService } from 'src/app/shared/messages/service/messages.service';
@@ -61,7 +62,12 @@ export class LoginComponent implements OnInit {
       }
 
       const login$ = this.authService.login(formContent.email, formContent.password, clientType)
-        .pipe(tap(authenticated => {
+        .pipe(
+          catchError(err => {
+            this.messagesService.displayErrors('Could not reach server conectivity, please try again later');
+            return throwError(err);
+          }),
+          tap(authenticated => {
           if(authenticated)
           {
             this.router.navigateByUrl('');

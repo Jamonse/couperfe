@@ -15,6 +15,9 @@ export class CouponComponent implements OnInit {
   @Input()
   couponToDisplay: Coupon;
 
+  @Input()
+  inCart: boolean;
+
   @Output()
   updateCoupon: EventEmitter<Coupon> = new EventEmitter<Coupon>();
 
@@ -23,6 +26,9 @@ export class CouponComponent implements OnInit {
 
   @Output()
   buyCoupon: EventEmitter<Coupon> = new EventEmitter<Coupon>();
+
+  @Output()
+  addCouponToCart: EventEmitter<Coupon> = new EventEmitter<Coupon>();
 
   constructor() { }
 
@@ -42,6 +48,11 @@ export class CouponComponent implements OnInit {
   buy()
   {
     this.buyCoupon.emit(this.couponToDisplay);
+  }
+
+  addToCart()
+  {
+    this.addCouponToCart.emit(this.couponToDisplay);
   }
 
   get clientTypes(): typeof ClientType 

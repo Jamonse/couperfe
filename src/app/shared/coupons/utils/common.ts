@@ -11,6 +11,7 @@ export class CouponUtils
 
     private static IMAGE_BASE_URL: string = '/assets/coupon-pics/';
     public static couponImages: CouponImage[] = [
+      {url: CouponUtils.IMAGE_BASE_URL + "coupon.jpg", name: 'Coupon'},
       {url: CouponUtils.IMAGE_BASE_URL + "airport.jpg", name: 'Airport'},
       {url: CouponUtils.IMAGE_BASE_URL + "book-shelf.jpg", name: 'Book-shelf'},
       {url: CouponUtils.IMAGE_BASE_URL + "books.jpg", name: 'Books'},

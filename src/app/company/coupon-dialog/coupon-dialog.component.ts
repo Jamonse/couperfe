@@ -27,9 +27,7 @@ export class CouponDialogComponent implements OnInit {
   coupon: Coupon;
 
   selectedCategory: Category;
-  selectedStartDate: Date;
-  selectedEndDate: Date;
-
+  
   couponImages: CouponImage[] = CouponUtils.couponImages;
 
   constructor(
@@ -54,7 +52,7 @@ export class CouponDialogComponent implements OnInit {
           Validators.required, 
           conditionalValidator(() => this.dialogMode == 'add', this.notBeforeToday)]],
         endDate: ['', [Validators.required, this.notBeforeToday]],
-        imageUrl: [{value: '', disabled: true}],
+        imagePath: [''],
         description: ['']
       }
       
@@ -87,6 +85,11 @@ export class CouponDialogComponent implements OnInit {
   {
     if(this.couponForm.valid)
     {
+      const imagePath = this.couponForm.get('imagePath').value
+      if(!imagePath || imagePath == '')
+      {
+        this.selectImage(this.couponImages[0]);
+      }
       const coupon = {
         ...this.coupon,
         ...this.couponForm.value
@@ -100,7 +103,7 @@ export class CouponDialogComponent implements OnInit {
 
   selectImage(image: CouponImage)
   {
-    this.couponForm.get('imageUrl').patchValue(image.name);
+    this.couponForm.get('imagePath').patchValue(image.url);
   }
 
   onClose()

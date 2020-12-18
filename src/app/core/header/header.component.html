@@ -14,6 +14,7 @@
         </div>
         <div>
             <button mat-icon-button
+                [routerLink]="'/customer/cart'"
                 style="margin-right: 1rem;"
                 *ngIf="(clientType$ | async) == clientTypes.CUSTOMER"
                 [matBadge]="(shopStore.shoppingCart$ | async)?.length"
@@ -54,7 +55,8 @@
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #customerMenu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item
+                routerLink="customer/cart">
                 <mat-icon>shopping_cart</mat-icon>
                 My Cart
             </button>

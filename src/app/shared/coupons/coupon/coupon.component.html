@@ -1,32 +1,50 @@
 <mat-card>
     <mat-card-header style="display: flex; flex-direction: column;">
         <div style="display: flex; justify-content: space-between;">
-            <h1 class="coupon-heading">{{ couponToDisplay.title }}</h1>
+            <h1 class="coupon-heading"
+                appTooltipIfTuncated
+                [matTooltip]="couponToDisplay.title">
+                {{ couponToDisplay.title }}
+            </h1>
             <div *ngIf="!clientType" style="display: flex;">
                 <button 
                     mat-icon-button
                     color="primary"
-                    [routerLink]="['info/', couponToDisplay.id]">
+                    [routerLink]="['info/', couponToDisplay.id]"
+                    [matTooltip]="'Coupon information'">
                     <mat-icon>
                         info
                     </mat-icon>
                 </button>
-                <button mat-icon-button
-                    color="primary">
-                    <mat-icon>
-                        add_shopping_cart
-                    </mat-icon>
-                </button>
+                <span
+                    [matTooltip]="inCart ? 'In cart!' : 'Add to Cart'">
+                    <button mat-icon-button
+                        color="primary" 
+                        [disabled]="inCart"
+                        (click)="addToCart()">
+                        <mat-icon>
+                            add_shopping_cart
+                        </mat-icon>
+                    </button>
+                </span>
             </div>
         </div>
         <div *ngIf="clientType != clientTypes.COMPANY">
             <mat-divider></mat-divider>
-            <p class="ellipsis">by: {{ couponToDisplay.ownerCompany.name }}</p>
+            <p class="ellipsis"
+                appTooltipIfTuncated
+                [matTooltip]="couponToDisplay.ownerCompany.name">
+                by: {{ couponToDisplay.ownerCompany.name }}
+            </p>
         </div>
     </mat-card-header>
-    <img mat-card-image src="/assets/coupon-pics/Tech.jpg">
+    <img mat-card-image [src]="couponToDisplay.imagePath">
     <mat-card-content>
-        <h2 class="coupon-heading">{{ couponToDisplay.category.name }}</h2>
+        <h2 class="coupon-heading"
+            appTooltipIfTuncated
+            [matTooltip]="couponToDisplay.category.name">
+            {{ couponToDisplay.category.name }}
+        </h2>
         <h2>{{ couponToDisplay.price | currency }}</h2>
         <h2 *ngIf="clientType != clientTypes.CUSTOMER"
             [innerHTML]="couponToDisplay.quantity | stock">

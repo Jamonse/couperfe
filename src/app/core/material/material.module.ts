@@ -19,6 +19,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const materialModules = [
   MatButtonModule,
@@ -41,7 +42,8 @@ const materialModules = [
   MatCardModule,
   MatRadioModule,
   MatMenuModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatTooltipModule
 ]
 
 @NgModule({

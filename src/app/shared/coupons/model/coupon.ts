@@ -12,5 +12,6 @@ export class Coupon
         public ownerCompany: Company,
         public startDate: Date,
         public endDate: Date,
+        public imagePath: string,
         public description: string) { }
 }

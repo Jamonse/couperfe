@@ -28,6 +28,7 @@ export class ShopComponent implements OnInit {
   DOWN_ARROW = 'keyboard_arrow_down';
 
   coupons$: Observable<Coupon[]>;
+  cart$: Observable<Coupon[]>;
   pageIndex: number;
   pageSize: number;
   sortBy: CouponSortType; 
@@ -53,8 +54,8 @@ export class ShopComponent implements OnInit {
     }
 
     ngOnInit(): void {
-      this.couponsStore.loadCoupons();
       this.coupons$ = this.couponsStore.coupons$;
+      this.cart$ = this.couponsStore.shoppingCart$;
       this.sortBy = this.couponsStore.sortBy;
       this.sortDirection = this.couponsStore.sortDirection;
       this.loadSearchedCoupons();
@@ -109,6 +110,16 @@ export class ShopComponent implements OnInit {
             .open('Purchased Successfuly, Congatulations!', 'X', GlobalConfiguration.snackbarGlobalConfiguration())
         }
       })
+    }
+
+    addToCart(coupon: Coupon)
+    {
+      this.couponsStore.addToCart(coupon);
+    }
+
+    couponIncluded(coupon: Coupon, coupons: Coupon[])
+    {
+      return coupons.some(c => c.id == coupon.id);
     }
 
     get clientTypes(): typeof ClientType 

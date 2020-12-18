@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
+import { AuthenticationService } from 'src/app/authentication/service/authentication.service';
+import { ClientType } from 'src/app/core/model/client-type';
 import { LoadingService } from '../../loading/service/loading.service';
 import { MessagesService } from '../../messages/service/messages.service';
 import { Coupon } from '../model/coupon';
@@ -28,9 +30,16 @@ export class ShopCouponStore
     constructor(
         private couponsService: CouponsService,
         private messagesService: MessagesService,
-        private loadingService: LoadingService) 
+        private loadingService: LoadingService,
+        private authService: AuthenticationService) 
     { 
-        this.loadCoupons();
+        this.authService.clientType$.subscribe(clientType => {
+            if(clientType && clientType == ClientType.CUSTOMER)
+            {
+                this.loadCoupons();
+                this.loadCart();
+            }
+        })    
     }
 
     loadCoupons(pageIndex = 0, pageSize = 5, sortBy?: CouponSortType, asc?: boolean)
@@ -43,11 +52,46 @@ export class ShopCouponStore
     purchaseCoupons(coupons: Coupon[])
     {
         return this.couponsService.purchaseCoupons(coupons).pipe(
+            catchError(this.displayErrors)
+        );
+    }
+
+    addToCart(coupon: Coupon)
+    {
+        const addedCoupon$ = this.couponsService.addToCart(coupon).pipe(
+            catchError(this.displayErrors)
+        );
+        this.loadingService.displayLoadingUntil(addedCoupon$).subscribe(() => {
+            const cart = this.shoppingCartSubject.getValue();
+            cart.push(coupon);
+            this.shoppingCartSubject.next(cart);
+        })
+    }
+
+    removeFromCart(coupon: Coupon)
+    {
+        const removedCoupon$ = this.couponsService.addToCart(coupon).pipe(
+            catchError(this.displayErrors)
+        );
+        this.loadingService.displayLoadingUntil(removedCoupon$).subscribe(() => {
+            const cart = this.shoppingCartSubject.getValue();
+            let index = cart.indexOf(coupon);
+            cart.splice(index, 1);
+            this.shoppingCartSubject.next(cart);
+        })
+    }
+
+    loadCart()
+    {
+        const loadedCart$ = this.couponsService.getCart().pipe(
             catchError(err => {
-                this.messagesService.displayErrors(err.error.message);
+                this.messagesService.displayErrors('Could not load coupons');
                 return throwError(err);
             })
         );
+        this.loadingService.displayLoadingUntil(loadedCart$).subscribe((loadedCart: Coupon[]) => 
+            this.shoppingCartSubject.next(loadedCart)
+        )
     }
 
     private loadCouponsPaged(pageIndex: number, pageSize: number)
@@ -97,5 +141,11 @@ export class ShopCouponStore
                     return throwError(err);
                 })
             );
+    }
+
+    private displayErrors = (err) =>
+    {
+        this.messagesService.displayErrors(err.error.message);
+        return throwError(err);
     }
 }
