@@ -1,4 +1,5 @@
-<div class="coupon">
+<div class="coupon" 
+    [ngStyle]="styleCoupon()">
     <div class="coupon-header">
         <h1 style="margin-left: 1rem;" 
             appTooltipIfTuncated
@@ -7,13 +8,15 @@
         </h1>
         <div class="buttons-container">
             <button mat-icon-button 
-                color="primary">
+                color="primary"
+                [routerLink]="['../shop/info/', couponToDisplay.id]">
                 <mat-icon>
                     info
                 </mat-icon>
             </button>
             <button mat-icon-button 
-                color="warn">
+                color="warn"
+                (click)="remove()">
                 <mat-icon>
                     delete
                 </mat-icon>

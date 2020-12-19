@@ -26,7 +26,11 @@ import { CustomerInfoComponent } from './customers/customer-info/customer-info.c
     CategoryDialogComponent, 
     CompanyComponent, 
     CompanyDialogComponent, 
-    CompanyInfoComponent, CustomerComponent, CustomerDialogComponent, CustomerInfoComponent],
+    CompanyInfoComponent, 
+    CustomerComponent, 
+    CustomerDialogComponent, 
+    CustomerInfoComponent
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,

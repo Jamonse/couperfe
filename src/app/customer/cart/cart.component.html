@@ -1,15 +1,42 @@
-<ng-template
-    *ngIf="(cart$ | async)?.length == 0;
+<div class="cart">
+    <ng-template
+        *ngIf="(cart$ | async)?.length == 0;
         then noCouponsFound
         else couponsFound">
-</ng-template>
+    </ng-template>
+</div>
 <ng-template #noCouponsFound>
-    Nothing in the cart yet.
+    <div style="font-size: 2rem; margin: auto;">
+        Nothing in the cart yet.
+        <hr>
+    </div>
+
 </ng-template>
 <ng-template #couponsFound>
-    <app-cart-coupon
-        *ngFor="let coupon of (cart$ | async) as cart"
-        [couponToDisplay]="coupon">
-    </app-cart-coupon>
+    <div class="cart-coupons">
+        <app-cart-coupon
+            *ngFor="let coupon of (cart$ | async) as cart"
+            [couponToDisplay]="coupon"
+            (removeCoupon)="removeCoupon($event)">
+        </app-cart-coupon>
+        <div class="spacer"></div>
+        <div class="cart-info">
+            <div style="margin-left: 2rem;">Total coupons in cart: <b>{{ totalCoupons }}</b></div>
+            <button *ngIf="!windowService.isWindowSmall"
+                mat-flat-button 
+                color="primary"
+                (click)="checkOut()">
+                Check Out
+            </button>
+            <div style="margin-right: 2rem;">Total: <b>{{ totalPrice | currency }}</b></div>
+        </div>
+        <button *ngIf="windowService.isWindowSmall"
+            style="margin-top: 1rem;" 
+            mat-flat-button 
+            color="primary"
+            (click)="checkOut()">
+            Check Out
+        </button>
+    </div>
 </ng-template>
 

@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Injector } from '@angular/core
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/authentication/service/authentication.service';
+import { Coupon } from 'src/app/shared/coupons/model/coupon';
 import { ShopCouponStore } from 'src/app/shared/coupons/store/coupons-shop.store';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
 import { MenuOption } from 'src/app/shared/utils/common';
@@ -17,6 +18,7 @@ export class HeaderComponent implements OnInit {
 
   clientType$: Observable<ClientType>;
   shopStore: ShopCouponStore;
+  cart$: Observable<Coupon[]>;
 
   @Output()
   sideMenuButtonCliecked: EventEmitter<any> = new EventEmitter();
@@ -34,6 +36,7 @@ export class HeaderComponent implements OnInit {
         if(clientType == ClientType.CUSTOMER)
         {
           this.shopStore = this.injector.get<ShopCouponStore>(ShopCouponStore);
+          this.cart$ = this.shopStore.shoppingCart$;
         }
       })
     }

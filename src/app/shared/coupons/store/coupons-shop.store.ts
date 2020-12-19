@@ -70,7 +70,7 @@ export class ShopCouponStore
 
     removeFromCart(coupon: Coupon)
     {
-        const removedCoupon$ = this.couponsService.addToCart(coupon).pipe(
+        const removedCoupon$ = this.couponsService.removeFromCart(coupon).pipe(
             catchError(this.displayErrors)
         );
         this.loadingService.displayLoadingUntil(removedCoupon$).subscribe(() => {

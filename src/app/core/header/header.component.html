@@ -17,8 +17,8 @@
                 [routerLink]="'/customer/cart'"
                 style="margin-right: 1rem;"
                 *ngIf="(clientType$ | async) == clientTypes.CUSTOMER"
-                [matBadge]="(shopStore.shoppingCart$ | async)?.length"
-                [matBadgeHidden]="(shopStore.shoppingCart$ | async)?.length == 0"
+                [matBadge]="(cart$ | async)?.length"
+                [matBadgeHidden]="(cart$ | async)?.length == 0"
                 matBadgeColor="primary">
                 <mat-icon>shopping_cart</mat-icon>
             </button>
@@ -54,17 +54,6 @@
             [matMenuTriggerFor]="customerMenu">
             <mat-icon>more_vert</mat-icon>
         </button>
-        <mat-menu #customerMenu="matMenu">
-            <button mat-menu-item
-                routerLink="customer/cart">
-                <mat-icon>shopping_cart</mat-icon>
-                My Cart
-            </button>
-            <button mat-menu-item>
-                <mat-icon>power_settings_new</mat-icon>
-                Logout
-            </button>
-        </mat-menu>
     </ng-template>
     <ng-template #noneCustomer>
         <button mat-raised-button 
@@ -75,5 +64,16 @@
         </button>
     </ng-template>
 </mat-toolbar>
-
+<mat-menu #customerMenu="matMenu">
+    <button mat-menu-item
+        [routerLink]="'/customer/cart'">
+        <mat-icon>shopping_cart</mat-icon>
+        My Cart
+    </button>
+    <button mat-menu-item
+        (click)="logout()">
+        <mat-icon>power_settings_new</mat-icon>
+        Logout
+    </button>
+</mat-menu>
 

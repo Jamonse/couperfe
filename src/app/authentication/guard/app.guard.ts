@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStat
 import { Observable, of } from 'rxjs';
 import { catchError, delay, map, tap } from 'rxjs/operators';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
+import { MessagesService } from 'src/app/shared/messages/service/messages.service';
 
 import { AuthenticationService } from '../service/authentication.service';
 
@@ -13,7 +14,8 @@ export class AppGuard implements CanActivate {
 
   constructor(private router: Router, 
     private authService: AuthenticationService,
-    private loadingService: LoadingService) { }
+    private loadingService: LoadingService,
+    private messagesService: MessagesService) { }
 
   canActivate(next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
@@ -34,12 +36,14 @@ export class AppGuard implements CanActivate {
             // Checks wether the user is still logged in (session is still alive)
             if(!authenticated.authenticated)
             {
+              this.messagesService.displayErrors('Session timed out, please reconnect to the system.');
               this.navigateToLoginPage();
               return false;
             }
             return true;
           }), // Connection Error
           catchError(err => {
+            this.messagesService.displayErrors('Could not reach server conectivity, please try again later');
             this.navigateToLoginPage();
             return of(false);
           }));

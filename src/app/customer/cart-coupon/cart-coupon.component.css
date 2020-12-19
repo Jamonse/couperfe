@@ -1,13 +1,15 @@
-.coupon-header {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
 .coupon {
     border: 1px solid lightgrey;
     border-radius: 1rem;
     margin: 1rem;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.coupon-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .coupon-info {

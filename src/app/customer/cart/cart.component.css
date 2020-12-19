@@ -1,0 +1,23 @@
+.cart {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.cart-coupons {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.cart-info {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 1rem;
+    height: 4rem;
+    align-items: center;
+}
