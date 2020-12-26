@@ -8,7 +8,6 @@ import { ShopComponent } from './shop/shop.component';
 import { CouponInfoComponent } from './coupon-info/coupon-info.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../core/material/material.module';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PurchaseDialogComponent } from './purchase-dialog/purchase-dialog.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { CouponShopInfoComponent } from './coupon-shop-info/coupon-shop-info.component';
@@ -21,14 +20,17 @@ import { CartCouponComponent } from './cart-coupon/cart-coupon.component';
     ProfileComponent, 
     CouponsComponent, 
     ShopComponent, 
-    CouponInfoComponent, PurchaseDialogComponent, CouponShopInfoComponent, CartComponent, CartCouponComponent
+    CouponInfoComponent, 
+    PurchaseDialogComponent, 
+    CouponShopInfoComponent, 
+    CartComponent, 
+    CartCouponComponent
   ],
   imports: [
     CommonModule,
     CustomerRoutingModule,
     MaterialModule,
     SharedModule,
-    ScrollingModule,
     MatStepperModule
   ]
 })

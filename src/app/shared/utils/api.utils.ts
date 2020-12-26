@@ -18,7 +18,7 @@
         COMPANY_GET_PAGED_SORTED_URL, ADD_TO_CART_URL,
         COMPANY_GET_EXAMPLE_URL, REMOVE_FROM_CART_URL,
         CUSTOMER_POST_URL, GET_CUSTOMER_CART,
-        CUSTOMER_PUT_URL,
+        CUSTOMER_PUT_URL, LOGOUT_URL,
         CUSTOMER_GET_ALL_URL,
         CUSTOMER_DELETE_URL,
         CUSTOMER_GET_URL,
@@ -36,6 +36,7 @@
     const API_URL = 'http://localhost:8080/coupersb/';
 
     const LOGIN = 'login';
+    const LOGOUT = 'logout'
     const GET_DETAILS = 'getDetails';
     const ADD = 'add';
     const UPDATE = 'update';
@@ -49,6 +50,8 @@
     const ADMIN_URL = API_URL + 'admin/';
     const COMPANY_URL = API_URL + 'company/';
     const CUSTOMER_URL = API_URL + 'customer/';
+
+    const LOGOUT_URL = API_URL + LOGOUT;
 
     const ADMIN_LOGIN_URL = ADMIN_URL + LOGIN;
     const COMPANY_LOGIN_URL = COMPANY_URL + LOGIN;

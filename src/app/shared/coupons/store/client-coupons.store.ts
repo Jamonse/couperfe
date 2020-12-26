@@ -40,6 +40,7 @@ export class ClientCouponsStore
             else
             {
                 this.couponsSubject.next([]);
+                this.sortBy = undefined;
             }
         });
     }

@@ -43,7 +43,7 @@ export class AppGuard implements CanActivate {
             return true;
           }), // Connection Error
           catchError(err => {
-            this.messagesService.displayErrors('Could not reach server conectivity, please try again later');
+            this.messagesService.displayErrors('Please reconnect to the system');
             this.navigateToLoginPage();
             return of(false);
           }));

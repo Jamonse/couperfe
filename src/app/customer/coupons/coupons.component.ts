@@ -10,6 +10,7 @@ import { ClientCouponsStore } from 'src/app/shared/coupons/store/client-coupons.
 import { CouponUtils } from 'src/app/shared/coupons/utils/common';
 import { CouponSortType } from 'src/app/shared/coupons/utils/coupon.sort-type';
 import { WindowSizeService } from 'src/app/shared/service/window-size.service';
+import { PageUtils } from 'src/app/shared/utils/common';
 
 @Component({
   templateUrl: './coupons.component.html',
@@ -30,7 +31,7 @@ export class CouponsComponent implements OnInit, AfterViewInit {
   sortDirection: boolean;
   // Sort options and directions
   sortByOptions: string[][] = CouponUtils.COUPON_SORT_OPTIONS;
-  pageSizeOptions: number[] = [5, 7, 10];
+  pageSizeOptions: number[] = PageUtils.DEFAULT_PAGE_SIZE_OPTIONS;
   // Search bar and autocomplete
   searchInput: FormGroup;
   searchText: string;
@@ -62,7 +63,7 @@ export class CouponsComponent implements OnInit, AfterViewInit {
   }
 
   loadCoupons()
-  { // Load company coupons with current pagination properties
+  { // Load customer coupons with current pagination properties
     this.sortBy ? 
     this.couponsStore // Sorting was selected
         .loadCoupons(ClientType.CUSTOMER, 

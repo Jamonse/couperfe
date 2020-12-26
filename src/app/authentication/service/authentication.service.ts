@@ -10,7 +10,8 @@ import {
   COMPANY_LOGIN_URL,
   CUSTOMER_LOGIN_URL,
   AUTH_URL,
-  API_URL
+  API_URL,
+  LOGOUT_URL
  } from 'src/app/shared/utils/api.utils';
 import { AuthenticationResponse } from '../model/auth.response';
 
@@ -41,22 +42,6 @@ export class AuthenticationService {
     this.isLoggedOut$ = this.logoutSubject.asObservable();
     this.clientType$ = this.clientTypeSubject.asObservable();
     this.client$ = this.clientSubject.asObservable();
-    
-    /* 
-    If the login url is reached (probaby pressing the browser back button)
-    that action will be considered as a logout an wont allow to return to the app
-    by pressing the forward button
-    */ 
-    this.router.events.pipe(
-      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-      map(event => {
-        if(event.url == '/login')
-        {
-          this.logout();
-        }
-      })
-    ).subscribe()
-  
   }
 
   login(email: string, password: string, clientType: ClientType): Observable<boolean>
@@ -149,10 +134,12 @@ export class AuthenticationService {
 
   logout()
   {
-    this.loginSubject.next(false);
-    this.logoutSubject.next(true);
-    this.clientTypeSubject.next(null);
-    this.clientSubject.next(null);
+    this.httpClient.post(LOGOUT_URL, '').subscribe(() => {
+      this.loginSubject.next(false);
+      this.logoutSubject.next(true);
+      this.clientTypeSubject.next(null);
+      this.clientSubject.next(null);
+    });
   }
   
 }

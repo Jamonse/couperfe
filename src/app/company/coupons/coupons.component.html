@@ -51,8 +51,7 @@
         else noCouponFound">
     </ng-template>
     <ng-template #couponsFound>
-        <div class="coupons-grid"
-        [ngClass]="{'grid-small-window': windowService.isWindowSmall}">
+        <div class="coupons-grid">
             <app-coupon
                 *ngFor="let coupon of (coupons$ | async)"
                 [couponToDisplay]="coupon"

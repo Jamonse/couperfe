@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
@@ -20,6 +21,8 @@ import { PurchaseDialogComponent } from '../purchase-dialog/purchase-dialog.comp
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   MAX_SEARCH_RESULTS = 5;
 
@@ -105,6 +108,7 @@ export class ShopComponent implements OnInit {
         if(res)
         {
           this.loadCoupons();
+          this.couponsStore.loadCart();
           this.clientCouponsStore.loadCoupons(ClientType.CUSTOMER);
           this.snackBar
             .open('Purchased Successfuly, Congatulations!', 'X', GlobalConfiguration.snackbarGlobalConfiguration())

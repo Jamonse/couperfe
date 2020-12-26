@@ -47,16 +47,15 @@
     </ng-template>
     <ng-template #couponsFound>
         <ng-container *ngIf="coupons$ | async as coupons">
-            <cdk-virtual-scroll-viewport class="coupons-grid"
-                [itemSize]="50">
+            <div class="coupons-grid">
                 <app-coupon
-                    *cdkVirtualFor="let coupon of coupons"
+                    *ngFor="let coupon of coupons"
                     [couponToDisplay]="coupon"
                     [inCart]="couponIncluded(coupon, (cart$ | async))"
                     (buyCoupon)="buyCoupon($event)"
                     (addCouponToCart)="addToCart($event)">
                 </app-coupon>
-            </cdk-virtual-scroll-viewport>
+            </div>
         </ng-container>
     </ng-template>
     <ng-template #noCouponFound>
@@ -64,5 +63,15 @@
             No Coupons found.
         </div>
     </ng-template>
+    <div *ngIf="!windowService.isWindowSmall || 
+        (coupons$ | async)?.length == 0" class="spacer">
+    </div>
+    <mat-paginator style="width: 50%;"
+        [disabled]="(coupons$ | async)?.length == 0"
+        class="mat-elevation-z8 paginator"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="couponsStore.pageIndex"
+        [pageSize]="couponsStore.pageSize"
+        [length]="couponsStore.count">
+    </mat-paginator>
 </div>
-
