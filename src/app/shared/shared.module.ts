@@ -16,7 +16,6 @@ import { CouponInfoComponent } from './coupons/coupon-info/coupon-info.component
 import { TooltipIfTuncatedDirective } from './tooltip-if-tuncated.directive';
 
 
-
 @NgModule({
   declarations: [
     ValuesPipe, 

@@ -1,6 +1,11 @@
 <div class="profile-container" *ngIf="(companyToDisplay$ | async) as company">
     <div class="company-details">
-        <div style="margin-left: 4rem;">
+        <div>
+            <mat-icon style="transform: scale(5); margin-bottom: 2rem;">
+                groups
+            </mat-icon>
+        </div>
+        <div>
             <h1 style="margin-top: 0.5rem;">
                 {{ company.name }}
             </h1>

@@ -1,13 +1,18 @@
 <div class="profile-container" *ngIf="(customerToDisplay$ | async) as customer">
     <div class="customer-details">
-        <div style="margin-left: 4rem;">
+        <div>
+            <mat-icon style="transform: scale(5); margin-bottom: 2rem;">
+                person
+            </mat-icon>
+        </div>
+        <div>
             <h1 style="margin-top: 0.5rem;">
                 {{ customer.name }}
             </h1>
             <h2>
                 {{ customer.email }}
             </h2>
-        </div>    
+        </div>
     </div>
     <p style="font-size: 1.5rem; margin-top: 5rem;">
         Buy and manage your coupons today!

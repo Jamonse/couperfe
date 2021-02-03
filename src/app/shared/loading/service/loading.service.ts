@@ -26,7 +26,7 @@ export class LoadingService {
               this.displayLoading();
             }
           }, 500)
-        }), // Perform a concat map in order to handle each subscription at a time
+        }), // Handle each subscription at a time
         concatMap(() => observable$),
         finalize(() => {
           // Hide loading again after subscription returned

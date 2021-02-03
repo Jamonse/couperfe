@@ -9,7 +9,8 @@ import { ClientType } from './model/client-type';
 import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
 
 const routes: Routes =[
-  {path: '', component: LayoutComponent, canActivate: [AppGuard],
+  {
+    path: '', component: LayoutComponent, canActivate: [AppGuard],
     children: [
       {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: 'home', component: HomeComponent},

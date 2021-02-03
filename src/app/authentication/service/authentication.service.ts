@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { filter, finalize, map, tap } from 'rxjs/operators';
+import { finalize, map, tap } from 'rxjs/operators';
 import { ClientType } from 'src/app/core/model/client-type';
 import { LoadingService } from 'src/app/shared/loading/service/loading.service';
 import { 
@@ -60,14 +60,14 @@ export class AuthenticationService {
         loginUrl = CUSTOMER_LOGIN_URL;
         break;
     }
-    
+    // Perform a login operation
     return this.httpClient.post<boolean>(loginUrl,{email, password})
         .pipe(tap(authenticated => {
-          this.loginSubject.next(authenticated);
-          this.logoutSubject.next(!authenticated);
-          this.clientTypeSubject.next(clientType);
           if(authenticated)
-          {
+          { // Successful login
+            this.loginSubject.next(authenticated);
+            this.logoutSubject.next(!authenticated);
+            this.clientTypeSubject.next(clientType);
             clientType != ClientType.ADMIN ?
               this.loadUser(clientType) : null;
           }
@@ -100,6 +100,7 @@ export class AuthenticationService {
     );
   }
 
+  // Perofrms an client type authentication check, mainly used for auth guard
   isAllowed(clientType: ClientType): Observable<boolean>
   {
     if(this.clientTypeSubject.getValue() == clientType)
@@ -108,14 +109,12 @@ export class AuthenticationService {
     }
     return this.isAuthenticated().pipe(
       tap(() => this.loadingService.displayLoading()),
-      map(
-      authResponse => {
-        return authResponse.clientType == clientType
-      },
+      map(authResponse => authResponse.clientType == clientType),
       finalize(() => this.loadingService.hideLoading())
-    ));
+    );
   }
 
+  // Loads the current logged in user information
   loadUser(clientType: ClientType)
   {
     const loadedUser$ = this.httpClient.get<Client>(API_URL + 
@@ -133,7 +132,7 @@ export class AuthenticationService {
   }
 
   logout()
-  {
+  { // Cleans the session and auth service state
     this.httpClient.post(LOGOUT_URL, '').subscribe(() => {
       this.loginSubject.next(false);
       this.logoutSubject.next(true);

@@ -32,9 +32,10 @@ export class ClientCouponsStore
         private messagesService: MessagesService,
         private authService: AuthenticationService) 
     {   
-        this.authService.clientType$.subscribe(clientType => {
+        this.authService.clientType$.subscribe(clientType=> {
             if(clientType && clientType != ClientType.ADMIN)
             {
+                console.log(clientType)
                 this.loadCoupons(clientType);
             }
             else
@@ -42,7 +43,8 @@ export class ClientCouponsStore
                 this.couponsSubject.next([]);
                 this.sortBy = undefined;
             }
-        });
+        },
+        err => null);
     }
 
     saveCoupon(coupon: Coupon): Observable<Coupon>
