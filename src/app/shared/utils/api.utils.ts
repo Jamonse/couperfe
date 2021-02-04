@@ -1,4 +1,4 @@
-import { environment } from "src/environments/environment.prod";
+import { environment } from "src/environments/environment";
 
     export {
         API_URL, COMPANY_COUPON_GET_PAGED_SORTED_URL,
