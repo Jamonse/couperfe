@@ -1,3 +1,5 @@
+import { environment } from "src/environments/environment.prod";
+
     export {
         API_URL, COMPANY_COUPON_GET_PAGED_SORTED_URL,
         ADMIN_LOGIN_URL, COMPANY_COUPON_GET_EXAMPLE_URL,
@@ -33,7 +35,7 @@
         AUTH_URL
      }
     
-    const API_URL = 'http://localhost:8080/coupersb/';
+    const API_URL = environment.baseUrl;
 
     const LOGIN = 'login';
     const LOGOUT = 'logout'
