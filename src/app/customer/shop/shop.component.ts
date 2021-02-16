@@ -65,6 +65,11 @@ export class ShopComponent implements OnInit {
     }
   
     ngAfterViewInit(): void {
+      this.paginator.page.pipe(
+        tap(() => this.loadCoupons())
+      ) // Subscribe to paginator events, and load companies accordingly
+      .subscribe();
+  
       this.changeDetector.detectChanges();
     }
   

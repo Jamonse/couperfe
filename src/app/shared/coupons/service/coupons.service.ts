@@ -147,7 +147,6 @@ export class CouponsService {
     {
       url = CUSTOMER_COUPON_GET_EXAMPLE_URL;
     }
-    console.log(url)
     const queryParams = new HttpParams()
       .set(RESULTS_COUNT, resultsCount.toString())
       .set(NAME_EXAMPLE, nameExample);

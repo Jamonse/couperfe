@@ -8,7 +8,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { ClientType } from './model/client-type';
 import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
 
-const routes: Routes =[
+const routes: Routes = [
   {
     path: '', component: LayoutComponent, canActivate: [AppGuard],
     children: [

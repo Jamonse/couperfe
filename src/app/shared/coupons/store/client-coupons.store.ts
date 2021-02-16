@@ -35,7 +35,6 @@ export class ClientCouponsStore
         this.authService.clientType$.subscribe(clientType=> {
             if(clientType && clientType != ClientType.ADMIN)
             {
-                console.log(clientType)
                 this.loadCoupons(clientType);
             }
             else
