@@ -40,5 +40,6 @@ if(!match)
 // Regex match! return the value with bold tags around the match
 return value.replace(regex, `<b>${match[0]}</b>`);
 ```
-The applicatio is deployed to Heroku CLoud Platform and is available on: https://couper.herokuapp.com (While dynos are up).
+The application is deployed to Heroku CLoud Platform and is available on: https://couper.herokuapp.com (While dynos are up), you are more than welcome to check it out!
+
 ![image](https://user-images.githubusercontent.com/67602805/110339281-aaf68400-8030-11eb-8cac-4f3662dd3e14.png)
