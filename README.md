@@ -1,27 +1,44 @@
-# Couper
+![image](https://user-images.githubusercontent.com/67602805/110339089-6f5bba00-8030-11eb-8c9a-3b183ebf5eb8.png)
+## Front end application for the couper project, my final project during college studies :mortar_board:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
+The application allows admin user to sign companies that can publish coupons and customer that can purchase them.
+The system is based on angular 9 and utilzies several features of the framwork:
 
-## Development server
+- HTTP Client based services.
+- Components and sub-components.
+- Routes and guards.
+- Lazy loaded feature modules.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+With some additional custom features:
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- Custom state management mechanism
+```typescript
+@Injectable({
+    providedIn: 'root'
+})
+export class ClientCouponsStore
+{
+    private couponsSubject = new BehaviorSubject<Coupon[]>([]);
+    ...
+}
+```
+- Custom responsive tool-tip directive
+```typescript
+@HostListener('mouseenter')
+initTooltip()
+{
+  const element = this.elementRef.nativeElement;
+  this.matTooltip.disabled = element.scrollWidth <= element.clientWidth;
+}
+```
+- Request based search with custom highlighting pipe
+```typescript
+if(!match)
+{ // Regex does not match with the value
+  return value;
+}
+// Regex match! return the value with bold tags around the match
+return value.replace(regex, `<b>${match[0]}</b>`);
+```
+The applicatio is deployed to Heroku CLoud Platform and is available on: https://couper.herokuapp.com (While dynos are up).
+![image](https://user-images.githubusercontent.com/67602805/110339281-aaf68400-8030-11eb-8cac-4f3662dd3e14.png)
